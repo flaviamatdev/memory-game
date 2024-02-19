@@ -1,40 +1,48 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { GameService } from '../services/game.service';
-import { delay } from 'rxjs/operators';
-
+import { Card } from '../shared/model/card';
 
 @Component({
-  selector: 'memory-card',
-  templateUrl: './memory-card.component.html',
-  styleUrls: ['./memory-card.component.scss']
+    selector: 'app-memory-card',
+    templateUrl: './memory-card.component.html',
+    styleUrls: ['./memory-card.component.scss']
 })
 export class MemoryCardComponent implements OnInit, DoCheck {
 
-  constructor(private gameService: GameService) { }
+    constructor(private gameService: GameService) { }
 
+    @Input() card!: Card;
+    @Input() id: number;
 
-  @Input() type: string;
-  @Input() code: string;
-  @Input() id: number;
+    icon: string[] = [];
+    private _isRotated: boolean;
 
-  icon = [this.type, this.code];
-  isRotated: boolean;
+    get isRotated(): boolean {
+		return this._isRotated;
+	}
 
-  ngOnInit(): void {
-    this.gameService.getCoveredCards().subscribe(r=>r.map(v=>this.isRotated=(v.id==this.id)?false:this.isRotated));
-  }
+    ngOnInit(): void {
+        this._setIcon();
+        this.gameService.getCoveredCards().subscribe(coveredCards => 
+            coveredCards.map(card => this._isRotated = (card.id == this.id) ? false : this._isRotated)
+        );
+    }
 
-  ngDoCheck(): void {
-    this.icon = [this.type, this.code];
-  }
+    ngDoCheck(): void {
+        this._setIcon();
+    }
 
-  undo() {
-    this.isRotated = false;
-  }
+    private _setIcon() {
+        this.icon = [this.card?.type, this.card?.code];
+    }
 
-  onClick() {
-    this.isRotated = true;
-    this.gameService.controlCards({ id: this.id, code: this.code, type: this.type });
-  }
+    onClick() {
+        this._isRotated = true;
+        this.gameService.controlCards({ 
+            id: this.id, 
+            code: this.card?.code,
+            type: this.card?.type 
+        });
+    }
 
 }
