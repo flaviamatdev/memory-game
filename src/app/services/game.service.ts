@@ -12,6 +12,7 @@ export class GameService {
     selectedCard1: Card = null;
     selectedCard2: Card = null;
 
+    totalCards: number = 8; // vindo da home
     cardCount: number = 0;
     moveCount: number = 0;
 
@@ -24,8 +25,8 @@ export class GameService {
 
     constructor(private http: HttpClient) { }
 
-    getCards(count: number) {
-        this.cardCount = count;
+    getCards() {
+        this.cardCount = this.totalCards;
         this.moveCount = 0;
 
         this._remainingCardPairs.next(this.cardCount);
@@ -36,7 +37,7 @@ export class GameService {
                 this.shuffleCards(cardArr);
             }), 
             map(d => {
-                let arr = d.slice(0, count);
+                let arr = d.slice(0, this.totalCards);
                 return this.shuffleCards([...arr, ...this.shuffleCards(arr)]);
             }
         ));
@@ -63,11 +64,11 @@ export class GameService {
         }
 
         this.selectedCard2 = choosen;
-        if (this.selectedCard1.code != this.selectedCard2.code) {
-            this._coverCards.next([this.selectedCard1, this.selectedCard2]);
-        } else {
+        if (this.selectedCard1.code == this.selectedCard2.code) {
             this.cardCount--;
             this._remainingCardPairs.next(this.cardCount);
+        } else {
+            this._coverCards.next([this.selectedCard1, this.selectedCard2]);
         }
 
         this.selectedCard1 = null;
@@ -92,10 +93,5 @@ export class GameService {
     getCoveredCards() {
         return this._coverCards.asObservable().pipe(delay(1200));
     }
-
-
-
-
-
 
 }

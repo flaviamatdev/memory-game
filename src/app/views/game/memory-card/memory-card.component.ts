@@ -1,6 +1,6 @@
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
-import { GameService } from '../services/game.service';
-import { Card } from '../shared/model/card';
+import { GameService } from 'src/app/services/game.service';
+import { Card } from 'src/app/shared/model/card';
 
 @Component({
     selector: 'app-memory-card',

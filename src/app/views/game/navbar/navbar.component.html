@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button aria-label="Home" matTooltip="Home" (click)="parent.goHome()">
+            <mat-icon>home</mat-icon>
+        </button>
+
+        <span class="title">{{title}}</span>
+
+        <button mat-icon-button aria-label="New Game" matTooltip="New Game" (click)="parent.newGame()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,5 @@
+<app-navbar [parent]="this"></app-navbar>
+
+<div class="board" [style.width.px]="boardWidth">
+    <app-memory-card *ngFor="let card of cards;let i=index" [id]="i+1" [card]="card"></app-memory-card>
+</div>
