@@ -1,0 +1,15 @@
+.loading-options-error {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.5em;
+
+    color: red;
+    font-size: smaller;
+    font-style: italic;
+    margin-bottom: 4px;
+    
+    mat-icon {
+        margin: 0;
+    }
+}

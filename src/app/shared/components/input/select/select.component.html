@@ -1,0 +1,28 @@
+<div id="{{controlName}}-div" [ngClass]="inputClass">
+    <app-input-label [label]="label" [comment]="labelComment" [required]="isRequired"></app-input-label>
+
+    <mat-form-field appearance="outline" class="w-100 mat-form-field-label-out" floatLabel="never" color="primary">
+        <mat-select [formControl]="formControl" [multiple]="multiple" 
+            (selectionChange)="onChangeSelection($event.value)">
+
+            <mat-option #allOption *ngIf="allOptionLabel" [value]="ALL_OPTION">
+                {{ allOptionLabel }}
+            </mat-option>
+
+            <mat-option *ngFor="let option of options" [value]="getOptionValue(option)" 
+                [disabled]="multiple && allOptionSelected">
+                {{ option[labelAttribute] }}
+            </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="isRequired">
+            <mat-icon aria-label="false">cancel</mat-icon>
+            Campo <strong>obrigatório</strong>
+        </mat-error>
+    </mat-form-field>
+</div>
+
+<div *ngIf="showLoadingOptionsError" class="loading-options-error">
+    <mat-icon aria-label="false">cancel</mat-icon>
+    Erro ao buscar opções para {{ label }}
+</div>

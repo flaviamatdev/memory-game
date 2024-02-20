@@ -1,0 +1,30 @@
+<div id="{{controlName}}-div" [ngClass]="inputClass">
+    <app-input-label *ngIf="label" [label]="label" [comment]="labelComment" [required]="isRequired"></app-input-label>
+
+    <mat-form-field appearance="outline" class="w-100 mat-form-field-label-out" floatLabel="never" color="primary">
+        <input matInput 
+            type="number" 
+            [formControl]="formControl" 
+            (change)="sendValueChange($event)" 
+            [min]="min"
+            [max]="max"
+        >
+    
+        <mat-error *ngIf="isRequired">
+            <mat-icon aria-hidden="false">cancel</mat-icon>
+            Campo <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error *ngIf="min!=null && formControl.hasError('min')">
+            <mat-icon aria-hidden="false">cancel</mat-icon>
+            Valor mínimo é <strong>{{ min }}</strong>
+        </mat-error>
+        <mat-error *ngIf="max!=null && formControl.hasError('max')">
+            <mat-icon aria-hidden="false">cancel</mat-icon>
+            Valor máximo é <strong>{{ max }}</strong>
+        </mat-error>
+        <mat-error *ngIf="min==null && max==null && isInvalid">
+            <mat-icon aria-label="false">cancel</mat-icon>
+            Valor inserido <strong>inválido</strong>
+        </mat-error>
+    </mat-form-field>
+</div>

@@ -1,0 +1,33 @@
+<div id="{{controlName}}-div" [ngClass]="inputClass">
+    <app-input-label [label]="label" [comment]="labelComment" [required]="isRequired"></app-input-label>
+
+    <mat-form-field appearance="outline" class="w-100 mat-form-field-label-out" floatLabel="never" color="primary">
+        <input matInput
+            type="text"
+            [formControl]="formControl"
+            [id]="controlName"
+            [name]="controlName"
+            [minLength]="minLength"
+            [maxLength]="maxLength"
+            [title]="title"
+            [placeholder]="placeholder"
+            [readonly]="disabled"
+            (change)="sendChangeEvent($event)"
+        >
+
+        <mat-error *ngIf="isRequired">
+            <mat-icon aria-label="false">cancel</mat-icon>
+            Campo <strong>obrigatório</strong>
+        </mat-error>
+
+        <mat-error *ngIf="isInvalid">
+            <mat-icon aria-label="false">cancel</mat-icon>
+            Valor inserido <strong>inválido</strong>
+        </mat-error>
+
+        <mat-error *ngIf="hasError('minLength')">
+            <mat-icon aria-label="false">cancel</mat-icon>
+            Tamanho mínimo: <strong>{{ minLength }}</strong> caracteres
+        </mat-error>
+    </mat-form-field>
+</div>
