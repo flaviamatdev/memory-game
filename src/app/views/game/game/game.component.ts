@@ -9,24 +9,42 @@ import { Card } from 'src/app/shared/model/card';
 })
 export class GameComponent implements OnInit {
 
-    @Input() title: string = 'Memory Game';
-
-    constructor(private gameService: GameService) { }
-
+    title: string;
     cards: Card[] = [];
     boardWidth: number;
 
+    constructor(private gameService: GameService) { }
+
     ngOnInit(): void {
+        this.title = this.gameService.getTitle();
         this.newGame();
     }
 
     newGame() {
-        this.gameService.getCards().subscribe(cards => { 
-            this.cards = cards;
-            console.log(cards)
-            // let numPairs = this.cardCount / 2;
-            // this.boardWidth = numPairs * 100 + (numPairs - 1) * 16;
-        });
+        this.cards = this.gameService.getCards();
+        this._printPairs();//.
+    }
+
+    // TODO remover
+    private _printPairs() {
+        let numCards = this.cards.length;
+        if (!numCards) {
+            return;
+        }
+
+        let indices: number[] = [];
+        let pairs: number[][] = [];
+
+        this.cards.forEach( (card, i) => {
+            if (indices.includes(i)) {
+                return;
+            }
+            let j = this.cards.findIndex((c,j) => c.code === card.code && j != i);
+            indices.push(...[i,j]);
+            pairs.push([i+1, j+1]);
+        })
+
+        console.log(pairs);
     }
 
     goHome() {

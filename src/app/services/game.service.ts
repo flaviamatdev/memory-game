@@ -15,17 +15,9 @@ export class GameService {
     selectedCard1: Card = null;
     selectedCard2: Card = null;
 
-    totalCards: number = 8; // vindo da home
-    cardCount: number = 0;
-    moveCount: number = 0;
-
-    cards: Card[] = [];
-    card = new BehaviorSubject<Card>(null);
-
     private _gameConfig: GameConfig;
+    private _pairCount: number = 0;
     private _coverCards = new BehaviorSubject<Card[]>([]);
-    private _remainingCardPairs = new BehaviorSubject<number>(8);
-    private _doneMoves = new BehaviorSubject<number>(0);
 
     constructor(
         private http: HttpClient,
@@ -42,32 +34,37 @@ export class GameService {
         this.router.navigate(['game']);
     }
 
-    getCards() {
-        this.cardCount = this.totalCards;
-        this.moveCount = 0;
-
-        this._remainingCardPairs.next(this.cardCount);
-        this._doneMoves.next(0);
-
-        return this.http.get<Card[]>('assets/cards.json').pipe(
-            tap((cardArr) => {
-                this.shuffleCards(cardArr);
-            }), 
-            map(d => {
-                let arr = d.slice(0, this.totalCards);
-                return this.shuffleCards([...arr, ...this.shuffleCards(arr)]);
-            }
-        ));
+    getTitle() {
+        return this._gameConfig?.title ?? 'Memory Game';
     }
 
-    shuffleCards(arr: Card[]) {
-        for (let index = 0; index < arr.length; index++) {
-            const temp = arr[index];
-            const newIdx = Math.floor(Math.random() * arr.length);
-            arr[index] = arr[newIdx];
-            arr[newIdx] = temp;
+    getCards(): Card[] {
+        if (!this._gameConfig) {
+            this.goHome();
+            return [];
         }
-        return arr;
+
+        let numPairs = this._gameConfig.numPairs;
+        this._pairCount = numPairs;
+
+        let cardImages = this._gameConfig.pairImgSrcs;
+        let code = 1;
+        let cards = cardImages.map(img => new Card(`${code++}`, img));
+
+        return [
+            ...this._shuffleCards(cards), 
+            ...this._shuffleCards(Object.assign([], cards)) 
+        ];
+    }
+
+    private _shuffleCards(cards: Card[]) {
+        for (let index = 0; index < cards.length; index++) {
+            const temp = cards[index];
+            const newIdx = Math.floor(Math.random() * cards.length);
+            cards[index] = cards[newIdx];
+            cards[newIdx] = temp;
+        }
+        return cards;
     }
 
     controlCards(choosen: Card) {
@@ -82,18 +79,16 @@ export class GameService {
 
         this.selectedCard2 = choosen;
         if (this.selectedCard1.code == this.selectedCard2.code) {
-            this.cardCount--;
-            this._remainingCardPairs.next(this.cardCount);
+            this._pairCount--;
         } else {
             this._coverCards.next([this.selectedCard1, this.selectedCard2]);
         }
 
         this.selectedCard1 = null;
         this.selectedCard2 = null;
-        this.moveCount++;
+
         setTimeout(() => {
-            this._doneMoves.next(this.moveCount);
-            if (this.cardCount == 0) {
+            if (this._pairCount == 0) {
                 this._win();
             }
         }, 200);
@@ -101,14 +96,6 @@ export class GameService {
 
     private _win() {
         this.toastService.success('Parabéns!');
-    }
-
-    getRemainingCardPairs() {
-        return this._remainingCardPairs.asObservable();
-    }
-
-    getDoneMoves() {
-        return this._doneMoves.asObservable();
     }
 
     getCoveredCards() {

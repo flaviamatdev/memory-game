@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { Card } from 'src/app/shared/model/card';
 
@@ -7,14 +7,13 @@ import { Card } from 'src/app/shared/model/card';
     templateUrl: './memory-card.component.html',
     styleUrls: ['./memory-card.component.scss']
 })
-export class MemoryCardComponent implements OnInit, DoCheck {
+export class MemoryCardComponent implements OnInit {
 
     constructor(private gameService: GameService) { }
 
     @Input() card!: Card;
     @Input() id: number;
 
-    icon: string[] = [];
     private _isRotated: boolean;
 
     get isRotated(): boolean {
@@ -22,18 +21,9 @@ export class MemoryCardComponent implements OnInit, DoCheck {
 	}
 
     ngOnInit(): void {
-        this._setIcon();
         this.gameService.getCoveredCards().subscribe(coveredCards => 
             coveredCards.map(card => this._isRotated = (card.id == this.id) ? false : this._isRotated)
         );
-    }
-
-    ngDoCheck(): void {
-        this._setIcon();
-    }
-
-    private _setIcon() {
-        this.icon = [this.card?.type, this.card?.code];
     }
 
     onClick() {
@@ -41,7 +31,8 @@ export class MemoryCardComponent implements OnInit, DoCheck {
         this.gameService.controlCards({ 
             id: this.id, 
             code: this.card?.code,
-            type: this.card?.type 
+            type: this.card?.type,
+            img: ''
         });
     }
 

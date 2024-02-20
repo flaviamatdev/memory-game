@@ -9,6 +9,5 @@ import { GameComponent } from '../game/game.component';
 export class NavbarComponent {
 
     @Input() parent: GameComponent;
-    @Input() title: string = 'Memory Game';
 
 }

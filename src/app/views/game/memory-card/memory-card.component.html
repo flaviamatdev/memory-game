@@ -1,8 +1,11 @@
 <div class="card" [ngClass]="{rotated: isRotated}" (click)="onClick()">
-    <div class="card-inner" >
-        <div class="front">
-            <fa-icon [icon]="icon" size="3x"></fa-icon>
+    <div class="card-inner">
+        <div  class="front">
+            <fa-icon *ngIf="card.type" [icon]="[card.type, card.code]" size="3x"></fa-icon>
+
+            <img *ngIf="card.img" [src]="card.img" alt="card">
         </div>
+
         <div class="back">
             <div style="font-size: 40px;">{{id}}</div>
         </div>

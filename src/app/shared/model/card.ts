@@ -1,5 +1,9 @@
 export class Card {
     id: number;
-    type: string;
-    code: string;
+    type?: string;
+
+    constructor(
+        public code: string,
+        public img: string
+    ) {}
 }

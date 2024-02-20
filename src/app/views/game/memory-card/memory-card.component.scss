@@ -12,6 +12,12 @@ $blue: #6fb1fc;
     margin: 10px;
     cursor: pointer;
 
+    img {
+        width: 100px;
+        height: auto;
+        border-radius: 4px;
+    }
+
     .front,
     .back {
         border-radius: 4px;
