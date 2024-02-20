@@ -30,7 +30,7 @@ export class GameComponent implements OnInit {
     }
 
     goHome() {
-        alert('TODO Go Home');
+        this.gameService.goHome();
     }
 
 }

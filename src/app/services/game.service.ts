@@ -4,6 +4,8 @@ import { Card } from '../shared/model/card';
 import { tap, map, delay } from "rxjs/operators";
 import { BehaviorSubject } from 'rxjs';
 import { GameConfig } from '../shared/model/game-config.model';
+import { ToastService } from './toast.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -20,14 +22,24 @@ export class GameService {
     cards: Card[] = [];
     card = new BehaviorSubject<Card>(null);
 
+    private _gameConfig: GameConfig;
     private _coverCards = new BehaviorSubject<Card[]>([]);
     private _remainingCardPairs = new BehaviorSubject<number>(8);
     private _doneMoves = new BehaviorSubject<number>(0);
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private toastService: ToastService,
+        private router: Router,
+    ) { }
+
+    goHome() {
+        this.router.navigate(['']);
+    }
 
     create(gameConfig: GameConfig) {
-        debugger
+        this._gameConfig = gameConfig;
+        this.router.navigate(['game']);
     }
 
     getCards() {
@@ -82,9 +94,13 @@ export class GameService {
         setTimeout(() => {
             this._doneMoves.next(this.moveCount);
             if (this.cardCount == 0) {
-                alert('Parabens!'); // TODO
+                this._win();
             }
-        }, 1000);
+        }, 200);
+    }
+
+    private _win() {
+        this.toastService.success('Parabéns!');
     }
 
     getRemainingCardPairs() {
