@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AbstractInputComponent } from '../abstract-input.component';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
     selector: 'app-upload-image',
@@ -17,6 +18,12 @@ export class UploadImageComponent extends AbstractInputComponent {
     private _numFiles: number = 0;
     private _base64Arr: any[];
 
+    constructor(
+        private toastService: ToastService
+    ) {
+        super();
+    }
+
 
     onSelectFiles($event: any) {
         this._base64Arr = [];
@@ -25,7 +32,7 @@ export class UploadImageComponent extends AbstractInputComponent {
         if (!allOk) {
             this._inputElem.nativeElement.value = "";
             const accept = this.ACCEPT_IMG.map(x => x.replace('image/', '')).join(', ');
-            alert(`Pelo menos 1 arquivo selecionado está fora dos formatos de imagem aceitos: ${accept}. Tente novamente!`);
+            this.toastService.error(`Pelo menos 1 arquivo selecionado está fora dos formatos de imagem aceitos: ${accept}. Tente novamente!`);
             return;
         }
 

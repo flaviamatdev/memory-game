@@ -16,6 +16,25 @@ body {
     font-family: Quicksand;
 }
 
+.custom-toast-title {
+    color: white !important;
+}
+.swal2-icon.swal2-info {
+    border-color: #9de0f6 !important;
+    color: #9de0f6 !important;
+}
+.swal2-success-ring {
+    border-color: #a5dc86 !important;
+    color: #a5dc86 !important;
+}
+.swal2-icon.swal2-warning {
+    border-color: #facea8 !important;
+    color: #facea8 !important;
+}
+.swal2-close:hover {
+    color: #d1d1d1 !important;
+}
+
 .d-flex-row {
     display: flex;
     flex-direction: row;

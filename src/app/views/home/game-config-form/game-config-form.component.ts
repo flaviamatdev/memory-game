@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { CardPositionIdTypeEnum } from 'src/app/shared/enums/card-position-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 
@@ -21,10 +22,11 @@ export class GameConfigFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private gameService: GameService,
+        private toastService: ToastService,
     ) { }
 
     ngOnInit(): void {
-        
+        this.insertConfigFile = null;
     }
 
     changeInputType($event: boolean) {
@@ -69,13 +71,9 @@ export class GameConfigFormComponent implements OnInit {
     submit() {
         this.form.markAllAsTouched();
         if (this.form.invalid) {
-            return this._showErrorMsg('Preencha todos os campos');
+            return this.toastService.showInvalidFormError();
         }
         this.gameService.create({...this.form.value} as GameConfig);
-    }
-
-    private _showErrorMsg(msg: string) {
-        alert(msg); // TODO
     }
 
 }
