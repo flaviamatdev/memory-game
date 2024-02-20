@@ -19,7 +19,7 @@
         <form *ngIf="form" [formGroup]="form">
             <div class="form-line">
                 <app-input-text label="Título" [form]="form" controlName="title"></app-input-text>
-                <app-upload-image label="Imagem de fundo" [form]="form" controlName="backgroundImgFile"></app-upload-image>
+                <app-upload-image label="Imagem de fundo" [form]="form" controlName="backgroundImgSrc"></app-upload-image>
             </div>
 
             <div class="form-line">
@@ -28,7 +28,7 @@
                 </app-select>
 
                 <app-upload-image label="Pasta contendo as imagens das cartas" 
-                    [form]="form" controlName="pairsImgFiles" [selectAllDir]="true">
+                    [form]="form" controlName="pairImgSrcs" [selectAllDir]="true">
                 </app-upload-image>
             </div>
 

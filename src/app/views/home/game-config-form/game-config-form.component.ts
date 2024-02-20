@@ -43,9 +43,9 @@ export class GameConfigFormComponent implements OnInit {
     private _initForm() {
         this.form = this.fb.group({
             title: new FormControl('Memory Game', Validators.required),
-            backgroundImgFile: new FormControl(null, Validators.required),
+            backgroundImgSrc: new FormControl(null, Validators.required),
             singleImgPerPair: new FormControl(null, Validators.required),
-            pairsImgFiles: new FormControl(null, Validators.required),
+            pairImgSrcs: new FormControl(null, Validators.required),
             cardPositionIdType: new FormControl(CardPositionIdTypeEnum.NUMBERS, Validators.required),
         });
     }
@@ -65,6 +65,7 @@ export class GameConfigFormComponent implements OnInit {
 
     onSelectConfigFile($event: any) {
         let file: File = $event?.target?.files[0];
+        // TODO
         debugger
     }
 
@@ -73,7 +74,7 @@ export class GameConfigFormComponent implements OnInit {
         if (this.form.invalid) {
             return this.toastService.showInvalidFormError();
         }
-        this.gameService.create({...this.form.value} as GameConfig);
+        this.gameService.create(Object.assign(new GameConfig(), this.form.value));
     }
 
 }

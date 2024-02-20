@@ -2,8 +2,8 @@ import { CardPositionIdTypeEnum } from "../enums/card-position-id-type.enum";
 
 export class GameConfig {
     title: string;
-    backgroundImgSrc: File;
+    backgroundImgSrc: string;
     singleImgPerPair: boolean;
-    pairImgFiles: File[];
+    pairImgSrcs: string[];
     cardPositionIdType: CardPositionIdTypeEnum;
 }
