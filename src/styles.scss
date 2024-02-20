@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import "assets/styles/mat-form-field";
 
 html,
 body {
@@ -14,4 +14,30 @@ body {
 
 .quicksand {
     font-family: Quicksand;
+}
+
+.d-flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.d-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    column-gap: 1em;
+    row-gap: 0.5em;
+}
+
+.form-item {
+    flex: 1 0 0;
 }

@@ -1,0 +1,47 @@
+<div>
+    <mat-label>Selecione como deseja inserir as informações para o jogo:</mat-label>
+
+    <div class="form-line mt-2 ms-4">
+        <mat-radio-group aria-label="label" (change)="changeInputType($event.value == 'true')">
+            <mat-radio-button value="true" color="primary">Inserir Arquivo de configuração</mat-radio-button>
+            <mat-radio-button value="false" color="primary">Inserir manualmente</mat-radio-button>
+        </mat-radio-group>
+    </div>
+</div>
+
+<div [ngSwitch]="insertConfigFile" class="mt-4">
+    <div *ngSwitchCase="true">
+        <input type="file" #inputFile hidden (change)="onChangeFile($event)" accept="txt">
+        <button mat-raised-button color="primary" (click)="inputFile.click()">Selecionar arquivo</button>
+    </div>
+
+    <div *ngSwitchCase="false">
+        <form *ngIf="form" [formGroup]="form">
+            <div class="form-line">
+                <app-input-text label="Título" [form]="form" controlName="title"></app-input-text>
+            
+                <div class="input-file">
+                    <mat-label>Imagem de fundo</mat-label>
+                    <input type="file" #backgroundImgInputFile (change)="onChangeFile($event)" accept="txt">
+                </div>
+            </div>
+
+            <div class="form-line">
+                <app-select label="Cada par possui imagens iguais?" [form]="form" 
+                    controlName="eachPairHasSameImg" [options]="numImagesPerPairOptions">
+                </app-select>
+
+                <div class="input-file">
+                    <mat-label>Pasta contendo as imagens das cartas</mat-label>
+                    <input type="file" #cardImgInputFile (change)="onChangeFile($event)" accept="txt">
+                </div>
+            </div>
+
+            <div class="form-line">
+                <app-select label="Tipo de identificação das posições das cartas" [form]="form" 
+                    controlName="cardPositionType" [options]="cardPositionOptions">
+                </app-select>
+            </div>
+        </form>
+    </div>
+</div>
