@@ -1,6 +1,6 @@
 export class Card {
     id: number;
-    type?: string;
+    iconType?: string;
 
     constructor(
         public code: string,
