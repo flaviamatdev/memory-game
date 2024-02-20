@@ -64,7 +64,7 @@ export class GameService {
         return cards;
     }
 
-    controlCards(choosen: Card) {
+    onChooseCard(choosen: Card) {
         if (this._selectedCard1 === null) {
             this._selectedCard1 = choosen;
             return;

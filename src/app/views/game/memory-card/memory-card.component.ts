@@ -28,11 +28,9 @@ export class MemoryCardComponent implements OnInit {
 
     onClick() {
         this._isRotated = true;
-        this.gameService.controlCards({ 
+        this.gameService.onChooseCard({ 
             id: this.id, 
-            code: this.card?.code,
-            type: this.card?.type,
-            img: ''
+            code: this.card?.code
         });
     }
 

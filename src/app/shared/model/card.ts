@@ -4,6 +4,6 @@ export class Card {
 
     constructor(
         public code: string,
-        public img: string
+        public img?: string
     ) {}
 }
