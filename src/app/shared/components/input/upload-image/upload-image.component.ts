@@ -8,7 +8,7 @@ import { AbstractInputComponent } from '../abstract-input.component';
 })
 export class UploadImageComponent extends AbstractInputComponent {
 
-    readonly ACCEPT_IMG = [ '.png', '.jpg', '.jpeg' ];
+    readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     @Input() multiple: boolean = false;
     @Input() selectAllDir: boolean = false;
@@ -24,7 +24,8 @@ export class UploadImageComponent extends AbstractInputComponent {
 
         if (!allOk) {
             this._inputElem.nativeElement.value = "";
-            alert(`Pelo menos 1 arquivo selecionado está fora dos formatos de imagem aceitos ($${this.ACCEPT_IMG.join(',')})`);
+            const accept = this.ACCEPT_IMG.map(x => x.replace('image/', '')).join(', ');
+            alert(`Pelo menos 1 arquivo selecionado está fora dos formatos de imagem aceitos: ${accept}. Tente novamente!`);
             return;
         }
 
@@ -40,7 +41,7 @@ export class UploadImageComponent extends AbstractInputComponent {
         do {
             let file = fileList.item(i++);
             files.push(file);
-            allOk &&= this.ACCEPT_IMG.includes(file.type);
+            allOk = allOk && this.ACCEPT_IMG.includes(file.type);
         } while (allOk && i < this._numFiles);
         
         return {
