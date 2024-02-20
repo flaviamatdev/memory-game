@@ -1,28 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Card } from '../shared/model/card';
-import { tap, map, delay } from "rxjs/operators";
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { delay } from "rxjs/operators";
+import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ToastService } from './toast.service';
-import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameService {
 
-    selectedCard1: Card = null;
-    selectedCard2: Card = null;
-
     private _gameConfig: GameConfig;
     private _pairCount: number = 0;
     private _coverCards = new BehaviorSubject<Card[]>([]);
+    private _selectedCard1: Card = null;
+    private _selectedCard2: Card = null;
 
     constructor(
-        private http: HttpClient,
-        private toastService: ToastService,
         private router: Router,
+        private toastService: ToastService,
     ) { }
 
     goHome() {
@@ -68,24 +65,24 @@ export class GameService {
     }
 
     controlCards(choosen: Card) {
-        if (this.selectedCard1 === null) {
-            this.selectedCard1 = choosen;
+        if (this._selectedCard1 === null) {
+            this._selectedCard1 = choosen;
             return;
         }
 
-        if (choosen.id === this.selectedCard1.id) {
+        if (choosen.id === this._selectedCard1.id) {
             return;
         }
 
-        this.selectedCard2 = choosen;
-        if (this.selectedCard1.code == this.selectedCard2.code) {
+        this._selectedCard2 = choosen;
+        if (this._selectedCard1.code == this._selectedCard2.code) {
             this._pairCount--;
         } else {
-            this._coverCards.next([this.selectedCard1, this.selectedCard2]);
+            this._coverCards.next([this._selectedCard1, this._selectedCard2]);
         }
 
-        this.selectedCard1 = null;
-        this.selectedCard2 = null;
+        this._selectedCard1 = null;
+        this._selectedCard2 = null;
 
         setTimeout(() => {
             if (this._pairCount == 0) {
