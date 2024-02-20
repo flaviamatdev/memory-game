@@ -11,7 +11,7 @@
 
 <div [ngSwitch]="insertConfigFile" class="mt-4">
     <div *ngSwitchCase="true">
-        <input type="file" #inputFile hidden (change)="onChangeFile($event)" accept="txt">
+        <input type="file" #inputFile hidden (change)="onSelectConfigFile($event)" accept="txt">
         <button mat-raised-button color="primary" (click)="inputFile.click()">Selecionar arquivo</button>
     </div>
 
@@ -19,29 +19,28 @@
         <form *ngIf="form" [formGroup]="form">
             <div class="form-line">
                 <app-input-text label="Título" [form]="form" controlName="title"></app-input-text>
-            
-                <div class="input-file">
-                    <mat-label>Imagem de fundo</mat-label>
-                    <input type="file" #backgroundImgInputFile (change)="onChangeFile($event)" accept="txt">
-                </div>
+                <app-upload-image label="Imagem de fundo" [form]="form" controlName="backgroundImgFile"></app-upload-image>
             </div>
 
             <div class="form-line">
-                <app-select label="Cada par possui imagens iguais?" [form]="form" 
-                    controlName="eachPairHasSameImg" [options]="numImagesPerPairOptions">
+                <app-select label="Cada par possui imagens iguais?" 
+                    [form]="form" controlName="singleImgPerPair" [options]="numImagesPerPairOptions">
                 </app-select>
 
-                <div class="input-file">
-                    <mat-label>Pasta contendo as imagens das cartas</mat-label>
-                    <input type="file" #cardImgInputFile (change)="onChangeFile($event)" accept="txt">
-                </div>
+                <app-upload-image label="Pasta contendo as imagens das cartas" 
+                    [form]="form" controlName="pairsImgFiles" [selectAllDir]="true">
+                </app-upload-image>
             </div>
 
             <div class="form-line">
-                <app-select label="Tipo de identificação das posições das cartas" [form]="form" 
-                    controlName="cardPositionType" [options]="cardPositionOptions">
+                <app-select label="Tipo de identificação das posições das cartas" 
+                    [form]="form" controlName="cardPositionIdType" [options]="cardPositionOptions">
                 </app-select>
             </div>
         </form>
+
+        <div>
+            <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
+        </div>
     </div>
 </div>

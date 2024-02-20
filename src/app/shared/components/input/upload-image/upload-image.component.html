@@ -1,0 +1,10 @@
+<div class="input-file">
+    <app-input-label *ngIf="label" [label]="label" [comment]="labelComment" [required]="isRequired"></app-input-label>
+
+    <div *ngIf="selectAllDir else regularInput" >
+        <input type="file" #uploadInput (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" multiple webkitdirectory>
+    </div>
+    <ng-template #regularInput>
+        <input type="file" #uploadInput (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" [multiple]="multiple">
+    </ng-template>
+</div>

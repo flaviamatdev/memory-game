@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CardPositionIdEnum } from 'src/app/shared/enums/card-position-id.enum';
+import { GameService } from 'src/app/services/game.service';
+import { CardPositionIdTypeEnum } from 'src/app/shared/enums/card-position-id-type.enum';
+import { GameConfig } from 'src/app/shared/model/game-config.model';
 
 @Component({
     selector: 'app-game-config-form',
@@ -9,13 +11,16 @@ import { CardPositionIdEnum } from 'src/app/shared/enums/card-position-id.enum';
 })
 export class GameConfigFormComponent implements OnInit {
 
+    readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
+
     form: FormGroup;
     insertConfigFile: boolean;
     numImagesPerPairOptions: any[] = [];
     cardPositionOptions: any[] = [];
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private gameService: GameService,
     ) { }
 
     ngOnInit(): void {
@@ -26,29 +31,28 @@ export class GameConfigFormComponent implements OnInit {
         this.insertConfigFile = $event;
         if (this.insertConfigFile) {
             this.form = this.fb.group({});
-        } else {
-            this._initForm();
-            this._setOptions();
+            return;
         }
+        
+        this._initForm();
+        this._setOptions();
     }
 
     private _initForm() {
         this.form = this.fb.group({
             title: new FormControl('Memory Game', Validators.required),
-            backgroundImgInputFile: new FormControl(null, Validators.required),
-
-            eachPairHasSameImg: new FormControl(null, Validators.required),
-            pairsImgDirPath: new FormControl(null, Validators.required),
-
-            cardPositionType: new FormControl(CardPositionIdEnum.NUMBERS, Validators.required),
-        })
+            backgroundImgFile: new FormControl(null, Validators.required),
+            singleImgPerPair: new FormControl(null, Validators.required),
+            pairsImgFiles: new FormControl(null, Validators.required),
+            cardPositionIdType: new FormControl(CardPositionIdTypeEnum.NUMBERS, Validators.required),
+        });
     }
 
     private _setOptions() {
         this.cardPositionOptions = [
-            { id: CardPositionIdEnum.NUMBERS, label: 'Números' },
-            { id: CardPositionIdEnum.IMAGES, label: 'Imagens' },
-            { id: CardPositionIdEnum.ROW_COLUMN, label: 'Linhas e colunas (Batalha Naval)' },
+            { id: CardPositionIdTypeEnum.NUMBERS, label: 'Números' },
+            { id: CardPositionIdTypeEnum.IMAGES, label: 'Imagens' },
+            { id: CardPositionIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas (Batalha Naval)' },
         ]
 
         this.numImagesPerPairOptions = [
@@ -57,8 +61,21 @@ export class GameConfigFormComponent implements OnInit {
         ]
     }
 
-    onChangeFile($event) {
+    onSelectConfigFile($event: any) {
+        let file: File = $event?.target?.files[0];
+        debugger
+    }
 
+    submit() {
+        this.form.markAllAsTouched();
+        if (this.form.invalid) {
+            return this._showErrorMsg('Preencha todos os campos');
+        }
+        this.gameService.create({...this.form.value} as GameConfig);
+    }
+
+    private _showErrorMsg(msg: string) {
+        alert(msg); // TODO
     }
 
 }

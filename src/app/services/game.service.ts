@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Card } from '../shared/model/card';
 import { tap, map, delay } from "rxjs/operators";
 import { BehaviorSubject } from 'rxjs';
+import { GameConfig } from '../shared/model/game-config.model';
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +25,10 @@ export class GameService {
     private _doneMoves = new BehaviorSubject<number>(0);
 
     constructor(private http: HttpClient) { }
+
+    create(gameConfig: GameConfig) {
+        debugger
+    }
 
     getCards() {
         this.cardCount = this.totalCards;
