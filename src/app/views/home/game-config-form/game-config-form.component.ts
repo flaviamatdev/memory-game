@@ -43,7 +43,7 @@ export class GameConfigFormComponent implements OnInit {
     private _initForm() {
         this.form = this.fb.group({
             title: new FormControl('Memory Game', Validators.required),
-            backgroundImgSrc: new FormControl(null, Validators.required),
+            backgroundImgSrc: new FormControl(null),
             singleImgPerPair: new FormControl(null, Validators.required),
             pairImgSrcs: new FormControl(null, Validators.required),
             cardPositionIdType: new FormControl(CardPositionIdTypeEnum.NUMBERS, Validators.required),
