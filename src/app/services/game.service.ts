@@ -22,6 +22,10 @@ export class GameService {
         private toastService: ToastService,
     ) { }
 
+    get config() {
+        return this._gameConfig;
+    }
+
     goHome() {
         this.router.navigate(['']);
     }
@@ -29,10 +33,6 @@ export class GameService {
     create(gameConfig: GameConfig) {
         this._gameConfig = gameConfig;
         this.router.navigate(['game']);
-    }
-
-    getTitle() {
-        return this._gameConfig?.title ?? 'Memory Game';
     }
 
     getCards(): Card[] {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { Card } from 'src/app/shared/model/card';
 
@@ -11,12 +11,19 @@ export class GameComponent implements OnInit {
 
     title: string;
     cards: Card[] = [];
-    boardWidth: number;
+    backgroundStyle: any;
 
     constructor(private gameService: GameService) { }
 
     ngOnInit(): void {
-        this.title = this.gameService.getTitle();
+        let gameConfig = this.gameService.config;
+        if (!gameConfig) {
+            this.goHome();
+            return;
+        }
+
+        this.title = gameConfig.title.toUpperCase();
+        this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
         this.newGame();
     }
 

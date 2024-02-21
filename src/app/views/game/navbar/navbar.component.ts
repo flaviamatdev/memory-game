@@ -4,7 +4,7 @@ import { GameComponent } from '../game/game.component';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
+    styleUrls: []
 })
 export class NavbarComponent {
 
