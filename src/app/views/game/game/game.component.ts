@@ -11,7 +11,7 @@ export class GameComponent implements OnInit {
 
     title: string;
     cards: Card[] = [];
-    backgroundStyle: any;
+    backgroundStyle: any = '';
 
     constructor(private gameService: GameService) { }
 
@@ -23,7 +23,9 @@ export class GameComponent implements OnInit {
         }
 
         this.title = gameConfig.title.toUpperCase();
-        this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
+        if (gameConfig.backgroundImgSrc) {
+            this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
+        }
         this.newGame();
     }
 
