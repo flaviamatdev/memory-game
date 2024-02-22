@@ -36,11 +36,11 @@ export class GameComponent implements OnInit {
     newGame() {
         this._checkGameFinishedAndDoIt(
             'Tem certeza que deseja iniciar novo jogo?',
-            () => this._openNewGame()
+            () => this._startNewGame()
         );
     }
 
-    private _openNewGame() {
+    private _startNewGame() {
         this.cards = this.gameService.getCards();
         this._printPairs();//.
     }
@@ -97,6 +97,27 @@ export class GameComponent implements OnInit {
             },
             bodyText: confirmQuestion,
             okCallback: callback
+        });
+    }
+
+    onChooseCard($card: Card) {
+        let win = this.gameService.onChooseCard($card);
+        if (win) {
+            setTimeout(() => {
+                this._openNewGameDialog();
+            }, 200);
+        }
+    }
+
+    private _openNewGameDialog() {
+        this.dialogService.openConfirmationDialog({
+            header: {
+                icon: 'mood',
+                iconColor: 'limegreen',
+                title: 'Parabéns!'
+            },
+            bodyText: 'Deseja jogar novamente?',
+            okCallback: () => this._startNewGame()
         });
     }
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { Card } from 'src/app/shared/model/card';
 
@@ -14,6 +14,8 @@ export class MemoryCardComponent implements OnInit {
     @Input() card!: Card;
     @Input() id: number;
 
+    @Output() onSelect = new EventEmitter<Card>();
+
     private _isRotated: boolean;
 
     get isRotated(): boolean {
@@ -28,7 +30,7 @@ export class MemoryCardComponent implements OnInit {
 
     onClick() {
         this._isRotated = true;
-        this.gameService.onChooseCard({ 
+        this.onSelect.emit({ 
             id: this.id, 
             code: this.card?.code
         });

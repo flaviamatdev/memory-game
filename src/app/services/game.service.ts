@@ -6,7 +6,6 @@ import { AudioEnum } from '../shared/enums/audio.enum';
 import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
 import { AudioService } from './audio.service';
-import { ToastService } from './toast.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +20,6 @@ export class GameService {
 
     constructor(
         private router: Router,
-        private toastService: ToastService,
         private audioService: AudioService,
     ) { }
 
@@ -72,7 +70,7 @@ export class GameService {
         return cards;
     }
 
-    onChooseCard(choosen: Card) {
+    onChooseCard(choosen: Card): boolean {
         if (this.isGameFinished) {
             return;
         }
@@ -102,16 +100,15 @@ export class GameService {
         this._selectedCard1 = null;
         this._selectedCard2 = null;
 
+        let win = this.isGameFinished;
+
         setTimeout(() => {
-            if (this.isGameFinished) {
-                this._win();
+            if (win) {
+                this.audioService.play(AudioEnum.WIN);
             }
         }, 200);
-    }
 
-    private _win() {
-        this.toastService.success('Parabéns!');
-        this.audioService.play(AudioEnum.WIN);
+        return win;
     }
 
     getCoveredCards() {
