@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogData } from '../shared/components/dialog/live-game-confirmation-dialog/confirmation-dialog-data';
-import { ConfirmationDialogComponent } from '../shared/components/dialog/live-game-confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogData } from '../shared/components/dialog/confirmation-dialog/confirmation-dialog-data';
+import { ConfirmationDialogComponent } from '../shared/components/dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Injectable({
     providedIn: 'root'
