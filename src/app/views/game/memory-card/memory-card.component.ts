@@ -12,7 +12,6 @@ export class MemoryCardComponent implements OnInit {
     constructor(private gameService: GameService) { }
 
     @Input() card!: Card;
-    @Input() id: number;
 
     @Output() onSelect = new EventEmitter<Card>();
 
@@ -24,16 +23,13 @@ export class MemoryCardComponent implements OnInit {
 
     ngOnInit(): void {
         this.gameService.getCoveredCards().subscribe(coveredCards => 
-            coveredCards.map(card => this._isRotated = (card.id == this.id) ? false : this._isRotated)
+            coveredCards.map(card => this._isRotated = (card.id == this.card.id) ? false : this._isRotated)
         );
     }
 
     onClick() {
         this._isRotated = true;
-        this.onSelect.emit({ 
-            id: this.id, 
-            code: this.card?.code
-        });
+        this.onSelect.emit(this.card);
     }
 
 }

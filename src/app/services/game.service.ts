@@ -48,17 +48,17 @@ export class GameService {
             return [];
         }
 
-        let numPairs = this._gameConfig.numPairs;
-        this._pairCount = numPairs;
+        this._pairCount = this._gameConfig.numPairs;
 
         let cardImages = this._gameConfig.pairImgSrcs;
-        let code = 1;
-        let cards = cardImages.map(img => new Card(`${code++}`, img));
+        let cards = cardImages.map((img, i) => new Card(`${i+1}`, img));
 
-        return [
+        let finalCards = [
             ...this._shuffleCards(cards), 
-            ...this._shuffleCards(Object.assign([], cards)) 
+            ...this._shuffleCards(JSON.parse(JSON.stringify(cards))) 
         ];
+        finalCards.forEach((card, i) => card.id = i+1);
+        return finalCards;
     }
 
     private _shuffleCards(cards: Card[]) {

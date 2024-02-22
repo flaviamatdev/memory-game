@@ -14,6 +14,7 @@ export class GameComponent implements OnInit {
     title: string;
     backgroundStyle: any = '';
     cardRows: Card[][] = [];
+
     private _boardDim: BoardDim;
 
     constructor(
@@ -49,11 +50,10 @@ export class GameComponent implements OnInit {
         this.cardRows = [];
         let cards = this.gameService.getCards();
 
-        let numCols = this._boardDim.numCols;
-        let i=0;
+        const numCols = this._boardDim.numCols;
         for (let r = 0; r < this._boardDim.numRows; r++) {
-           this.cardRows.push(cards.slice(i, i+numCols));
-           i += numCols;
+            let idx = r*numCols;
+            this.cardRows.push(cards.slice(idx, idx+numCols));
         }
 
         this._printPairs();//.
@@ -81,12 +81,9 @@ export class GameComponent implements OnInit {
             pairs.push([i+1, j+1]);
         })
 
-        console.log(pairs);
+        console.log('pairs', pairs);
     }
-
-    getId(row: number, col: number) {
-        return row * this._boardDim.numCols + col + 1;
-    }
+    
 
     newGame() {
         this._checkGameFinishedAndDoIt(

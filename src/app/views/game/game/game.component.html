@@ -5,7 +5,7 @@
         <div class="board">
             <div class="board-row" *ngFor="let cardRow of cardRows; let r=index">
                 <app-memory-card *ngFor="let card of cardRow;let c=index" 
-                    [id]="getId(r,c)" [card]="card" (onSelect)="onChooseCard($event)">
+                    [card]="card" (onSelect)="onChooseCard($event)">
                 </app-memory-card>
             </div>
         </div>
