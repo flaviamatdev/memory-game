@@ -98,6 +98,9 @@ export class GameService {
     }
 
     onChooseCard(choosen: Card) {
+        if (this._pairCount == 0) {
+            return;
+        }
         this._playAudio(AudioEnum.TURN_CARD);
 
         if (this._selectedCard1 === null) {
