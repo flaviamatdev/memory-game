@@ -32,11 +32,11 @@
                     [form]="form" controlName="cardPositionIdType" [options]="cardPositionOptions">
                 </app-select>
             </div>
-
-            <div>
-                <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
-            </div>
         </form>
+
+        <div>
+            <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
+        </div>
     </div>
 
     <div *ngSwitchCase="INPUT_TYPE.CONFIG_FILE">
