@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/services/dialog.service';
 import { GameService } from 'src/app/services/game.service';
+import { VALUES } from 'src/app/shared/constants/global.values';
 import { Card } from 'src/app/shared/model/card';
 
 @Component({
@@ -105,7 +106,7 @@ export class GameComponent implements OnInit {
         if (win) {
             setTimeout(() => {
                 this._openNewGameDialog();
-            }, 200);
+            }, VALUES.winNotificationTimeout);
         }
     }
 

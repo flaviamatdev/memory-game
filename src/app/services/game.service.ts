@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
+import { VALUES } from '../shared/constants/global.values';
 import { AudioEnum } from '../shared/enums/audio.enum';
 import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
@@ -106,7 +107,7 @@ export class GameService {
             if (win) {
                 this.audioService.play(AudioEnum.WIN);
             }
-        }, 200);
+        }, VALUES.winNotificationTimeout);
 
         return win;
     }
