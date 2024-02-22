@@ -2,22 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
+import { AudioEnum } from '../shared/enums/audio.enum';
 import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
+import { AudioService } from './audio.service';
 import { ToastService } from './toast.service';
-
-enum AudioEnum {
-    CORRECT,
-    TURN_CARD,
-    WIN
-}
-
-const AUDIO_DIR_PATH = 'assets/audio';
-const AUDIO_SRC = {
-    [AudioEnum.CORRECT]: 'correct.mp3',
-    [AudioEnum.TURN_CARD]: 'page-turn.mp3',
-    [AudioEnum.WIN]: 'tada.mp3',
-}
 
 @Injectable({
     providedIn: 'root'
@@ -29,11 +18,11 @@ export class GameService {
     private _coverCards = new BehaviorSubject<Card[]>([]);
     private _selectedCard1: Card = null;
     private _selectedCard2: Card = null;
-    private _audioMap: { [key: number]: HTMLAudioElement };
 
     constructor(
         private router: Router,
         private toastService: ToastService,
+        private audioService: AudioService,
     ) { }
 
     get config() {
@@ -46,27 +35,9 @@ export class GameService {
 
     create(gameConfig: GameConfig) {
         this._gameConfig = gameConfig;
-        this._loadAudios();
+        this.audioService.load();
         this.router.navigate(['game']);
     }
-
-    private _loadAudios() {
-        this._audioMap = {};
-        Object.entries(AUDIO_SRC).forEach(([key,src]) => {
-            this._audioMap[key] = this._loadAudio(src);
-        });
-    }
-
-    private _loadAudio(src: string) {
-        let audio = new Audio(`${AUDIO_DIR_PATH}/${src}`);
-        audio.load();
-        return audio;
-    }
-
-    private _playAudio(audioKey: AudioEnum) {
-        (this._audioMap[audioKey]).play();
-    }
-
 
     getCards(): Card[] {
         if (!this._gameConfig) {
@@ -101,7 +72,8 @@ export class GameService {
         if (this._pairCount == 0) {
             return;
         }
-        this._playAudio(AudioEnum.TURN_CARD);
+        
+        this.audioService.play(AudioEnum.TURN_CARD);
 
         if (this._selectedCard1 === null) {
             this._selectedCard1 = choosen;
@@ -116,7 +88,7 @@ export class GameService {
         if (this._selectedCard1.code == this._selectedCard2.code) {
             this._pairCount--;
             setTimeout(() => {
-                this._playAudio(AudioEnum.CORRECT);
+                this.audioService.play(AudioEnum.CORRECT);
             }, 100);
         } 
         else {
@@ -135,7 +107,7 @@ export class GameService {
 
     private _win() {
         this.toastService.success('Parabéns!');
-        this._playAudio(AudioEnum.WIN);
+        this.audioService.play(AudioEnum.WIN);
     }
 
     getCoveredCards() {
