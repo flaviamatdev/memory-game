@@ -2,20 +2,15 @@
     <mat-label>Selecione como deseja inserir as informações para o jogo:</mat-label>
 
     <div class="form-line mt-2 ms-4">
-        <mat-radio-group aria-label="label" (change)="changeInputType($event.value == 'true')">
-            <mat-radio-button value="true" color="primary">Inserir arquivo de configuração</mat-radio-button>
-            <mat-radio-button value="false" color="primary">Inserir manualmente</mat-radio-button>
+        <mat-radio-group aria-label="label" [(ngModel)]="inputType" (change)="onChangeInputType()">
+            <mat-radio-button [value]="INPUT_TYPE.MANUALLY" color="primary">Inserir manualmente</mat-radio-button>
+            <mat-radio-button [value]="INPUT_TYPE.CONFIG_FILE" color="primary">Inserir arquivo de configuração</mat-radio-button>
         </mat-radio-group>
     </div>
 </div>
 
-<div [ngSwitch]="insertConfigFile" class="mt-4">
-    <div *ngSwitchCase="true">
-        <input type="file" #inputFile hidden (change)="onSelectConfigFile($event)" accept="txt">
-        <button mat-raised-button color="primary" (click)="inputFile.click()">Selecionar arquivo</button>
-    </div>
-
-    <div *ngSwitchCase="false">
+<div [ngSwitch]="inputType" class="mt-4">
+    <div *ngSwitchCase="INPUT_TYPE.MANUALLY">
         <form *ngIf="form" [formGroup]="form">
             <div class="form-line">
                 <app-input-text label="Título" [form]="form" controlName="title"></app-input-text>
@@ -37,10 +32,15 @@
                     [form]="form" controlName="cardPositionIdType" [options]="cardPositionOptions">
                 </app-select>
             </div>
-        </form>
 
-        <div>
-            <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
-        </div>
+            <div>
+                <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngSwitchCase="INPUT_TYPE.CONFIG_FILE">
+        <input type="file" #inputFile hidden (change)="onSelectConfigFile($event)" accept="txt">
+        <button mat-raised-button color="primary" (click)="inputFile.click()">Selecionar arquivo</button>
     </div>
 </div>

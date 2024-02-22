@@ -5,6 +5,11 @@ import { ToastService } from 'src/app/services/toast.service';
 import { CardPositionIdTypeEnum } from 'src/app/shared/enums/card-position-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 
+enum InputTypeEnum {
+    MANUALLY = 1,
+    CONFIG_FILE = 2
+}
+
 @Component({
     selector: 'app-game-config-form',
     templateUrl: './game-config-form.component.html',
@@ -12,10 +17,11 @@ import { GameConfig } from 'src/app/shared/model/game-config.model';
 })
 export class GameConfigFormComponent implements OnInit {
 
+    readonly INPUT_TYPE = InputTypeEnum;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
-    insertConfigFile: boolean;
+    inputType = InputTypeEnum.MANUALLY;
     numImagesPerPairOptions: any[] = [];
     cardPositionOptions: any[] = [];
 
@@ -26,12 +32,11 @@ export class GameConfigFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.insertConfigFile = null;
+        this.onChangeInputType();
     }
 
-    changeInputType($event: boolean) {
-        this.insertConfigFile = $event;
-        if (this.insertConfigFile) {
+    onChangeInputType() {
+        if (this.inputType == InputTypeEnum.CONFIG_FILE) {
             this.form = this.fb.group({});
             return;
         }
