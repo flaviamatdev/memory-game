@@ -50,7 +50,7 @@ export class GameConfigFormComponent implements OnInit {
             title: new FormControl('Memory Game', Validators.required),
             backgroundImgSrc: new FormControl(null),
             singleImgPerPair: new FormControl(null, Validators.required),
-            pairImgSrcs: new FormControl(null, Validators.required),
+            cardImages: new FormControl(null, Validators.required),
             cardPositionIdType: new FormControl(CardPositionIdTypeEnum.NUMBERS, Validators.required),
         });
     }
@@ -71,6 +71,10 @@ export class GameConfigFormComponent implements OnInit {
     onSelectConfigFile($event: any) {
         let file: File = $event?.target?.files[0];
         // TODO
+        debugger
+    }
+
+    onSelectCardPositionId($idType: CardPositionIdTypeEnum) {
         debugger
     }
 

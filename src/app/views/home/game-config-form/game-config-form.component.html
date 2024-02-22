@@ -23,13 +23,14 @@
                 </app-select>
 
                 <app-upload-image label="Pasta contendo as imagens das cartas" 
-                    [form]="form" controlName="pairImgSrcs" [selectAllDir]="true">
+                    [form]="form" controlName="cardImages" [selectAllDir]="true">
                 </app-upload-image>
             </div>
 
             <div class="form-line">
                 <app-select label="Tipo de identificação das posições das cartas" 
-                    [form]="form" controlName="cardPositionIdType" [options]="cardPositionOptions">
+                    [form]="form" controlName="cardPositionIdType" [options]="cardPositionOptions" 
+                    (onChange)="onSelectCardPositionId($event)">
                 </app-select>
             </div>
         </form>

@@ -3,7 +3,7 @@
         <div  class="front">
             <fa-icon *ngIf="card.iconType" [icon]="[card.iconType, card.code]" size="3x"></fa-icon>
 
-            <img *ngIf="card.img" [src]="card.img" alt="card">
+            <img *ngIf="card.img" [src]="card.img.base64" alt="card">
         </div>
 
         <div class="back bg-primary-2">

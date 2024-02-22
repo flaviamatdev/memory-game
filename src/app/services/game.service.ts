@@ -7,6 +7,7 @@ import { AudioEnum } from '../shared/enums/audio.enum';
 import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
 import { AudioService } from './audio.service';
+import { CardImg } from '../shared/model/pair-image.model';
 
 @Injectable({
     providedIn: 'root'
@@ -50,7 +51,14 @@ export class GameService {
 
         this._pairCount = this._gameConfig.numPairs;
 
-        let cardImages = this._gameConfig.pairImgSrcs;
+        if (!this._gameConfig.singleImgPerPair) {
+            return this._getCardsForDifferentImagesPerPair();
+        }
+        return this._getCardsForSameImagePerPair();
+    }
+
+    private _getCardsForSameImagePerPair(): Card[] {
+        let cardImages = this._gameConfig.cardImages;
         let cards = cardImages.map((img, i) => new Card(`${i+1}`, img));
 
         let finalCards = [
@@ -59,6 +67,13 @@ export class GameService {
         ];
         finalCards.forEach((card, i) => card.id = i+1);
         return finalCards;
+    }
+
+    private _getCardsForDifferentImagesPerPair(): Card[] {
+        // espera-se q as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes de _
+        let cardImages = this._gameConfig.cardImages;
+        // TODO
+        return [];
     }
 
     private _shuffleCards(cards: Card[]) {

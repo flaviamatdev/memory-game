@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AbstractInputComponent } from '../abstract-input.component';
 import { ToastService } from 'src/app/services/toast.service';
+import { CardImg } from 'src/app/shared/model/pair-image.model';
 
 @Component({
     selector: 'app-upload-image',
@@ -16,7 +17,7 @@ export class UploadImageComponent extends AbstractInputComponent {
 
     @ViewChild('uploadInput') private _inputElem: ElementRef;
     private _numFiles: number = 0;
-    private _base64Arr: any[];
+    private _images: CardImg[];
 
     constructor(
         private toastService: ToastService
@@ -26,7 +27,7 @@ export class UploadImageComponent extends AbstractInputComponent {
 
 
     onSelectFiles($event: any) {
-        this._base64Arr = [];
+        this._images = [];
         let { files, allOk } = this._extractFiles($event?.target?.files);
 
         if (!allOk) {
@@ -60,9 +61,9 @@ export class UploadImageComponent extends AbstractInputComponent {
     private _readFile(file: File) {
         const reader = new FileReader();
         reader.onload = (fileReaderEvent: any) => {
-            this._base64Arr.push(fileReaderEvent.target.result);
-            if (this._base64Arr.length == this._numFiles) {
-                this.formControl.setValue(this._base64Arr);
+            this._images.push(new CardImg(fileReaderEvent.target.result, file.name));
+            if (this._images.length == this._numFiles) {
+                this.formControl.setValue(this._images);
             }
         }
         reader.readAsDataURL(file);
