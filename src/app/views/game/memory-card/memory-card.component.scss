@@ -1,7 +1,3 @@
-$red: #d50000;
-$orange: #ff9800;
-$blue: #6fb1fc;
-
 .card {
     height: 100px;
     width: 100px;
@@ -33,14 +29,12 @@ $blue: #6fb1fc;
     }
 
     .back {
-        background-color: $blue;
-        color: #fff;
+        color: white;
     }
 
     .front {
         transform: rotateY(180deg);
         background-color: white;
-        color: $orange;
     }
 }
 
@@ -56,4 +50,9 @@ $blue: #6fb1fc;
     .card-inner {
         transform: rotateY(180deg);
     }
+}
+
+.card-id-number {
+    font-size: 50px;
+    font-weight: bold;
 }
