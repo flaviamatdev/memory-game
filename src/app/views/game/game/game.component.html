@@ -3,9 +3,11 @@
 <div class="board-background" [style.background-image]="backgroundStyle">
     <div>
         <div class="board">
-            <app-memory-card *ngFor="let card of cards;let i=index" 
-                [id]="i+1" [card]="card" (onSelect)="onChooseCard($event)">
-            </app-memory-card>
+            <div class="board-row" *ngFor="let cardRow of cardRows; let r=index">
+                <app-memory-card *ngFor="let card of cardRow;let c=index" 
+                    [id]="getId(r,c)" [card]="card" (onSelect)="onChooseCard($event)">
+                </app-memory-card>
+            </div>
         </div>
     </div>
 </div>

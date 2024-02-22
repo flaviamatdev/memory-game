@@ -12,8 +12,9 @@ import { Card } from 'src/app/shared/model/card';
 export class GameComponent implements OnInit {
 
     title: string;
-    cards: Card[] = [];
     backgroundStyle: any = '';
+    cardRows: Card[][] = [];
+    private _boardDim: BoardDim;
 
     constructor(
         private gameService: GameService,
@@ -31,7 +32,60 @@ export class GameComponent implements OnInit {
         if (gameConfig.backgroundImgSrc) {
             this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
         }
-        this.newGame();
+        this._setBoardDim(gameConfig.numPairs * 2);
+        this._startNewGame();
+    }
+
+    private _goHome() {
+        this.gameService.goHome();
+    }
+
+    private _setBoardDim(numCards: number) {
+        let numCols = (numCards % 5 == 0 ? 5 : 4);
+        this._boardDim = new BoardDim(numCards / numCols, numCols);
+    }
+
+    private _startNewGame() {
+        this.cardRows = [];
+        let cards = this.gameService.getCards();
+
+        let numCols = this._boardDim.numCols;
+        let i=0;
+        for (let r = 0; r < this._boardDim.numRows; r++) {
+           this.cardRows.push(cards.slice(i, i+numCols));
+           i += numCols;
+        }
+
+        this._printPairs();//.
+    }
+
+    // TODO remover
+    private _printPairs() {
+        let numCards = this.cardRows.length;
+        if (!numCards) {
+            return;
+        }
+
+        let indices: number[] = [];
+        let pairs: number[][] = [];
+
+        let cards: Card[] = [];
+        this.cardRows.forEach(rowCards => cards.push(...rowCards));
+
+        cards.forEach( (card, i) => {
+            if (indices.includes(i)) {
+                return;
+            }
+            let j = cards.findIndex((c,j) => c.code === card.code && j != i);
+            indices.push(...[i,j]);
+            pairs.push([i+1, j+1]);
+        })
+
+        console.log(pairs);
+    }
+
+    getId(row: number, col: number) {
+        return row * this._boardDim.numCols + col + 1;
     }
 
     newGame() {
@@ -41,44 +95,12 @@ export class GameComponent implements OnInit {
         );
     }
 
-    private _startNewGame() {
-        this.cards = this.gameService.getCards();
-        this._printPairs();//.
-    }
-
-    // TODO remover
-    private _printPairs() {
-        let numCards = this.cards.length;
-        if (!numCards) {
-            return;
-        }
-
-        let indices: number[] = [];
-        let pairs: number[][] = [];
-
-        this.cards.forEach( (card, i) => {
-            if (indices.includes(i)) {
-                return;
-            }
-            let j = this.cards.findIndex((c,j) => c.code === card.code && j != i);
-            indices.push(...[i,j]);
-            pairs.push([i+1, j+1]);
-        })
-
-        console.log(pairs);
-    }
-
     goHome() {
         this._checkGameFinishedAndDoIt(
             'Tem certeza que deseja sair do jogo?', 
             () => this._goHome()
         );
     }
-
-    private _goHome() {
-        this.gameService.goHome();
-    }
-
 
     private _checkGameFinishedAndDoIt(confirmQuestion: string, callback: Function) {
         if (!this.gameService.isGameFinished) {
@@ -122,4 +144,11 @@ export class GameComponent implements OnInit {
         });
     }
 
+}
+
+class BoardDim {
+    constructor(
+        public numRows: number,
+        public numCols: number,
+    ) {}
 }
