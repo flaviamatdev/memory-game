@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/services/dialog.service';
 import { GameService } from 'src/app/services/game.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { Card } from 'src/app/shared/model/card';
 
@@ -20,6 +21,7 @@ export class GameComponent implements OnInit {
     constructor(
         private gameService: GameService,
         private dialogService: DialogService,
+        private toastService: ToastService,
     ) { }
 
     ngOnInit(): void {
@@ -48,7 +50,13 @@ export class GameComponent implements OnInit {
 
     private _startNewGame() {
         this.cardRows = [];
-        let cards = this.gameService.getCards();
+        let cards: Card[] = [];
+        try {
+            cards = this.gameService.getCards();
+        } catch (error) {
+            this.toastService.error(error?.message || 'Ops!');
+            return this._goHome();
+        }
 
         const numCols = this._boardDim.numCols;
         for (let r = 0; r < this._boardDim.numRows; r++) {
@@ -83,7 +91,7 @@ export class GameComponent implements OnInit {
 
         console.log('pairs', pairs);
     }
-    
+
 
     newGame() {
         this._checkGameFinishedAndDoIt(

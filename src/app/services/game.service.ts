@@ -6,8 +6,11 @@ import { VALUES } from '../shared/constants/global.values';
 import { AudioEnum } from '../shared/enums/audio.enum';
 import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
-import { AudioService } from './audio.service';
 import { CardImg } from '../shared/model/pair-image.model';
+import { ArrayUtil } from '../shared/util/array.util';
+import { AudioService } from './audio.service';
+
+const IMG_FILENAME_SEP = '_';
 
 @Injectable({
     providedIn: 'root'
@@ -58,22 +61,50 @@ export class GameService {
     }
 
     private _getCardsForSameImagePerPair(): Card[] {
-        let cardImages = this._gameConfig.cardImages;
-        let cards = cardImages.map((img, i) => new Card(`${i+1}`, img));
+        let cards = this._gameConfig.cardImages.map((img, i) => new Card(`${i+1}`, img));
 
-        let finalCards = [
+        return this._getFinalShuffledCardsWithId([
             ...this._shuffleCards(cards), 
             ...this._shuffleCards(JSON.parse(JSON.stringify(cards))) 
-        ];
-        finalCards.forEach((card, i) => card.id = i+1);
-        return finalCards;
+        ]);
+    }
+
+    private _getFinalShuffledCardsWithId(cards: Card[]) {
+        cards.forEach((card, i) => card.id = i+1);
+        return cards;
     }
 
     private _getCardsForDifferentImagesPerPair(): Card[] {
-        // espera-se q as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes de _
+        // Espera-se que as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes do SEP
         let cardImages = this._gameConfig.cardImages;
-        // TODO
-        return [];
+        let keys = this._getFilenamePrefixForDiffImagesPerPair(cardImages);
+        let cards: Card[] = [];
+
+        keys.forEach(key => {
+            cardImages
+                .filter(img => this._getCardImageFilenamePrefix(img) === key)
+                .forEach(img => cards.push(new Card(key, img)));
+        });
+
+        return this._getFinalShuffledCardsWithId( this._shuffleCards(cards) );
+    }
+
+    private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImg[]) {
+        let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
+        let occurrences = ArrayUtil.getNumOccurrences(filenames);
+        let keys = Object.keys(occurrences);
+
+        if (keys.length !== filenames.length / 2 ||
+            Object.values(occurrences).some(count => count != 2)
+        ) {
+            throw new Error('Em caso de imagens diferentes por par, os nomes dos arquivos devem seguir o padrão informado');
+        }
+
+        return keys;
+    }
+
+    private _getCardImageFilenamePrefix(cardImage: CardImg) {
+        return cardImage.filename.split(IMG_FILENAME_SEP)[0];
     }
 
     private _shuffleCards(cards: Card[]) {
