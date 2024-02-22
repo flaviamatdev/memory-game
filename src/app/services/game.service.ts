@@ -29,6 +29,10 @@ export class GameService {
         return this._gameConfig;
     }
 
+    get isGameFinished() {
+        return this._pairCount == 0;
+    }
+
     goHome() {
         this.router.navigate(['']);
     }
@@ -69,10 +73,10 @@ export class GameService {
     }
 
     onChooseCard(choosen: Card) {
-        if (this._pairCount == 0) {
+        if (this.isGameFinished) {
             return;
         }
-        
+
         this.audioService.play(AudioEnum.TURN_CARD);
 
         if (this._selectedCard1 === null) {
@@ -99,7 +103,7 @@ export class GameService {
         this._selectedCard2 = null;
 
         setTimeout(() => {
-            if (this._pairCount == 0) {
+            if (this.isGameFinished) {
                 this._win();
             }
         }, 200);

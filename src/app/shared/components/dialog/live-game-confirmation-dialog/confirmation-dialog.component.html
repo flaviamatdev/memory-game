@@ -1,0 +1,20 @@
+<div class="dialog-header">
+    <mat-icon [style.color]="data.header.iconColor">{{ data.header.icon }}</mat-icon>
+    <div mat-dialog-title>{{ data.header.title }}</div>
+</div>
+
+<div mat-dialog-content>
+    <div class="text-center mb-2">
+        {{ data.bodyText }}
+    </div>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-stroked-button mat-dialog-close id="modal-cancel-btn" color="primary">
+        <mat-icon>thumb_down</mat-icon> Não
+    </button>
+
+    <button mat-raised-button mat-dialog-close="ok" id="modal-ok-btn" color="primary">
+        <mat-icon>thumb_up</mat-icon> Sim
+    </button>
+</div>

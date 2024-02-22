@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'src/app/services/dialog.service';
 import { GameService } from 'src/app/services/game.service';
 import { Card } from 'src/app/shared/model/card';
 
@@ -13,12 +14,15 @@ export class GameComponent implements OnInit {
     cards: Card[] = [];
     backgroundStyle: any = '';
 
-    constructor(private gameService: GameService) { }
+    constructor(
+        private gameService: GameService,
+        private dialogService: DialogService,
+    ) { }
 
     ngOnInit(): void {
         let gameConfig = this.gameService.config;
         if (!gameConfig) {
-            this.goHome();
+            this._goHome();
             return;
         }
 
@@ -30,6 +34,13 @@ export class GameComponent implements OnInit {
     }
 
     newGame() {
+        this._checkGameFinishedAndDoIt(
+            'Tem certeza que deseja iniciar novo jogo?',
+            () => this._openNewGame()
+        );
+    }
+
+    private _openNewGame() {
         this.cards = this.gameService.getCards();
         this._printPairs();//.
     }
@@ -57,7 +68,36 @@ export class GameComponent implements OnInit {
     }
 
     goHome() {
+        this._checkGameFinishedAndDoIt(
+            'Tem certeza que deseja sair do jogo?', 
+            () => this._goHome()
+        );
+    }
+
+    private _goHome() {
         this.gameService.goHome();
+    }
+
+
+    private _checkGameFinishedAndDoIt(confirmQuestion: string, callback: Function) {
+        if (!this.gameService.isGameFinished) {
+            this._openConfirmationDialog(confirmQuestion, callback);
+            return;
+        }
+
+        callback();
+    }
+
+    private _openConfirmationDialog(confirmQuestion: string, callback: Function) {
+        this.dialogService.openConfirmationDialog({
+            header: {
+                icon: 'pan_tool',
+                iconColor: 'darkorange',
+                title: 'Espere! O jogo ainda não acabou!'
+            },
+            bodyText: confirmQuestion,
+            okCallback: callback
+        });
     }
 
 }
