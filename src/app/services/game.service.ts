@@ -107,7 +107,7 @@ export class GameService {
             if (win) {
                 this.audioService.play(AudioEnum.WIN);
             }
-        }, VALUES.winNotificationTimeout);
+        }, VALUES.winNotificationTimeout / 2);
 
         return win;
     }
