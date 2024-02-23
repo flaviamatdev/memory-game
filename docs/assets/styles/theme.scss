@@ -1,0 +1,66 @@
+@import "~@angular/material/theming";
+
+$my-palette-primary: (
+    50: #fff,
+    100: #e5edfa,
+    200: #e3edfd,
+    300: #dbe8fb,
+    400: #c5d4eb,
+    500: #5992ed,
+    600: #2670e8,
+    700: #0057c1,
+    800: #0c326f,
+    900: #071d41,
+    contrast: (
+        50: #333333,
+        100: #333333,
+        200: #333333,
+        300: #333333,
+        400: #333333,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff
+    )
+);
+
+$my-palette-accent: (
+    50: #eacccc,
+    100: #d69999,
+    200: #cc7f80,
+    300: #c16667,
+    400: #b74c4d,
+    500: #ad3234,
+    600: #a3191b,
+    700: #990002,
+    800: #890001,
+    900: #6b0001,
+    contrast: (
+        50: #333333,
+        100: #333333,
+        200: #333333,
+        300: #333333,
+        400: #ffffff,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff
+    )
+);
+
+$primary: mat-palette($my-palette-primary, 700);
+
+$my-theme: mat-light-theme(
+    $primary,
+    mat-palette($my-palette-accent, 800)
+);
+
+// Include theme styles for core and each component used in your app.
+@include angular-material-theme($my-theme);
+
+// definir em um scss soh para cores
+.bg-primary-2 {
+    background-color: mat-color($primary);
+}
