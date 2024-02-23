@@ -12,6 +12,7 @@ export class MemoryCardComponent implements OnInit {
     constructor(private gameService: GameService) { }
 
     @Input() card!: Card;
+    @Input() showId: boolean;
 
     @Output() onSelect = new EventEmitter<Card>();
 

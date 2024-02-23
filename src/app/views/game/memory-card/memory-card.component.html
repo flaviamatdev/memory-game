@@ -7,7 +7,7 @@
         </div>
 
         <div class="back bg-primary-2">
-            <div class="card-id-number quicksand">{{ card.id }}</div>
+            <div *ngIf="showId" class="card-id-number quicksand">{{ card.id }}</div>
         </div>
     </div>
 </div>

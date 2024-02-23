@@ -74,10 +74,6 @@ export class GameConfigFormComponent implements OnInit {
         debugger
     }
 
-    onSelectCardPositionId($idType: CardPositionIdTypeEnum) {
-        debugger
-    }
-
     submit() {
         this.form.markAllAsTouched();
         if (this.form.invalid) {

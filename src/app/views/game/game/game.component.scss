@@ -50,3 +50,21 @@
     gap: 1rem;
     justify-content: center;
 }
+.board-grid-space {
+    width: 30px;
+}
+.board-grid-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Quicksand;
+    font-size: 48px;
+}
+.board-grid-col {
+    width: 100px;
+    margin: 0 10px 16px 10px;
+}
+.board-grid-row {
+    height: 100px;
+    margin: 10px 0;
+}
