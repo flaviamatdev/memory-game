@@ -1,11 +1,11 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from 'src/app/material.module';
-import { HomeComponent } from './home/home.component';
-import { RouterModule, Routes } from '@angular/router';
-import { GameConfigFormComponent } from './game-config-form/game-config-form.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { MaterialModule } from 'src/app/material.module';
 import { InputModule } from 'src/app/shared/components/input/input.module';
+import { GameConfigFormComponent } from './game-config-form/game-config-form.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
     {
