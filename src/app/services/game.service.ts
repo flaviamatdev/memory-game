@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
 import { VALUES } from '../shared/constants/global.values';
+import { ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
 import { Card } from '../shared/model/card';
-import { GameConfig } from '../shared/model/game-config.model';
 import { CardImage } from '../shared/model/card-image.model';
+import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
+import { CardPositionIdTypeEnum } from '../shared/enums/card-position-id-type.enum';
 
 const IMG_FILENAME_SEP = '_';
 
@@ -24,9 +27,12 @@ export class GameService {
     private _selectedCard2: Card = null;
 
     constructor(
+        library: FaIconLibrary,
         private router: Router,
         private audioService: AudioService,
-    ) { }
+    ) {
+        library.addIcons(...ICONS);
+    }
 
     get config() {
         return this._gameConfig;
@@ -61,16 +67,21 @@ export class GameService {
     }
 
     private _getCardsForSameImagePerPair(): Card[] {
-        let cards = this._gameConfig.cardImages.map((img, i) => new Card(`${i+1}`, img));
+        let cards = this._gameConfig.cardImages.map((img, i) => new Card(`${i + 1}`, img));
 
         return this._getFinalShuffledCardsWithId([
-            ...this._shuffleCards(cards), 
-            ...this._shuffleCards(JSON.parse(JSON.stringify(cards))) 
+            ...this._shuffleCards(cards),
+            ...this._shuffleCards(JSON.parse(JSON.stringify(cards)))
         ]);
     }
 
     private _getFinalShuffledCardsWithId(cards: Card[]) {
-        cards.forEach((card, i) => card.id = i+1);
+        cards.forEach((card, i) => card.id = i + 1);
+
+        if (this._gameConfig.cardPositionIdType === CardPositionIdTypeEnum.IMAGES) {
+            cards.forEach((card, i) => card.icon = ICONS[i]);
+        }
+
         return cards;
     }
 
@@ -86,7 +97,7 @@ export class GameService {
                 .forEach(img => cards.push(new Card(key, img)));
         });
 
-        return this._getFinalShuffledCardsWithId( this._shuffleCards(cards) );
+        return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
     }
 
     private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {
@@ -139,7 +150,7 @@ export class GameService {
             setTimeout(() => {
                 this.audioService.play(AudioEnum.CORRECT);
             }, 100);
-        } 
+        }
         else {
             this._coverCards.next([this._selectedCard1, this._selectedCard2]);
         }

@@ -2,7 +2,7 @@ import { CardImage } from "./card-image.model";
 
 export class Card {
     id: number;
-    iconType?: string;
+    icon?: any;
 
     constructor(
         public code: string,

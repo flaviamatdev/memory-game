@@ -17,8 +17,7 @@
                     </div>
                 </div>
 
-                <app-memory-card *ngFor="let card of cardRow;let c=index" 
-                    [card]="card" [showId]="!grid" (onSelect)="onChooseCard($event)">
+                <app-memory-card *ngFor="let card of cardRow" [card]="card" (onSelect)="onChooseCard($event)">
                 </app-memory-card>
             </div>
         </div>

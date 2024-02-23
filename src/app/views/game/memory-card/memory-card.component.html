@@ -1,13 +1,15 @@
 <div class="card" [ngClass]="{rotated: isRotated}" (click)="onClick()">
     <div class="card-inner">
         <div  class="front">
-            <fa-icon *ngIf="card.iconType" [icon]="[card.iconType, card.code]" size="3x"></fa-icon>
-
             <img *ngIf="card.img" [src]="card.img.base64" alt="card">
         </div>
 
         <div class="back bg-primary-2">
-            <div *ngIf="showId" class="card-id-number quicksand">{{ card.id }}</div>
+            <div [ngSwitch]="frontIdType">
+                <div *ngSwitchCase="FRONT_ID_TYPE.NUMBERS" class="card-id-number quicksand">{{ card.id }}</div>
+                
+                <fa-icon *ngSwitchCase="FRONT_ID_TYPE.IMAGES" [icon]="card.icon" size="3x"></fa-icon>
+            </div>
         </div>
     </div>
 </div>
