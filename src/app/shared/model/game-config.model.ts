@@ -1,12 +1,12 @@
 import { CardPositionIdTypeEnum } from "../enums/card-position-id-type.enum";
-import { CardImg } from "./pair-image.model";
+import { CardImage } from "./card-image.model";
 
 export class GameConfig {
 
     title: string;
     backgroundImgSrc?: string;
     singleImgPerPair: boolean;
-    cardImages: CardImg[];
+    cardImages: CardImage[];
     cardPositionIdType: CardPositionIdTypeEnum;
 
     get numPairs(): number {

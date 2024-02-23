@@ -6,7 +6,7 @@ import { VALUES } from '../shared/constants/global.values';
 import { AudioEnum } from '../shared/enums/audio.enum';
 import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
-import { CardImg } from '../shared/model/pair-image.model';
+import { CardImage } from '../shared/model/card-image.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
 
@@ -89,7 +89,7 @@ export class GameService {
         return this._getFinalShuffledCardsWithId( this._shuffleCards(cards) );
     }
 
-    private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImg[]) {
+    private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {
         let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
         let occurrences = ArrayUtil.getNumOccurrences(filenames);
         let keys = Object.keys(occurrences);
@@ -103,7 +103,7 @@ export class GameService {
         return keys;
     }
 
-    private _getCardImageFilenamePrefix(cardImage: CardImg) {
+    private _getCardImageFilenamePrefix(cardImage: CardImage) {
         return cardImage.filename.split(IMG_FILENAME_SEP)[0];
     }
 

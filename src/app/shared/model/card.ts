@@ -1,4 +1,4 @@
-import { CardImg } from "./pair-image.model";
+import { CardImage } from "./card-image.model";
 
 export class Card {
     id: number;
@@ -6,6 +6,6 @@ export class Card {
 
     constructor(
         public code: string,
-        public img?: CardImg
+        public img?: CardImage
     ) {}
 }
