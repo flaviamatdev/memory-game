@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
-import { CardPositionIdTypeEnum } from 'src/app/shared/enums/card-position-id-type.enum';
+import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { Card } from 'src/app/shared/model/card';
 
 @Component({
@@ -10,13 +10,13 @@ import { Card } from 'src/app/shared/model/card';
 })
 export class MemoryCardComponent implements OnInit {
 
-    readonly FRONT_ID_TYPE = CardPositionIdTypeEnum;
+    readonly ID_TYPE = CardIdTypeEnum;
 
     @Input() card!: Card;
 
     @Output() onSelect = new EventEmitter<Card>();
 
-    frontIdType: CardPositionIdTypeEnum;
+    cardIdType: CardIdTypeEnum;
 
     private _isRotated: boolean;
 
@@ -27,7 +27,8 @@ export class MemoryCardComponent implements OnInit {
 	}
 
     ngOnInit(): void {
-        this.frontIdType = this.gameService.config.cardPositionIdType;
+        this.cardIdType = this.gameService.config.cardIdType;
+
         this.gameService.getCoveredCards().subscribe(coveredCards => 
             coveredCards.map(card => this._isRotated = (card.id == this.card.id) ? false : this._isRotated)
         );

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { CardPositionIdTypeEnum } from 'src/app/shared/enums/card-position-id-type.enum';
+import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 
 enum InputTypeEnum {
@@ -23,7 +23,7 @@ export class GameConfigFormComponent implements OnInit {
     form: FormGroup;
     inputType = InputTypeEnum.MANUALLY;
     numImagesPerPairOptions: any[] = [];
-    cardPositionOptions: any[] = [];
+    cardIdOptions: any[] = [];
 
     constructor(
         private fb: FormBuilder,
@@ -51,15 +51,15 @@ export class GameConfigFormComponent implements OnInit {
             backgroundImgSrc: new FormControl(null),
             singleImgPerPair: new FormControl(null, Validators.required),
             cardImages: new FormControl(null, Validators.required),
-            cardPositionIdType: new FormControl(CardPositionIdTypeEnum.NUMBERS, Validators.required),
+            cardIdType: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
         });
     }
 
     private _setOptions() {
-        this.cardPositionOptions = [
-            { id: CardPositionIdTypeEnum.NUMBERS, label: 'Números' },
-            { id: CardPositionIdTypeEnum.IMAGES, label: 'Imagens' },
-            { id: CardPositionIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas (Batalha Naval)' },
+        this.cardIdOptions = [
+            { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
+            { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
+            { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas (Batalha Naval)' },
         ]
 
         this.numImagesPerPairOptions = [

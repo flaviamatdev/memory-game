@@ -11,7 +11,7 @@ import { CardImage } from '../shared/model/card-image.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
-import { CardPositionIdTypeEnum } from '../shared/enums/card-position-id-type.enum';
+import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 
 const IMG_FILENAME_SEP = '_';
 
@@ -76,9 +76,9 @@ export class GameService {
     }
 
     private _getFinalShuffledCardsWithId(cards: Card[]) {
-        cards.forEach((card, i) => card.id = i + 1);
+        cards.forEach((card, i) => card.id = `${i + 1}`);
 
-        if (this._gameConfig.cardPositionIdType === CardPositionIdTypeEnum.IMAGES) {
+        if (this._gameConfig.cardIdType === CardIdTypeEnum.IMAGES) {
             cards.forEach((card, i) => card.icon = ICONS[i]);
         }
 

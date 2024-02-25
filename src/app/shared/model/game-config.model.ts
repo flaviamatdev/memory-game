@@ -1,4 +1,4 @@
-import { CardPositionIdTypeEnum } from "../enums/card-position-id-type.enum";
+import { CardIdTypeEnum } from "../enums/card-id-type.enum";
 import { CardImage } from "./card-image.model";
 
 export class GameConfig {
@@ -7,7 +7,7 @@ export class GameConfig {
     backgroundImgSrc?: string;
     singleImgPerPair: boolean;
     cardImages: CardImage[];
-    cardPositionIdType: CardPositionIdTypeEnum;
+    cardIdType: CardIdTypeEnum;
 
     get numPairs(): number {
         let numPairImages = this.cardImages.length;
