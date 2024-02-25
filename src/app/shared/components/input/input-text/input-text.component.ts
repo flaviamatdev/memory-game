@@ -21,10 +21,9 @@ export class InputTextComponent extends AbstractInputComponent {
     }
 
     sendChangeEvent($event) {
-        if($event || !$event.target) {
+        if( !($event?.target) ) {
             return;
         }
-
         this.onChange.emit($event.target.value);
     }
 
