@@ -6,12 +6,12 @@ import { delay } from "rxjs/operators";
 import { VALUES } from '../shared/constants/global.values';
 import { ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
+import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { Card } from '../shared/model/card';
 import { CardImage } from '../shared/model/card-image.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
-import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 
 const IMG_FILENAME_SEP = '_';
 
@@ -127,6 +127,18 @@ export class GameService {
         }
         return cards;
     }
+
+
+    setIdAsRowColumn(rowIndex: number, currCardRow: Card[]) {
+        if (this._gameConfig.cardIdType == CardIdTypeEnum.ROW_COLUMN) {
+            currCardRow.forEach((card, col) => card.id = `${this._getLetter(rowIndex)}${col+1}`);
+        }
+    }
+
+    private _getLetter(index: number) {
+        return String.fromCharCode('A'.charCodeAt(0) + index);
+    }
+
 
     onChooseCard(choosen: Card): boolean {
         if (this.isGameFinished) {

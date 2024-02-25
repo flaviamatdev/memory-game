@@ -59,7 +59,7 @@ export class GameConfigFormComponent implements OnInit {
         this.cardIdOptions = [
             { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
             { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
-            { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas (Batalha Naval)' },
+            { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
         ]
 
         this.numImagesPerPairOptions = [

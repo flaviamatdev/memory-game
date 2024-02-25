@@ -71,7 +71,9 @@ export class GameComponent implements OnInit {
         const numCols = this._boardDim.numCols;
         for (let r = 0; r < this._boardDim.numRows; r++) {
             let idx = r*numCols;
-            this.cardRows.push(cards.slice(idx, idx+numCols));
+            let currCardRow = cards.slice(idx, idx+numCols);
+            this.gameService.setIdAsRowColumn(r, currCardRow);
+            this.cardRows.push(currCardRow);
         }
 
         this._printPairs();//.
@@ -85,7 +87,7 @@ export class GameComponent implements OnInit {
         }
 
         let indices: number[] = [];
-        let pairs: number[][] = [];
+        let pairs: string[] = [];
 
         let cards: Card[] = [];
         this.cardRows.forEach(rowCards => cards.push(...rowCards));
@@ -96,7 +98,7 @@ export class GameComponent implements OnInit {
             }
             let j = cards.findIndex((c,j) => c.code === card.code && j != i);
             indices.push(...[i,j]);
-            pairs.push([i+1, j+1]);
+            pairs.push(`${card.id}, ${cards[j].id}`);
         })
 
         console.log('pairs', pairs);

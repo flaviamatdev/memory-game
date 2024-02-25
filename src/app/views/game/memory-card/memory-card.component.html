@@ -6,9 +6,9 @@
 
         <div class="back bg-primary-2">
             <div [ngSwitch]="cardIdType">
-                <div *ngSwitchCase="ID_TYPE.NUMBERS" class="card-id-number quicksand">{{ card.id }}</div>
-                
                 <fa-icon *ngSwitchCase="ID_TYPE.IMAGES" [icon]="card.icon" size="3x"></fa-icon>
+
+                <div *ngSwitchDefault class="card-id-number quicksand">{{ card.id }}</div>
             </div>
         </div>
     </div>

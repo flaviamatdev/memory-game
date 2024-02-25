@@ -3,20 +3,7 @@
 <div class="board-background" [style.background-image]="backgroundStyle">
     <div>
         <div class="board">
-            <div class="board-row" *ngIf="grid">
-                <div class="board-grid-space"></div>
-                <div class="board-grid-header board-grid-col" *ngFor="let col of grid.columns">
-                    {{ col }}
-                </div>
-            </div>
-
             <div class="board-row" *ngFor="let cardRow of cardRows; let r=index">
-                <div *ngIf="grid">
-                    <div class="board-grid-header board-grid-row">
-                        {{ grid.rows[r] }}
-                    </div>
-                </div>
-
                 <app-memory-card *ngFor="let card of cardRow" [card]="card" (onSelect)="onChooseCard($event)">
                 </app-memory-card>
             </div>
