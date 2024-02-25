@@ -1,12 +1,10 @@
 <app-navbar [parent]="this"></app-navbar>
 
 <div class="board-background" [style.background-image]="backgroundStyle">
-    <div>
-        <div class="board">
-            <div class="board-row" *ngFor="let cardRow of cardRows; let r=index">
-                <app-memory-card *ngFor="let card of cardRow" [card]="card" (onSelect)="onChooseCard($event)">
-                </app-memory-card>
-            </div>
+    <div class="board">
+        <div class="board-row" *ngFor="let cardRow of cardRows; let r=index">
+            <app-memory-card *ngFor="let card of cardRow" [card]="card" (onSelect)="onChooseCard($event)">
+            </app-memory-card>
         </div>
     </div>
 </div>
