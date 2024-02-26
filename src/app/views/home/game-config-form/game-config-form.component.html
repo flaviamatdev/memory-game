@@ -19,8 +19,11 @@
                 </app-select>
             </div>
 
+            <mat-divider></mat-divider>
+            <span>Imagem de Fundo</span>
+
             <div class="form-line">
-                <app-select label="Imagem de fundo?"
+                <app-select label="Inserir imagem de fundo?"
                     [form]="form" controlName="addBackgroundImg" [options]="options.yesNo" 
                     (onChange)="onChangeAddBackgroundImg($event)">
                 </app-select>
@@ -30,16 +33,19 @@
                 </div>
             </div>
 
+            <mat-divider></mat-divider>
+            <span>Imagens das Cartas</span>
+
             <div class="form-line">
                 <app-select label="Cada par possui imagens iguais?" 
                     [form]="form" controlName="singleImgPerPair" [options]="options.yesNo" 
                     (onChange)="onChangeSingleImgPerPair()">
                 </app-select>
 
-                <app-select label="Como deseja inserir imagens da cartas?"
-                    [form]="form" controlName="cardImageSrcType" [options]="options.cardImageSrcType" 
+                <app-select-image-src-type label="Como deseja inserir as imagens das cartas?"
+                    [form]="form" controlName="cardImageSrcType" [multiple]="true"
                     (onChange)="onChangeCardImageSrcType($event)">
-                </app-select>
+                </app-select-image-src-type>
 
                 <div [ngSwitch]="cardImageSrcType">
                     <app-input-number *ngSwitchCase="CARD_IMG_SRC_TYPE.URL" label="Nº de pares" 

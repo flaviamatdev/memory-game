@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PairConfig } from '../pair-config.model';
 
@@ -7,7 +7,7 @@ import { PairConfig } from '../pair-config.model';
     templateUrl: './input-image-urls.component.html',
     styleUrls: ['./input-image-urls.component.scss']
 })
-export class InputImageUrlsComponent implements OnInit {
+export class InputImageUrlsComponent implements OnInit, OnChanges {
 
     @Input() form: FormGroup;
     @Input() controlName: string;
@@ -20,31 +20,54 @@ export class InputImageUrlsComponent implements OnInit {
 
     constructor(private fb: FormBuilder) {}
 
-
     ngOnInit(): void {
-        let miniForm = this.fb.group({
-            urls: this.fb.array([])
-        });
-
-        this.form.addControl('cardUrls', miniForm);
-        this._formArray = miniForm.controls['urls'] as FormArray;
-        this._setIndices();
+        this._init();
     }
 
     ngOnDestroy() {
         this.form.removeControl('cardUrls');
     }
 
-    private _setIndices() {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.pairConfig && !changes.pairConfig.firstChange) {
+            this._init();
+        }
+    }
+
+    private _init() {
+        this._initFormArray();
+        this._setIndicesAndFillFormArray();
+    }
+
+    private _initFormArray() {
+        let formArrParent = this.fb.group({
+            urls: this.fb.array([])
+        });
+
+        this.form.addControl('cardUrls', formArrParent);
+        this._formArray = formArrParent.controls['urls'] as FormArray;
+    }
+
+    private _setIndicesAndFillFormArray() {
         let indices = [...Array(this.pairConfig.numPairs).keys()];
         indices.forEach(i => {
             this.urls.push(null);
-            this._formArray.push(this.fb.group({
-                url: new FormControl(null, Validators.required)
-            }));
+            this._formArray.push(this._buildSubFormArray());
         });
 
         this.indices = indices;
+    }
+
+    private _buildSubFormArray() {
+        let subForm = this.fb.group({
+            url: new FormControl(null, Validators.required)
+        });
+
+        if (!this.pairConfig.singleImgPerPair) {
+            subForm.addControl('url2', new FormControl(null, Validators.required))
+        }
+
+        return subForm;
     }
 
 

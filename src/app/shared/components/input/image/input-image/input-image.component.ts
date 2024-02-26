@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { UploadImageComponent } from '../upload-image/upload-image.component';
 import { FormUtil } from 'src/app/shared/util/form.util';
+import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 
 @Component({
     selector: 'app-input-image',
@@ -13,42 +14,55 @@ export class InputImageComponent implements OnInit {
 
     @Input() form: FormGroup;
     @Input() controlName: string;
+    @Input() multiple: boolean = false;
 
     @ViewChild('upload') private _uploadChild: UploadImageComponent;
 
-    urlControlName: string;
-    uploadControlName: string;
+    myControlName: { [key: string]: string } = {};
+    label: string;
     isUrl: boolean;
     imgPreview: any;
 
 
     ngOnInit(): void {
-        this.urlControlName = `${this.controlName}Url`;
-        this.uploadControlName = `${this.controlName}Upload`;
+        this._setLabel();
+        
+        this.myControlName = {
+            srcType: `${this.controlName}SrcType`,
+            url: `${this.controlName}Url`,
+            upload: `${this.controlName}Upload`
+        }
 
-        this.form.addControl(this.urlControlName, new FormControl());
-        this.form.addControl(this.uploadControlName, new FormControl());
+        this.form.addControl(this.myControlName.srcType, new FormControl(null, Validators.required));
+        this.form.addControl(this.myControlName.url, new FormControl());
+        this.form.addControl(this.myControlName.upload, new FormControl());
 
-        this.form.get(this.uploadControlName).valueChanges.subscribe(value => this._onUpload(value));
+        this.form.get(this.myControlName.upload).valueChanges.subscribe(value => this._onUpload(value));
+    }
+
+    private _setLabel() {
+        this.label = 'Como deseja inserir a imagem?';
+        if (this.multiple) {
+            this.label = 'Como deseja inserir as imagens?';
+        }
     }
 
     ngOnDestroy() {
-        this.form.removeControl(this.urlControlName);
-        this.form.removeControl(this.uploadControlName);
+        Object.keys(this.myControlName).forEach(controlName => this.form.removeControl(controlName));
     }
 
-    onChooseInputType(isUrl: boolean) {
-        this.isUrl = isUrl;
+    onChooseInputType($srcType: ImageSourceTypeEnum) {
+        this.isUrl = ($srcType == ImageSourceTypeEnum.URL);
         this.imgPreview = null;
         this.form.get(this.controlName).setValue(null);
 
-        if (isUrl) {
-            this._setFormControlAsRequired(this.urlControlName);
-            this._setFormControlAsNotRequired(this.uploadControlName);
+        if (this.isUrl) {
+            this._setFormControlAsRequired(this.myControlName.url);
+            this._setFormControlAsNotRequired(this.myControlName.upload);
         } 
         else {
-            this._setFormControlAsRequired(this.uploadControlName);
-            this._setFormControlAsNotRequired(this.urlControlName);
+            this._setFormControlAsRequired(this.myControlName.upload);
+            this._setFormControlAsNotRequired(this.myControlName.url);
         }
     }
 
@@ -83,8 +97,8 @@ export class InputImageComponent implements OnInit {
     deleteFile() {
         ([
             this.controlName,
-            this.urlControlName,
-            this.uploadControlName
+            this.myControlName.url,
+            this.myControlName.upload
         ]).forEach(controlName => this.form.get(controlName).setValue(null));
         
         this.imgPreview = null;

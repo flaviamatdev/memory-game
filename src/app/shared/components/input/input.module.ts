@@ -9,7 +9,8 @@ import { InputLabelComponent } from './input-label/input-label.component';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { InputTextComponent } from './input-text/input-text.component';
 import { RadioGroupModelComponent } from './radio-group-model/radio-group-model.component';
-import { SelectComponent } from './select/select.component';
+import { SelectComponent } from './select/select/select.component';
+import { SelectImageSrcTypeComponent } from './select/select-image-src-type/select-image-src-type.component';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { SelectComponent } from './select/select.component';
         InputImageComponent,
         RadioGroupModelComponent,
         ImagePreviewComponent,
+        SelectImageSrcTypeComponent,
     ],
     exports: [
         InputNumberComponent,
@@ -35,6 +37,7 @@ import { SelectComponent } from './select/select.component';
         UploadImageComponent,
         InputImageComponent,
         RadioGroupModelComponent,
+        SelectImageSrcTypeComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -3,18 +3,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
+import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
-import { FormUtil } from 'src/app/shared/util/form.util';
 import { PairConfig } from './pair-config.model';
 
 enum InputTypeEnum {
     MANUALLY = 1,
     CONFIG_FILE = 2
-}
-
-enum ImageSourceTypeEnum {
-    URL = 1,
-    UPLOAD = 2,
 }
 
 @Component({
@@ -146,10 +141,9 @@ export class GameConfigFormComponent implements OnInit {
             return;
         }
 
-        let singleImgPerPair = this.form.get('singleImgPerPair').value as boolean;
         this.pairConfig = {
             numPairs: numPairs,
-            numImagesPerPair: (singleImgPerPair ? 1 : 2)
+            singleImgPerPair: this.form.get('singleImgPerPair').value as boolean,
         };
     }
 

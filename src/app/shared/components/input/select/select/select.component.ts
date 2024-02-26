@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatOption } from '@angular/material/core';
-import { AbstractInputComponent } from '../abstract-input.component';
+import { AbstractInputComponent } from '../../abstract-input.component';
 
 
 @Component({

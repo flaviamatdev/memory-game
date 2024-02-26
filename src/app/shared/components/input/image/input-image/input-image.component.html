@@ -1,25 +1,19 @@
 <div class="input-image">
-    <div class="input-image-buttons">
-        <button mat-icon-button mat-stroked-button type="button" (click)="onChooseInputType(true)" 
-            matTooltip="Inserir link" color="primary">
-            <mat-icon>link</mat-icon>
-        </button>
-
-        <button mat-icon-button mat-stroked-button type="button" (click)="onChooseInputType(false)" 
-            matTooltip="Enviar arquivo" color="primary">
-            <mat-icon>upload</mat-icon>
-        </button>
-    </div>
+    <app-select-image-src-type [label]="label"
+        [form]="form" [controlName]="myControlName.srcType" [multiple]="multiple"
+        (onChange)="onChooseInputType($event)">
+    </app-select-image-src-type>
 
     <div [ngSwitch]="isUrl" class="form-item">
         <div class="input-preview">
             <div *ngSwitchCase="true" class="form-item">
-                <app-input-text label="Link da imagem" [form]="form" [controlName]="urlControlName" (onChange)="onInsertUrl($event)">
+                <app-input-text label="Link da imagem" [form]="form" [controlName]="myControlName.url" 
+                    (onChange)="onInsertUrl($event)">
                 </app-input-text>
             </div>
 
             <div *ngSwitchCase="false">
-                <app-upload-image #upload label="Selecione imagem" [form]="form" [controlName]="uploadControlName">
+                <app-upload-image #upload label="Selecione imagem" [form]="form" [controlName]="myControlName.upload">
                 </app-upload-image>
             </div>
 
