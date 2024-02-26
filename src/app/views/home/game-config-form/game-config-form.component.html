@@ -42,12 +42,12 @@
                 </app-select>
 
                 <div [ngSwitch]="cardImageSrcType">
-                    <app-input-number *ngSwitchCase="CARD_IMG_INPUT_TYPE.URL" label="Nº de pares" 
+                    <app-input-number *ngSwitchCase="CARD_IMG_SRC_TYPE.URL" label="Nº de pares" 
                         [form]="form" controlName="numPairs" [min]="MIN_IMAGES"
                         (onChange)="onInsertNumImages($event)">
                     </app-input-number>
 
-                    <app-upload-image *ngSwitchCase="CARD_IMG_INPUT_TYPE.UPLOAD" 
+                    <app-upload-image *ngSwitchCase="CARD_IMG_SRC_TYPE.UPLOAD" 
                         label="Selecione a pasta que contém as imagens das cartas" 
                         [form]="form" controlName="cardImages" [selectAllDir]="true">
                     </app-upload-image>

@@ -25,14 +25,13 @@ enum ImageSourceTypeEnum {
 export class GameConfigFormComponent implements OnInit {
 
     readonly INPUT_TYPE = InputTypeEnum;
-    readonly CARD_IMG_INPUT_TYPE = ImageSourceTypeEnum;
+    readonly CARD_IMG_SRC_TYPE = ImageSourceTypeEnum;
     readonly MIN_IMAGES = 4;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
     inputType = InputTypeEnum.MANUALLY;
     options: { [key: string]: any[] } = {};
-    checkboxModel: boolean = false;
     flag: any = {};
     pairConfig: PairConfig;
 
