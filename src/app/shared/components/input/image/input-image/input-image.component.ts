@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { UploadImageComponent } from '../upload-image/upload-image.component';
+import { FormUtil } from 'src/app/shared/util/form.util';
 
 @Component({
     selector: 'app-input-image',
@@ -52,17 +53,11 @@ export class InputImageComponent implements OnInit {
     }
 
     private _setFormControlAsRequired(controlName: string) {
-        let control = this.form.get(controlName);
-        control.reset();
-        control.setValidators(Validators.required);
-        control.updateValueAndValidity();
+        FormUtil.setFormControlAsRequired(this.form.get(controlName));
     }
 
     private _setFormControlAsNotRequired(controlName: string) {
-        let control = this.form.get(controlName);
-        control.reset();
-        control.clearValidators();
-        control.updateValueAndValidity();
+        FormUtil.setFormControlAsNotRequired(this.form.get(controlName));
     }
 
 

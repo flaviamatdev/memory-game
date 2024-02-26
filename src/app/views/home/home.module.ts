@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { InputModule } from 'src/app/shared/components/input/input.module';
 import { GameConfigFormComponent } from './game-config-form/game-config-form.component';
+import { InputImageUrlsComponent } from './game-config-form/input-image-urls/input-image-urls.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         HomeComponent, 
-        GameConfigFormComponent
+        GameConfigFormComponent,
+        InputImageUrlsComponent
     ],
     imports: [
         CommonModule,

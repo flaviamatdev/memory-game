@@ -32,24 +32,31 @@
 
             <div class="form-line">
                 <app-select label="Cada par possui imagens iguais?" 
-                    [form]="form" controlName="singleImgPerPair" [options]="options.yesNo">
+                    [form]="form" controlName="singleImgPerPair" [options]="options.yesNo" 
+                    (onChange)="onChangeSingleImgPerPair()">
                 </app-select>
 
                 <app-select label="Como deseja inserir imagens da cartas?"
-                    [form]="form" controlName="cardImagesInputWay" [options]="options.cardImagesInputWay" 
-                    (onChange)="onChangeCardImagesInputWay($event)">
+                    [form]="form" controlName="cardImageSrcType" [options]="options.cardImageSrcType" 
+                    (onChange)="onChangeCardImageSrcType($event)">
                 </app-select>
 
-                <app-upload-image *ngIf="cardImgInputType == CARD_IMG_INPUT_TYPE.UPLOAD" 
-                    label="Selecione a pasta quem contém as imagens das cartas" 
-                    [form]="form" controlName="cardImages" [selectAllDir]="true">
-                </app-upload-image>
+                <div [ngSwitch]="cardImageSrcType">
+                    <app-input-number *ngSwitchCase="CARD_IMG_INPUT_TYPE.URL" label="Nº de pares" 
+                        [form]="form" controlName="numPairs" [min]="MIN_IMAGES"
+                        (onChange)="onInsertNumImages($event)">
+                    </app-input-number>
+
+                    <app-upload-image *ngSwitchCase="CARD_IMG_INPUT_TYPE.UPLOAD" 
+                        label="Selecione a pasta que contém as imagens das cartas" 
+                        [form]="form" controlName="cardImages" [selectAllDir]="true">
+                    </app-upload-image>
+                </div>
             </div>
 
-            <div *ngIf="cardImgInputType == CARD_IMG_INPUT_TYPE.URL" class="form-line">
-                <app-input-image-url-multiple *ngSwitchCase="CARD_IMG_INPUT_TYPE.URL" 
-                    [form]="form" controlName="cardImages">
-                </app-input-image-url-multiple>
+            <div *ngIf="showCardImageUrlInputs" class="form-line">
+                <app-input-image-urls [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
+                </app-input-image-urls>
             </div>
         </form>
 

@@ -4,6 +4,8 @@ import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
+import { FormUtil } from 'src/app/shared/util/form.util';
+import { PairConfig } from './pair-config.model';
 
 enum InputTypeEnum {
     MANUALLY = 1,
@@ -24,6 +26,7 @@ export class GameConfigFormComponent implements OnInit {
 
     readonly INPUT_TYPE = InputTypeEnum;
     readonly CARD_IMG_INPUT_TYPE = ImageSourceTypeEnum;
+    readonly MIN_IMAGES = 4;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
@@ -31,7 +34,7 @@ export class GameConfigFormComponent implements OnInit {
     options: { [key: string]: any[] } = {};
     checkboxModel: boolean = false;
     flag: any = {};
-    cardImgInputType: ImageSourceTypeEnum;
+    pairConfig: PairConfig;
 
     constructor(
         private fb: FormBuilder,
@@ -63,7 +66,7 @@ export class GameConfigFormComponent implements OnInit {
             addBackgroundImg: new FormControl(false, Validators.required),
             backgroundImgSrc: new FormControl(null),
 
-            cardImagesInputWay: new FormControl(false, Validators.required),
+            cardImageSrcType: new FormControl(false, Validators.required),
             cardImages: new FormControl(null, Validators.required),
         });
     }
@@ -86,12 +89,13 @@ export class GameConfigFormComponent implements OnInit {
                 { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
             ],
 
-            cardImagesInputWay: [
+            cardImageSrcType: [
                 { id: ImageSourceTypeEnum.URL, label: 'Links das imagens' },
                 { id: ImageSourceTypeEnum.UPLOAD, label: 'Enviar arquivos de uma pasta' },
             ]
         }
     }
+
 
     onSelectConfigFile($event: any) {
         let file: File = $event?.target?.files[0];
@@ -104,13 +108,60 @@ export class GameConfigFormComponent implements OnInit {
         this.form.get('backgroundImgSrc').setValue(null);
     }
 
-    onChangeCardImagesInputWay($value: ImageSourceTypeEnum) {
-        this.cardImgInputType = $value;
+    
+
+    get cardImageSrcType(): ImageSourceTypeEnum {
+        return this.form?.get('cardImageSrcType')?.value || null;
+    }
+
+    get showCardImageUrlInputs(): boolean {
+        return this.cardImageSrcType === ImageSourceTypeEnum.URL && !!this.pairConfig;
+    }
+
+    onChangeSingleImgPerPair() {
+        this._setPairConfig(this.form.get('numPairs')?.value);
+    }
+
+    onChangeCardImageSrcType($value: ImageSourceTypeEnum) {
+        if ($value === ImageSourceTypeEnum.URL) {
+            this.form.addControl('numPairs', new FormControl(null, [Validators.required, Validators.min(this.MIN_IMAGES)]));
+        } else {
+            this.form.removeControl('numPairs');
+        }
+
+        this._setPairConfig(0);
+    }
+
+    onInsertNumImages($value: number) {
+        if ($value < this.MIN_IMAGES) {
+            this.pairConfig = null;
+            return;
+        }
+
+        this._setPairConfig($value);
+    }
+
+    private _setPairConfig(numPairs: number) {
+        if (!this.cardImageSrcType || !numPairs) {
+            this.pairConfig = null;
+            return;
+        }
+
+        let singleImgPerPair = this.form.get('singleImgPerPair').value as boolean;
+        this.pairConfig = {
+            numPairs: numPairs,
+            numImagesPerPair: (singleImgPerPair ? 1 : 2)
+        };
     }
 
     submit() {
         this.form.markAllAsTouched();
         if (this.form.invalid) {
+            console.log(
+                Object.entries(this.form.controls)
+                    .filter(([key, control]) => control.invalid)
+                    .map(([key, control]) => key)
+            )//.
             return this.toastService.showInvalidFormError();
         }
 
