@@ -25,13 +25,23 @@ export class UploadImageComponent extends AbstractInputComponent {
         super();
     }
 
+    reset() {
+        this._images = [];
+        this._numFiles = 0;
+        this._clearInput();
+        this.formControl.reset();
+    }
+
+    private _clearInput() {
+        this._inputElem.nativeElement.value = "";
+    }
 
     onSelectFiles($event: any) {
         this._images = [];
         let { files, allOk } = this._extractFiles($event?.target?.files);
 
         if (!allOk) {
-            this._inputElem.nativeElement.value = "";
+            this._clearInput();
             const accept = this.ACCEPT_IMG.map(x => x.replace('image/', '')).join(', ');
             this.toastService.error(`Pelo menos 1 arquivo selecionado está fora dos formatos de imagem aceitos: ${accept}. Tente novamente!`);
             return;

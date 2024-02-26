@@ -1,28 +1,37 @@
 <div class="input-image">
-    <div class="input-img-buttons">
+    <div class="input-image-buttons">
         <button mat-icon-button mat-stroked-button type="button" (click)="onChooseInputType(true)" 
-            matTooltip="Inserir URL" color="primary">
+            matTooltip="Inserir link" color="primary">
             <mat-icon>link</mat-icon>
         </button>
 
         <button mat-icon-button mat-stroked-button type="button" (click)="onChooseInputType(false)" 
-            matTooltip="Fazer upload" color="primary">
+            matTooltip="Enviar arquivo" color="primary">
             <mat-icon>upload</mat-icon>
         </button>
     </div>
 
     <div [ngSwitch]="isUrl" class="form-item">
         <div class="input-preview">
-            <img *ngIf="imgPreview" [src]="imgPreview" class="img-preview" alt="Imagem">
-
             <div *ngSwitchCase="true" class="form-item">
-                <app-input-text label="URL" [form]="form" [controlName]="urlControlName" (onChange)="onInsertUrl($event)">
+                <app-input-text label="Link da imagem" [form]="form" [controlName]="urlControlName" (onChange)="onInsertUrl($event)">
                 </app-input-text>
             </div>
 
             <div *ngSwitchCase="false">
-                <app-upload-image label="Selecione imagem" [form]="form" [controlName]="uploadControlName">
+                <app-upload-image #upload label="Selecione imagem" [form]="form" [controlName]="uploadControlName">
                 </app-upload-image>
+            </div>
+
+            <div *ngIf="imgPreview" class="form-line">
+                <img [src]="imgPreview" class="img-preview" alt="Imagem">
+
+                <div class="delete-btn">
+                    <button mat-icon-button mat-stroked-button type="button" (click)="deleteFile()" 
+                        matTooltip="Excluir imagem" color="accent">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

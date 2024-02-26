@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CardImage } from 'src/app/shared/model/card-image.model';
+import { UploadImageComponent } from '../upload-image/upload-image.component';
 
 @Component({
     selector: 'app-input-image',
@@ -11,6 +12,8 @@ export class InputImageComponent implements OnInit {
 
     @Input() form: FormGroup;
     @Input() controlName: string;
+
+    @ViewChild('upload') private _uploadChild: UploadImageComponent;
 
     urlControlName: string;
     uploadControlName: string;
@@ -26,6 +29,11 @@ export class InputImageComponent implements OnInit {
         this.form.addControl(this.uploadControlName, new FormControl());
 
         this.form.get(this.uploadControlName).valueChanges.subscribe(value => this._onUpload(value));
+    }
+
+    ngOnDestroy() {
+        this.form.removeControl(this.urlControlName);
+        this.form.removeControl(this.uploadControlName);
     }
 
     onChooseInputType(isUrl: boolean) {
@@ -75,6 +83,17 @@ export class InputImageComponent implements OnInit {
         }
 
         this.imgPreview = cardImages[0].base64;
+    }
+
+    deleteFile() {
+        ([
+            this.controlName,
+            this.urlControlName,
+            this.uploadControlName
+        ]).forEach(controlName => this.form.get(controlName).setValue(null));
+        
+        this.imgPreview = null;
+        this._uploadChild?.reset();
     }
 
 }

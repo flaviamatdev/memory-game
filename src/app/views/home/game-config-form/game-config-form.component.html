@@ -2,10 +2,9 @@
     <mat-label>Selecione como deseja inserir as informações para o jogo:</mat-label>
 
     <div class="form-line mt-2 ms-4">
-        <mat-radio-group aria-label="label" [(ngModel)]="inputType" (change)="onChangeInputType()">
-            <mat-radio-button [value]="INPUT_TYPE.MANUALLY" color="primary">Inserir manualmente</mat-radio-button>
-            <mat-radio-button [value]="INPUT_TYPE.CONFIG_FILE" color="primary">Inserir arquivo de configuração</mat-radio-button>
-        </mat-radio-group>
+        <app-radio-group-model [options]="options.inputType" [defaultOptionValue]="inputType"
+            (onChange)="onChangeInputType($event)">
+        </app-radio-group-model>
     </div>
 </div>
 
@@ -16,16 +15,24 @@
                 <app-input-text class="form-item" label="Título" [form]="form" controlName="title"></app-input-text>
 
                 <app-select class="form-item" label="Cada par possui imagens iguais?" 
-                    [form]="form" controlName="singleImgPerPair" [options]="numImagesPerPairOptions">
+                    [form]="form" controlName="singleImgPerPair" [options]="options.numImagesPerPair">
                 </app-select>
 
                 <app-select class="form-item" label="Tipo de identificação das posições das cartas" 
-                    [form]="form" controlName="cardIdType" [options]="cardIdOptions">
+                    [form]="form" controlName="cardIdType" [options]="options.cardId">
                 </app-select>
             </div>
 
-            <span>Imagem de Fundo</span>
-            <app-input-image [form]="form" controlName="backgroundImgSrc"></app-input-image>
+            <div class="form-line">
+                <app-select label="Imagem de fundo?"
+                    [form]="form" controlName="addBackgroundImg" [options]="options.yesNo" 
+                    (onChange)="onChangeAddBackgroundImg($event)">
+                </app-select>
+
+                <div *ngIf="flag.addBackgroundImg" class="form-item">
+                    <app-input-image [form]="form" controlName="backgroundImgSrc"></app-input-image>
+                </div>
+            </div>
 
             <div class="form-line">
                 <app-upload-image label="Pasta contendo as imagens das cartas" 

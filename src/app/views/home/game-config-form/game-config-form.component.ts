@@ -22,8 +22,9 @@ export class GameConfigFormComponent implements OnInit {
 
     form: FormGroup;
     inputType = InputTypeEnum.MANUALLY;
-    numImagesPerPairOptions: any[] = [];
-    cardIdOptions: any[] = [];
+    options: { [key: string]: any[] } = {};
+    checkboxModel: boolean = false;
+    flag: any = {};
 
     constructor(
         private fb: FormBuilder,
@@ -32,10 +33,11 @@ export class GameConfigFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.onChangeInputType();
+        this.onChangeInputType(this.inputType);
     }
 
-    onChangeInputType() {
+    onChangeInputType($value: InputTypeEnum) {
+        this.inputType = $value;
         if (this.inputType == InputTypeEnum.CONFIG_FILE) {
             this.form = this.fb.group({});
             return;
@@ -50,22 +52,35 @@ export class GameConfigFormComponent implements OnInit {
             title: new FormControl('Memory Game', Validators.required),
             cardIdType: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
             singleImgPerPair: new FormControl(null, Validators.required),
-            backgroundImgSrc: new FormControl(null, Validators.required),
+            addBackgroundImg: new FormControl(false, Validators.required),
+            backgroundImgSrc: new FormControl(null),
             cardImages: new FormControl(null, Validators.required),
         });
     }
 
     private _setOptions() {
-        this.cardIdOptions = [
-            { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
-            { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
-            { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
-        ];
+        this.options = {
+            inputType: [
+                { id: InputTypeEnum.MANUALLY, label: 'Inserir manualmente' },
+                { id: InputTypeEnum.CONFIG_FILE, label: 'Inserir arquivo de configuração' },
+            ],
 
-        this.numImagesPerPairOptions = [
-            { id: true, label: 'Sim' },
-            { id: false, label: 'Não' },
-        ];
+            yesNo: [
+                { id: true, label: 'Sim' },
+                { id: false, label: 'Não' },
+            ],
+
+            numImagesPerPair: [
+                { id: true, label: 'Sim' },
+                { id: false, label: 'Não' },
+            ],
+
+            cardId: [
+                { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
+                { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
+                { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
+            ]
+        }
     }
 
     onSelectConfigFile($event: any) {
@@ -74,9 +89,15 @@ export class GameConfigFormComponent implements OnInit {
         debugger
     }
 
+    onChangeAddBackgroundImg($value: boolean) {
+        this.flag.addBackgroundImg = $value;
+        this.form.get('backgroundImgSrc').setValue(null);
+    }
+
     submit() {
         this.form.markAllAsTouched();
         if (this.form.invalid) {
+            console.log(Object.entries(this.form.controls).filter(entry => entry[1].invalid))
             return this.toastService.showInvalidFormError();
         }
 
