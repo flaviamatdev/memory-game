@@ -13,28 +13,28 @@
     <div *ngSwitchCase="INPUT_TYPE.MANUALLY">
         <form *ngIf="form" [formGroup]="form">
             <div class="form-line">
-                <app-input-text label="Título" [form]="form" controlName="title"></app-input-text>
-                <app-upload-image label="Imagem de fundo" [form]="form" controlName="backgroundImgSrc"></app-upload-image>
-            </div>
+                <app-input-text class="form-item" label="Título" [form]="form" controlName="title"></app-input-text>
 
-            <div class="form-line">
-                <app-select label="Cada par possui imagens iguais?" 
+                <app-select class="form-item" label="Cada par possui imagens iguais?" 
                     [form]="form" controlName="singleImgPerPair" [options]="numImagesPerPairOptions">
                 </app-select>
 
+                <app-select class="form-item" label="Tipo de identificação das posições das cartas" 
+                    [form]="form" controlName="cardIdType" [options]="cardIdOptions">
+                </app-select>
+            </div>
+
+            <span>Imagem de Fundo</span>
+            <app-input-image [form]="form" controlName="backgroundImgSrc"></app-input-image>
+
+            <div class="form-line">
                 <app-upload-image label="Pasta contendo as imagens das cartas" 
                     [form]="form" controlName="cardImages" [selectAllDir]="true">
                 </app-upload-image>
             </div>
-
-            <div class="form-line">
-                <app-select label="Tipo de identificação das posições das cartas" 
-                    [form]="form" controlName="cardIdType" [options]="cardIdOptions">
-                </app-select>
-            </div>
         </form>
 
-        <div>
+        <div class="mt-4 text-center">
             <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
         </div>
     </div>

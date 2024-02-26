@@ -6,7 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { InputTextComponent } from './input-text/input-text.component';
 import { SelectComponent } from './select/select.component';
-import { UploadImageComponent } from './upload-image/upload-image.component';
+import { UploadImageComponent } from './image/upload-image/upload-image.component';
+import { InputImageComponent } from './image/input-image/input-image.component';
 
 @NgModule({
     imports: [
@@ -21,12 +22,14 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
         InputTextComponent,
         SelectComponent,
         UploadImageComponent,
+        InputImageComponent,
     ],
     exports: [
         InputNumberComponent,
         InputTextComponent,
         SelectComponent,
         UploadImageComponent,
+        InputImageComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

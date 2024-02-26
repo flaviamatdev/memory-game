@@ -48,10 +48,10 @@ export class GameConfigFormComponent implements OnInit {
     private _initForm() {
         this.form = this.fb.group({
             title: new FormControl('Memory Game', Validators.required),
-            backgroundImgSrc: new FormControl(null),
-            singleImgPerPair: new FormControl(null, Validators.required),
-            cardImages: new FormControl(null, Validators.required),
             cardIdType: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
+            singleImgPerPair: new FormControl(null, Validators.required),
+            backgroundImgSrc: new FormControl(null, Validators.required),
+            cardImages: new FormControl(null, Validators.required),
         });
     }
 
@@ -60,12 +60,12 @@ export class GameConfigFormComponent implements OnInit {
             { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
             { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
             { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
-        ]
+        ];
 
         this.numImagesPerPairOptions = [
             { id: true, label: 'Sim' },
             { id: false, label: 'Não' },
-        ]
+        ];
     }
 
     onSelectConfigFile($event: any) {
@@ -79,7 +79,17 @@ export class GameConfigFormComponent implements OnInit {
         if (this.form.invalid) {
             return this.toastService.showInvalidFormError();
         }
-        this.gameService.create(Object.assign(new GameConfig(), this.form.value));
+
+        let data = {...this.form.value };
+
+        let gameConfig = new GameConfig();
+        gameConfig.title = data.title;
+        gameConfig.singleImgPerPair = data.singleImgPerPair;
+        gameConfig.cardIdType = data.cardIdType;
+        gameConfig.backgroundImgSrc = data.backgroundImgSrc;
+        gameConfig.cardImages = data.cardImages;
+        
+        this.gameService.create(gameConfig);
     }
 
 }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { AbstractInputComponent } from '../abstract-input.component';
+import { AbstractInputComponent } from '../../abstract-input.component';
 import { ToastService } from 'src/app/services/toast.service';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 
