@@ -1,0 +1,27 @@
+<div class="form-line">
+    <app-select-yes-no label="Cada par possui imagens iguais?" 
+        [form]="form" controlName="singleImgPerPair" (onChange)="onChangeSingleImgPerPair()">
+    </app-select-yes-no>
+
+    <app-select-image-src-type
+        [form]="form" controlName="cardImageSrcType" [multiple]="true"
+        (onChange)="onChangeCardImageSrcType($event)">
+    </app-select-image-src-type>
+
+    <div [ngSwitch]="cardImageSrcType">
+        <app-input-number *ngSwitchCase="IMAGE_SRC_TYPE.URL" 
+            label="Nº de pares"  [form]="form" controlName="numPairs" [min]="MIN_IMAGES"
+            (onChange)="onInsertNumImages($event)">
+        </app-input-number>
+
+        <app-upload-image *ngSwitchCase="IMAGE_SRC_TYPE.UPLOAD" 
+            label="Selecione a pasta que contém as imagens das cartas" 
+            [form]="form" controlName="cardImages" [selectAllDir]="true">
+        </app-upload-image>
+    </div>
+</div>
+
+<div *ngIf="showCardImageUrlInputs" class="form-line">
+    <app-card-images-url-input [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
+    </app-card-images-url-input>
+</div>

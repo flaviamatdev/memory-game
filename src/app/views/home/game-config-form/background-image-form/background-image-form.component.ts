@@ -1,16 +1,16 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CardImage } from 'src/app/shared/model/card-image.model';
-import { UploadImageComponent } from '../upload-image/upload-image.component';
-import { FormUtil } from 'src/app/shared/util/form.util';
+import { UploadImageComponent } from 'src/app/shared/components/input/image/upload-image/upload-image.component';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { CardImage } from 'src/app/shared/model/card-image.model';
+import { FormUtil } from 'src/app/shared/util/form.util';
 
 @Component({
-    selector: 'app-input-image',
-    templateUrl: './input-image.component.html',
-    styleUrls: ['./input-image.component.scss']
+    selector: 'app-background-image-form',
+    templateUrl: './background-image-form.component.html',
+    styleUrls: ['./background-image-form.component.scss']
 })
-export class InputImageComponent implements OnInit {
+export class BackgroundImageFormComponent implements OnInit {
 
     @Input() form: FormGroup;
     @Input() controlName: string;
@@ -19,18 +19,15 @@ export class InputImageComponent implements OnInit {
     @ViewChild('upload') private _uploadChild: UploadImageComponent;
 
     myControlName: { [key: string]: string } = {};
-    label: string;
     isUrl: boolean;
     imgPreview: any;
 
 
     ngOnInit(): void {
-        this._setLabel();
-        
         this.myControlName = {
             srcType: `${this.controlName}SrcType`,
-            url: `${this.controlName}Url`,
-            upload: `${this.controlName}Upload`
+            url:     `${this.controlName}Url`,
+            upload:  `${this.controlName}Upload`
         }
 
         this.form.addControl(this.myControlName.srcType, new FormControl(null, Validators.required));
@@ -40,15 +37,8 @@ export class InputImageComponent implements OnInit {
         this.form.get(this.myControlName.upload).valueChanges.subscribe(value => this._onUpload(value));
     }
 
-    private _setLabel() {
-        this.label = 'Como deseja inserir a imagem?';
-        if (this.multiple) {
-            this.label = 'Como deseja inserir as imagens?';
-        }
-    }
-
     ngOnDestroy() {
-        Object.keys(this.myControlName).forEach(controlName => this.form.removeControl(controlName));
+        Object.values(this.myControlName).forEach(controlName => this.form.removeControl(controlName));
     }
 
     onChooseInputType($srcType: ImageSourceTypeEnum) {
@@ -75,33 +65,36 @@ export class InputImageComponent implements OnInit {
     }
 
 
+    private _onUpload(cardImages: CardImage[]) {
+        if ( !(cardImages?.length) ) {
+            this._setImage(null);
+            return;
+        }
+        this._setImage(cardImages[0].base64);
+    }
+
     onInsertUrl($url: string) {
         let value = $url;
         if (!$url) {
             value = null;
         }
-
-        this.imgPreview = value;
-        this.form.get(this.controlName).setValue(value);
+        this._setImage(value);
     }
 
-    private _onUpload(cardImages: CardImage[]) {
-        if ( !(cardImages?.length) ) {
-            this.imgPreview = null;
-            return;
-        }
-
-        this.imgPreview = cardImages[0].base64;
+    private _setImage(src: string) {
+        this.imgPreview = src;
+        this.form.get(this.controlName).setValue(src);
     }
+
 
     deleteFile() {
         ([
-            this.controlName,
             this.myControlName.url,
             this.myControlName.upload
-        ]).forEach(controlName => this.form.get(controlName).setValue(null));
+        ])
+        .forEach(controlName => this.form.get(controlName).setValue(null));
         
-        this.imgPreview = null;
+        this._setImage(null);
         this._uploadChild?.reset();
     }
 

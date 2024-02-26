@@ -1,0 +1,25 @@
+<div class="input-image">
+    <app-select-image-src-type label="Como deseja inserir a imagem?"
+        [form]="form" [controlName]="myControlName.srcType" [multiple]="multiple"
+        (onChange)="onChooseInputType($event)">
+    </app-select-image-src-type>
+
+    <div class="form-item">
+        <div class="input-preview">
+            <div [ngSwitch]="isUrl" class="form-item">
+                <div *ngSwitchCase="true">
+                    <app-input-text label="Link da imagem" [form]="form" [controlName]="myControlName.url" 
+                        (onChange)="onInsertUrl($event)">
+                    </app-input-text>
+                </div>
+
+                <div *ngSwitchCase="false">
+                    <app-upload-image #upload label="Selecione imagem" [form]="form" [controlName]="myControlName.upload">
+                    </app-upload-image>
+                </div>
+            </div>
+
+            <app-image-preview [src]="imgPreview" (onDelete)="deleteFile()"></app-image-preview>
+        </div>
+    </div>
+</div>

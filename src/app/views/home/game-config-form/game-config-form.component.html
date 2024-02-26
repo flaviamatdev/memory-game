@@ -14,7 +14,7 @@
             <div class="form-line">
                 <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
 
-                <app-select class="input-card-id" label="Tipo de identificação das posições das cartas" 
+                <app-select class="input-card-id" label="Modo de identificação das cartas" 
                     [form]="form" controlName="cardIdType" [options]="options.cardId">
                 </app-select>
             </div>
@@ -23,47 +23,18 @@
             <span>Imagem de Fundo</span>
 
             <div class="form-line">
-                <app-select label="Inserir imagem de fundo?"
-                    [form]="form" controlName="addBackgroundImg" [options]="options.yesNo" 
-                    (onChange)="onChangeAddBackgroundImg($event)">
-                </app-select>
+                <app-select-yes-no label="Inserir imagem de fundo?"
+                    [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
+                </app-select-yes-no>
 
                 <div *ngIf="flag.addBackgroundImg" class="form-item">
-                    <app-input-image [form]="form" controlName="backgroundImgSrc"></app-input-image>
+                    <app-background-image-form [form]="form" controlName="backgroundImgSrc"></app-background-image-form>
                 </div>
             </div>
 
             <mat-divider></mat-divider>
             <span>Imagens das Cartas</span>
-
-            <div class="form-line">
-                <app-select label="Cada par possui imagens iguais?" 
-                    [form]="form" controlName="singleImgPerPair" [options]="options.yesNo" 
-                    (onChange)="onChangeSingleImgPerPair()">
-                </app-select>
-
-                <app-select-image-src-type label="Como deseja inserir as imagens das cartas?"
-                    [form]="form" controlName="cardImageSrcType" [multiple]="true"
-                    (onChange)="onChangeCardImageSrcType($event)">
-                </app-select-image-src-type>
-
-                <div [ngSwitch]="cardImageSrcType">
-                    <app-input-number *ngSwitchCase="CARD_IMG_SRC_TYPE.URL" label="Nº de pares" 
-                        [form]="form" controlName="numPairs" [min]="MIN_IMAGES"
-                        (onChange)="onInsertNumImages($event)">
-                    </app-input-number>
-
-                    <app-upload-image *ngSwitchCase="CARD_IMG_SRC_TYPE.UPLOAD" 
-                        label="Selecione a pasta que contém as imagens das cartas" 
-                        [form]="form" controlName="cardImages" [selectAllDir]="true">
-                    </app-upload-image>
-                </div>
-            </div>
-
-            <div *ngIf="showCardImageUrlInputs" class="form-line">
-                <app-input-image-urls [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
-                </app-input-image-urls>
-            </div>
+            <app-card-images-form [parent]="this"></app-card-images-form>
         </form>
 
         <div class="mt-4 text-center">

@@ -3,11 +3,11 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { PairConfig } from '../pair-config.model';
 
 @Component({
-    selector: 'app-input-image-urls',
-    templateUrl: './input-image-urls.component.html',
-    styleUrls: ['./input-image-urls.component.scss']
+    selector: 'app-card-images-url-input',
+    templateUrl: './card-images-url-input.component.html',
+    styleUrls: ['./card-images-url-input.component.scss']
 })
-export class InputImageUrlsComponent implements OnInit, OnChanges {
+export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     @Input() form: FormGroup;
     @Input() controlName: string;

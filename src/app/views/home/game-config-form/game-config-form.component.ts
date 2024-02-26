@@ -3,9 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
-import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
-import { PairConfig } from './pair-config.model';
 
 enum InputTypeEnum {
     MANUALLY = 1,
@@ -20,15 +18,12 @@ enum InputTypeEnum {
 export class GameConfigFormComponent implements OnInit {
 
     readonly INPUT_TYPE = InputTypeEnum;
-    readonly CARD_IMG_SRC_TYPE = ImageSourceTypeEnum;
-    readonly MIN_IMAGES = 4;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
     inputType = InputTypeEnum.MANUALLY;
     options: { [key: string]: any[] } = {};
     flag: any = {};
-    pairConfig: PairConfig;
 
     constructor(
         private fb: FormBuilder,
@@ -55,11 +50,11 @@ export class GameConfigFormComponent implements OnInit {
         this.form = this.fb.group({
             title: new FormControl('Memory Game', Validators.required),
             cardIdType: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
-            singleImgPerPair: new FormControl(null, Validators.required),
 
             addBackgroundImg: new FormControl(false, Validators.required),
             backgroundImgSrc: new FormControl(null),
 
+            singleImgPerPair: new FormControl(null, Validators.required),
             cardImageSrcType: new FormControl(false, Validators.required),
             cardImages: new FormControl(null, Validators.required),
         });
@@ -72,21 +67,11 @@ export class GameConfigFormComponent implements OnInit {
                 { id: InputTypeEnum.CONFIG_FILE, label: 'Inserir arquivo de configuração' },
             ],
 
-            yesNo: [
-                { id: true, label: 'Sim' },
-                { id: false, label: 'Não' },
-            ],
-
             cardId: [
                 { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
                 { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
                 { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
             ],
-
-            cardImageSrcType: [
-                { id: ImageSourceTypeEnum.URL, label: 'Links das imagens' },
-                { id: ImageSourceTypeEnum.UPLOAD, label: 'Enviar arquivos de uma pasta' },
-            ]
         }
     }
 
@@ -100,51 +85,6 @@ export class GameConfigFormComponent implements OnInit {
     onChangeAddBackgroundImg($value: boolean) {
         this.flag.addBackgroundImg = $value;
         this.form.get('backgroundImgSrc').setValue(null);
-    }
-
-    
-
-    get cardImageSrcType(): ImageSourceTypeEnum {
-        return this.form?.get('cardImageSrcType')?.value || null;
-    }
-
-    get showCardImageUrlInputs(): boolean {
-        return this.cardImageSrcType === ImageSourceTypeEnum.URL && !!this.pairConfig;
-    }
-
-    onChangeSingleImgPerPair() {
-        this._setPairConfig(this.form.get('numPairs')?.value);
-    }
-
-    onChangeCardImageSrcType($value: ImageSourceTypeEnum) {
-        if ($value === ImageSourceTypeEnum.URL) {
-            this.form.addControl('numPairs', new FormControl(null, [Validators.required, Validators.min(this.MIN_IMAGES)]));
-        } else {
-            this.form.removeControl('numPairs');
-        }
-
-        this._setPairConfig(0);
-    }
-
-    onInsertNumImages($value: number) {
-        if ($value < this.MIN_IMAGES) {
-            this.pairConfig = null;
-            return;
-        }
-
-        this._setPairConfig($value);
-    }
-
-    private _setPairConfig(numPairs: number) {
-        if (!this.cardImageSrcType || !numPairs) {
-            this.pairConfig = null;
-            return;
-        }
-
-        this.pairConfig = {
-            numPairs: numPairs,
-            singleImgPerPair: this.form.get('singleImgPerPair').value as boolean,
-        };
     }
 
     submit() {
