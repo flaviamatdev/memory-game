@@ -10,6 +10,11 @@ enum InputTypeEnum {
     CONFIG_FILE = 2
 }
 
+enum ImageSourceTypeEnum {
+    URL = 1,
+    UPLOAD = 2,
+}
+
 @Component({
     selector: 'app-game-config-form',
     templateUrl: './game-config-form.component.html',
@@ -18,6 +23,7 @@ enum InputTypeEnum {
 export class GameConfigFormComponent implements OnInit {
 
     readonly INPUT_TYPE = InputTypeEnum;
+    readonly CARD_IMG_INPUT_TYPE = ImageSourceTypeEnum;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
@@ -25,6 +31,7 @@ export class GameConfigFormComponent implements OnInit {
     options: { [key: string]: any[] } = {};
     checkboxModel: boolean = false;
     flag: any = {};
+    cardImgInputType: ImageSourceTypeEnum;
 
     constructor(
         private fb: FormBuilder,
@@ -52,8 +59,11 @@ export class GameConfigFormComponent implements OnInit {
             title: new FormControl('Memory Game', Validators.required),
             cardIdType: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
             singleImgPerPair: new FormControl(null, Validators.required),
+
             addBackgroundImg: new FormControl(false, Validators.required),
             backgroundImgSrc: new FormControl(null),
+
+            cardImagesInputWay: new FormControl(false, Validators.required),
             cardImages: new FormControl(null, Validators.required),
         });
     }
@@ -70,15 +80,15 @@ export class GameConfigFormComponent implements OnInit {
                 { id: false, label: 'Não' },
             ],
 
-            numImagesPerPair: [
-                { id: true, label: 'Sim' },
-                { id: false, label: 'Não' },
-            ],
-
             cardId: [
                 { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
                 { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
                 { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
+            ],
+
+            cardImagesInputWay: [
+                { id: ImageSourceTypeEnum.URL, label: 'Links das imagens' },
+                { id: ImageSourceTypeEnum.UPLOAD, label: 'Enviar arquivos de uma pasta' },
             ]
         }
     }
@@ -94,10 +104,13 @@ export class GameConfigFormComponent implements OnInit {
         this.form.get('backgroundImgSrc').setValue(null);
     }
 
+    onChangeCardImagesInputWay($value: ImageSourceTypeEnum) {
+        this.cardImgInputType = $value;
+    }
+
     submit() {
         this.form.markAllAsTouched();
         if (this.form.invalid) {
-            console.log(Object.entries(this.form.controls).filter(entry => entry[1].invalid))
             return this.toastService.showInvalidFormError();
         }
 

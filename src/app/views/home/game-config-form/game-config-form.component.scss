@@ -12,6 +12,13 @@ form {
     gap: 1rem;
 }
 
+.input-title {
+    flex: 8 0 0;
+}
+.input-card-id {
+    flex: 4 0 0;
+}
+
 .input-file {
     display: flex;
     flex-direction: column;

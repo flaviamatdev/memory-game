@@ -1,0 +1,15 @@
+<div class="layout">
+    <app-input-number label="Nº de imagens" [form]="miniForm" controlName="numImages" [min]="MIN_IMAGES"
+        (onChange)="onInsertNumImages($event)">
+    </app-input-number>
+
+    <div *ngIf="indices">
+        <div *ngFor="let i of indices" class="inputs">
+            <app-input-text [label]="'Link da Imagem '+(i+1)" [form]="getSubForm(i)" controlName="url" 
+                (onChange)="onInsertUrl($event, i)">
+            </app-input-text>
+        
+            <app-image-preview [src]="urls[i]" (onDelete)="deleteUrl(i)"></app-image-preview>
+        </div>
+    </div>
+</div>

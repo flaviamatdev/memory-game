@@ -23,16 +23,7 @@
                 </app-upload-image>
             </div>
 
-            <div *ngIf="imgPreview" class="form-line">
-                <img [src]="imgPreview" class="img-preview" alt="Imagem">
-
-                <div class="delete-btn">
-                    <button mat-icon-button mat-stroked-button type="button" (click)="deleteFile()" 
-                        matTooltip="Excluir imagem" color="accent">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </div>
-            </div>
+            <app-image-preview [src]="imgPreview" (onDelete)="deleteFile()"></app-image-preview>
         </div>
     </div>
 </div>

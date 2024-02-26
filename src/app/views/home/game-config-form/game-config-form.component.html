@@ -12,13 +12,9 @@
     <div *ngSwitchCase="INPUT_TYPE.MANUALLY">
         <form *ngIf="form" [formGroup]="form">
             <div class="form-line">
-                <app-input-text class="form-item" label="Título" [form]="form" controlName="title"></app-input-text>
+                <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
 
-                <app-select class="form-item" label="Cada par possui imagens iguais?" 
-                    [form]="form" controlName="singleImgPerPair" [options]="options.numImagesPerPair">
-                </app-select>
-
-                <app-select class="form-item" label="Tipo de identificação das posições das cartas" 
+                <app-select class="input-card-id" label="Tipo de identificação das posições das cartas" 
                     [form]="form" controlName="cardIdType" [options]="options.cardId">
                 </app-select>
             </div>
@@ -35,9 +31,25 @@
             </div>
 
             <div class="form-line">
-                <app-upload-image label="Pasta contendo as imagens das cartas" 
+                <app-select label="Cada par possui imagens iguais?" 
+                    [form]="form" controlName="singleImgPerPair" [options]="options.yesNo">
+                </app-select>
+
+                <app-select label="Como deseja inserir imagens da cartas?"
+                    [form]="form" controlName="cardImagesInputWay" [options]="options.cardImagesInputWay" 
+                    (onChange)="onChangeCardImagesInputWay($event)">
+                </app-select>
+
+                <app-upload-image *ngIf="cardImgInputType == CARD_IMG_INPUT_TYPE.UPLOAD" 
+                    label="Selecione a pasta quem contém as imagens das cartas" 
                     [form]="form" controlName="cardImages" [selectAllDir]="true">
                 </app-upload-image>
+            </div>
+
+            <div *ngIf="cardImgInputType == CARD_IMG_INPUT_TYPE.URL" class="form-line">
+                <app-input-image-url-multiple *ngSwitchCase="CARD_IMG_INPUT_TYPE.URL" 
+                    [form]="form" controlName="cardImages">
+                </app-input-image-url-multiple>
             </div>
         </form>
 

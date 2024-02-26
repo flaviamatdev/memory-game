@@ -9,6 +9,8 @@ import { SelectComponent } from './select/select.component';
 import { UploadImageComponent } from './image/upload-image/upload-image.component';
 import { InputImageComponent } from './image/input-image/input-image.component';
 import { RadioGroupModelComponent } from './radio-group-model/radio-group-model.component';
+import { InputImageUrlMultipleComponent } from './image/input-image-url-multiple/input-image-url-multiple.component';
+import { ImagePreviewComponent } from './image/image-preview/image-preview.component';
 
 @NgModule({
     imports: [
@@ -25,6 +27,8 @@ import { RadioGroupModelComponent } from './radio-group-model/radio-group-model.
         UploadImageComponent,
         InputImageComponent,
         RadioGroupModelComponent,
+        InputImageUrlMultipleComponent,
+        ImagePreviewComponent,
     ],
     exports: [
         InputNumberComponent,
@@ -33,6 +37,7 @@ import { RadioGroupModelComponent } from './radio-group-model/radio-group-model.
         UploadImageComponent,
         InputImageComponent,
         RadioGroupModelComponent,
+        InputImageUrlMultipleComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
