@@ -5,10 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { InputModule } from 'src/app/shared/components/input/input.module';
 import { BackgroundImageFormComponent } from './game-config-form/background-image-form/background-image-form.component';
+import { ImageFilenameExampleDialogComponent } from './game-config-form/card-images/card-image-filename-example-dialog/card-image-filename-example-dialog.component';
+import { CardImagesFormComponent } from './game-config-form/card-images/card-images-form/card-images-form.component';
+import { CardImagesUrlInputComponent } from './game-config-form/card-images/card-images-url-input/card-images-url-input.component';
 import { GameConfigFormComponent } from './game-config-form/game-config-form.component';
-import { CardImagesFormComponent } from './game-config-form/card-images-form/card-images-form.component';
 import { HomeComponent } from './home/home.component';
-import { CardImagesUrlInputComponent } from './game-config-form/card-images-url-input/card-images-url-input.component';
 
 const routes: Routes = [
     {
@@ -23,7 +24,8 @@ const routes: Routes = [
         GameConfigFormComponent,
         BackgroundImageFormComponent,
         CardImagesFormComponent,
-        CardImagesUrlInputComponent
+        CardImagesUrlInputComponent,
+        ImageFilenameExampleDialogComponent
     ],
     imports: [
         CommonModule,

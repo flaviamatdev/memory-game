@@ -21,6 +21,14 @@
     </div>
 </div>
 
+<div *ngIf="showFilePatternWarning" class="file-warning">
+    <mat-icon>warning</mat-icon>
+    <span>Envio de arquivos diferentes por par: {{ warningMsgForDiffImagesPerPair }} 
+        Veja um exemplo <a class="example-link" (click)="openExample()">aqui</a>.
+    </span>
+    
+</div>
+
 <div *ngIf="showCardImageUrlInputs" class="form-line">
     <div class="form-item mt-2">
         <app-card-images-url-input [form]="form" controlName="cardImages" [pairConfig]="pairConfig">

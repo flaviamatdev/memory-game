@@ -33,4 +33,11 @@ export class DialogService {
         });
     }
 
+    openCustomDialog(component: any, width: number, data: any = {}) {
+        this.dialog.open(component, {
+            width: this._getWidthAccordingScreen(width),
+            data: data
+        });
+    }
+
 }

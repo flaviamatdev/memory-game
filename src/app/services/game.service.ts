@@ -15,7 +15,7 @@ import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
 import { ToastService } from './toast.service';
 
-const IMG_FILENAME_SEP = '_';
+const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 
 @Injectable({
     providedIn: 'root'
@@ -115,6 +115,10 @@ export class GameService {
         });
 
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
+    }
+
+    get warningMsgForDiffImagesPerPair(): string {
+        return `Oos nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} .`;
     }
 
     private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {

@@ -1,8 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GameService } from 'src/app/services/game.service';
+import { VALUES } from 'src/app/shared/constants/global.values';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
-import { PairConfig } from '../pair-config.model';
-import { GameConfigFormComponent } from '../game-config-form.component';
+import { GameConfigFormComponent } from '../../game-config-form.component';
+import { PairConfig } from '../../pair-config.model';
+import { DialogService } from 'src/app/services/dialog.service';
+import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 
 @Component({
     selector: 'app-card-images-form',
@@ -11,6 +15,7 @@ import { GameConfigFormComponent } from '../game-config-form.component';
 })
 export class CardImagesFormComponent implements OnInit {
 
+    readonly FILENAME_SEP = VALUES.upload.fileNameSeparator;
     readonly IMAGE_SRC_TYPE = ImageSourceTypeEnum;
     readonly MIN_NUM_PAIRS = 2;
 
@@ -18,6 +23,12 @@ export class CardImagesFormComponent implements OnInit {
 
     form: FormGroup;
     pairConfig: PairConfig;
+    showFilePatternWarning: boolean = false;
+
+    constructor(
+        private gameService: GameService,
+        private dialogService: DialogService,
+    ) {}
 
     ngOnInit(): void {
         this.form = this.parent.form;
@@ -30,6 +41,11 @@ export class CardImagesFormComponent implements OnInit {
     get showCardImageUrlInputs(): boolean {
         return this.cardImageSrcType === ImageSourceTypeEnum.URL && !!this.pairConfig;
     }
+
+    private get _singleImgPerPair() {
+        return this.form.get('singleImgPerPair').value as boolean;
+    }
+
 
     onChangeSingleImgPerPair() {
         this._setPairConfig(this.form.get('numPairs')?.value);
@@ -55,15 +71,25 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     private _setPairConfig(numPairs: number) {
+        this.showFilePatternWarning = (this._singleImgPerPair === false && 
+            this.cardImageSrcType === ImageSourceTypeEnum.UPLOAD
+        );
+
         if (!this.cardImageSrcType || !numPairs) {
             this.pairConfig = null;
             return;
         }
 
-        this.pairConfig = new PairConfig(
-            numPairs, 
-            this.form.get('singleImgPerPair').value as boolean
-        );
+        this.pairConfig = new PairConfig(numPairs, this._singleImgPerPair);
+    }
+    
+
+    get warningMsgForDiffImagesPerPair() {
+        return this.gameService.warningMsgForDiffImagesPerPair;
+    }
+
+    openExample() {
+        this.dialogService.openCustomDialog(ImageFilenameExampleDialogComponent, 80);
     }
 
 }

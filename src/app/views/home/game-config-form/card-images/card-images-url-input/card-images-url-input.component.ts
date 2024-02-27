@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PairConfig } from '../pair-config.model';
+import { PairConfig } from '../../pair-config.model';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 
 @Component({
