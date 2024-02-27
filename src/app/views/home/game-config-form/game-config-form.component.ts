@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { NUM_ICONS } from 'src/app/shared/constants/icons';
 import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 
@@ -69,7 +70,7 @@ export class GameConfigFormComponent implements OnInit {
 
             cardId: [
                 { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
-                { id: CardIdTypeEnum.IMAGES, label: 'Imagens' },
+                { id: CardIdTypeEnum.IMAGES, label: `Ícones (máximo ${NUM_ICONS} cartas)` },
                 { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
             ],
         }
