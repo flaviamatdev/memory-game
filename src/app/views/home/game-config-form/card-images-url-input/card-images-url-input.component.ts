@@ -38,7 +38,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     private _init() {
         this._cardImageMap = {};
-        this._numCardImages = this.pairConfig.numPairs * (this.pairConfig.singleImgPerPair ? 1 : 2);
+        this._numCardImages = this.pairConfig.numCards;
         this._initFormArray();
         this._setIndicesAndFillFormArray();
     }

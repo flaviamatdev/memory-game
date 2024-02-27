@@ -60,10 +60,10 @@ export class CardImagesFormComponent implements OnInit {
             return;
         }
 
-        this.pairConfig = {
-            numPairs: numPairs,
-            singleImgPerPair: this.form.get('singleImgPerPair').value as boolean,
-        };
+        this.pairConfig = new PairConfig(
+            numPairs, 
+            this.form.get('singleImgPerPair').value as boolean
+        );
     }
 
 }
