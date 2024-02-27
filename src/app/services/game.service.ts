@@ -7,11 +7,13 @@ import { VALUES } from '../shared/constants/global.values';
 import { ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
 import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
+import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { CardImage } from '../shared/model/card-image.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
+import { ToastService } from './toast.service';
 
 const IMG_FILENAME_SEP = '_';
 
@@ -30,6 +32,7 @@ export class GameService {
         library: FaIconLibrary,
         private router: Router,
         private audioService: AudioService,
+        private toastService: ToastService,
     ) {
         library.addIcons(...ICONS);
     }
@@ -48,22 +51,36 @@ export class GameService {
 
     create(gameConfig: GameConfig) {
         this._gameConfig = gameConfig;
-        this.audioService.load();
-        this.router.navigate(['game']);
+        try {
+            let cards = this._getCards();
+            this.audioService.load();
+            this.router.navigate(['game'], {
+                state: {
+                    cards: cards
+                }
+            });
+        } 
+        catch (error) {
+            this._gameConfig = null;
+            if ( !(error instanceof GameConfigError) ) {
+                return this.toastService.error('Ops! Ocorreu um erro inesperado. Tente novamente.');
+            }
+            this.toastService.error(error.message);
+        }
     }
 
-    getCards(): Card[] {
-        if (!this._gameConfig) {
-            this.goHome();
-            return [];
-        }
-
-        this._pairCount = this._gameConfig.numPairs;
+    private _getCards(): Card[] {
+        this._reset();
 
         if (!this._gameConfig.singleImgPerPair) {
             return this._getCardsForDifferentImagesPerPair();
         }
         return this._getCardsForSameImagePerPair();
+    }
+
+    private _reset() {
+        this._pairCount = this._gameConfig.numPairs;
+        this._coverCards.next([]);
     }
 
     private _getCardsForSameImagePerPair(): Card[] {
@@ -108,7 +125,7 @@ export class GameService {
         if (keys.length !== filenames.length / 2 ||
             Object.values(occurrences).some(count => count != 2)
         ) {
-            throw new Error('Em caso de imagens diferentes por par, os nomes dos arquivos devem seguir o padrão informado');
+            throw new GameConfigError('Em caso de imagens diferentes por par, os nomes dos arquivos devem seguir o padrão informado');
         }
 
         return keys;
@@ -179,6 +196,11 @@ export class GameService {
         }, VALUES.winNotificationTimeout / 2);
 
         return win;
+    }
+
+    restartGame(cards: Card[]) {
+        this._reset();
+        return this._getFinalShuffledCardsWithId( this._shuffleCards(cards) );
     }
 
     getCoveredCards() {
