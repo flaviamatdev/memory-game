@@ -6,11 +6,6 @@ import { NUM_ICONS } from 'src/app/shared/constants/icons';
 import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 
-enum InputTypeEnum {
-    MANUALLY = 1,
-    CONFIG_FILE = 2
-}
-
 @Component({
     selector: 'app-game-config-form',
     templateUrl: './game-config-form.component.html',
@@ -18,11 +13,10 @@ enum InputTypeEnum {
 })
 export class GameConfigFormComponent implements OnInit {
 
-    readonly INPUT_TYPE = InputTypeEnum;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
-    inputType: InputTypeEnum;
+    insertDataManually: boolean = true;
     options: { [key: string]: any[] } = {};
     flag: any = {};
 
@@ -33,16 +27,6 @@ export class GameConfigFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this._setOptions();
-    }
-
-    onChangeInputType($value: InputTypeEnum) {
-        this.inputType = $value;
-        if (this.inputType == InputTypeEnum.CONFIG_FILE) {
-            this.form = this.fb.group({});
-            return;
-        }
-        
         this._initForm();
         this._setOptions();
     }
@@ -63,11 +47,6 @@ export class GameConfigFormComponent implements OnInit {
 
     private _setOptions() {
         this.options = {
-            inputType: [
-                { id: InputTypeEnum.MANUALLY, label: 'Inserir manualmente' },
-                { id: InputTypeEnum.CONFIG_FILE, label: 'Enviar arquivo de configuração' },
-            ],
-
             cardId: [
                 { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
                 { id: CardIdTypeEnum.IMAGES, label: `Ícones (máximo ${NUM_ICONS} cartas)` },
@@ -76,6 +55,16 @@ export class GameConfigFormComponent implements OnInit {
         }
     }
 
+    onChangeInputType($insertConfigFile: boolean) {
+        this.insertDataManually = !$insertConfigFile;
+
+        if ($insertConfigFile) {
+            this.form = this.fb.group({});
+            return;
+        }
+        
+        this.ngOnInit();
+    }
 
     onSelectConfigFile($event: any) {
         let file: File = $event?.target?.files[0];
