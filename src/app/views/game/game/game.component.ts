@@ -3,7 +3,6 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
-import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { Card } from 'src/app/shared/model/card';
 
 @Component({
@@ -16,7 +15,6 @@ export class GameComponent implements OnInit {
     title: string;
     backgroundStyle: any = '';
     cardRows: Card[][] = [];
-    grid: any;
 
     private _boardDim: BoardDim;
 
@@ -49,13 +47,6 @@ export class GameComponent implements OnInit {
         let numCols = (numCards % 5 == 0 ? 5 : 4);
         let numRows = numCards / numCols
         this._boardDim = new BoardDim(numRows, numCols);
-
-        if (this.gameService.config.cardIdType == CardIdTypeEnum.ROW_COLUMN) {
-            this.grid = {
-                rows:    [...Array(numRows).keys()].map(r => String.fromCharCode('A'.charCodeAt(0) + r)),
-                columns: [...Array(numCols).keys()].map(c => c+1)
-            }
-        }
     }
 
     private _startNewGame() {
