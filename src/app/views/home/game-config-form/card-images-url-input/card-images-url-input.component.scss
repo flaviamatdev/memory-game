@@ -1,9 +1,13 @@
-.layout {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
 .d-flex-col {
     gap: 1em;
+}
+
+.flex-2 {
+    flex: 2 0 0;
+}
+.flex-4 {
+    flex: 4 0 0;
+}
+.flex-8 {
+    flex: 8 0 0;
 }

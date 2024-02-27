@@ -90,11 +90,6 @@ export class GameConfigFormComponent implements OnInit {
     submit() {
         this.form.markAllAsTouched();
         if (this.form.invalid) {
-            console.log(
-                Object.entries(this.form.controls)
-                    .filter(([key, control]) => control.invalid)
-                    .map(([key, control]) => key)
-            )//.
             return this.toastService.showInvalidFormError();
         }
 

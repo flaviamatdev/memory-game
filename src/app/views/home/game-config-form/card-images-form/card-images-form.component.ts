@@ -12,7 +12,7 @@ import { GameConfigFormComponent } from '../game-config-form.component';
 export class CardImagesFormComponent implements OnInit {
 
     readonly IMAGE_SRC_TYPE = ImageSourceTypeEnum;
-    readonly MIN_IMAGES = 4;
+    readonly MIN_NUM_PAIRS = 2;
 
     @Input() parent: GameConfigFormComponent;
 
@@ -37,7 +37,7 @@ export class CardImagesFormComponent implements OnInit {
 
     onChangeCardImageSrcType($value: ImageSourceTypeEnum) {
         if ($value === ImageSourceTypeEnum.URL) {
-            this.form.addControl('numPairs', new FormControl(null, [Validators.required, Validators.min(this.MIN_IMAGES)]));
+            this.form.addControl('numPairs', new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
         } else {
             this.form.removeControl('numPairs');
         }
@@ -46,7 +46,7 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     onInsertNumImages($value: number) {
-        if ($value < this.MIN_IMAGES) {
+        if ($value < this.MIN_NUM_PAIRS) {
             this.pairConfig = null;
             return;
         }

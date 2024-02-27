@@ -10,7 +10,7 @@
 
     <div [ngSwitch]="cardImageSrcType">
         <app-input-number *ngSwitchCase="IMAGE_SRC_TYPE.URL" 
-            label="Nº de pares"  [form]="form" controlName="numPairs" [min]="MIN_IMAGES"
+            label="Nº de pares"  [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS"
             (onChange)="onInsertNumImages($event)">
         </app-input-number>
 
@@ -22,6 +22,8 @@
 </div>
 
 <div *ngIf="showCardImageUrlInputs" class="form-line">
-    <app-card-images-url-input [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
-    </app-card-images-url-input>
+    <div class="form-item mt-2">
+        <app-card-images-url-input [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
+        </app-card-images-url-input>
+    </div>
 </div>
