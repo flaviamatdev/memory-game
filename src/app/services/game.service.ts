@@ -118,7 +118,7 @@ export class GameService {
     }
 
     get warningMsgForDiffImagesPerPair(): string {
-        return `Oos nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} .`;
+        return `os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} .`;
     }
 
     private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {
