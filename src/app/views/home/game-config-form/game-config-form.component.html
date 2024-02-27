@@ -1,8 +1,10 @@
+<h2 class="color-primary">Monte o seu jogo</h2>
+
 <div>
     <mat-label>Selecione como deseja inserir as informações para o jogo:</mat-label>
 
-    <div class="form-line mt-2 ms-4">
-        <app-radio-group-model [options]="options.inputType" [defaultOptionValue]="inputType"
+    <div class="mt-2 ms-4">
+        <app-radio-group-model [options]="options.inputType" [flexDirectionRow]="true"
             (onChange)="onChangeInputType($event)">
         </app-radio-group-model>
     </div>
@@ -11,6 +13,7 @@
 <div [ngSwitch]="inputType" class="mt-4">
     <div *ngSwitchCase="INPUT_TYPE.MANUALLY">
         <form *ngIf="form" [formGroup]="form">
+            <span class="subtitle color-primary">Dados Principais</span>
             <div class="form-line">
                 <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
 
@@ -20,7 +23,7 @@
             </div>
 
             <mat-divider></mat-divider>
-            <span>Imagem de Fundo</span>
+            <span class="subtitle color-primary">Imagem de Fundo</span>
 
             <div class="form-line">
                 <app-select-yes-no label="Inserir imagem de fundo?"
@@ -33,7 +36,7 @@
             </div>
 
             <mat-divider></mat-divider>
-            <span>Imagens das Cartas</span>
+            <span class="subtitle color-primary">Imagens das Cartas</span>
             <app-card-images-form [parent]="this"></app-card-images-form>
         </form>
 

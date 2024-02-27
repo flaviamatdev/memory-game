@@ -21,7 +21,7 @@ export class GameConfigFormComponent implements OnInit {
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
-    inputType = InputTypeEnum.MANUALLY;
+    inputType: InputTypeEnum;
     options: { [key: string]: any[] } = {};
     flag: any = {};
 
@@ -32,7 +32,7 @@ export class GameConfigFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.onChangeInputType(this.inputType);
+        this._setOptions();
     }
 
     onChangeInputType($value: InputTypeEnum) {
@@ -64,7 +64,7 @@ export class GameConfigFormComponent implements OnInit {
         this.options = {
             inputType: [
                 { id: InputTypeEnum.MANUALLY, label: 'Inserir manualmente' },
-                { id: InputTypeEnum.CONFIG_FILE, label: 'Inserir arquivo de configuração' },
+                { id: InputTypeEnum.CONFIG_FILE, label: 'Enviar arquivo de configuração' },
             ],
 
             cardId: [

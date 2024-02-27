@@ -64,3 +64,6 @@ $my-theme: mat-light-theme(
 .bg-primary-2 {
     background-color: mat-color($primary);
 }
+.color-primary {
+    color: mat-color($primary);
+}
