@@ -39,7 +39,7 @@ export class GameConfigFormComponent implements OnInit {
             backgroundImgSrc: new FormControl(null),
 
             singleImgPerPair: new FormControl(null, Validators.required),
-            cardImageSrcType: new FormControl(false, Validators.required),
+            cardImageSrcType: new FormControl(null, Validators.required),
             cardImages: new FormControl(null, Validators.required),
         });
     }
