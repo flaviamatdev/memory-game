@@ -1,9 +1,20 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <span class="title">MEMORY GAME</span>
+        <span class="toolbar-title">MEMORY GAME</span>
     </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="p-3">
-    <button mat-raised-button color="primary" (click)="buildGame()">Crie seu jogo customizado</button>
+<div class="p-3 text-center">
+
+    <h1>Bem vindo!</h1>
+
+    <div class="d-flex-col main-font">
+        <span>Este é um espaço para você criar um jogo da memória customizado para jogar coletivamente.</span>
+        <span>As cartas possuem identificadores para facilitar a interação entre o mediador e os jogadores.</span>
+        <span>Temos 3 tipos de identificadores: Números, Ícones e Linhas/Colunas</span>
+    </div>
+
+    <div class="mt-4">
+        <button mat-raised-button color="primary" (click)="buildGame()">Crie seu jogo customizado</button>
+    </div>
 </div>

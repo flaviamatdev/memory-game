@@ -1,5 +1,6 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "assets/styles/theme.scss";
+@import "assets/styles/mat-button";
 @import "assets/styles/mat-form-field";
 
 html,
@@ -8,8 +9,9 @@ body {
 }
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    // font-family: Nunito, Raleway, sans-serif !important;
 }
+
 .mat-button.mat-primary .mat-button-focus-overlay {
     background-color: transparent !important;
 }
@@ -18,7 +20,7 @@ body {
     height: 80px !important;
 }
 
-.title {
+.toolbar-title {
     margin-left: auto;
     margin-right: auto;
     font-family: Quicksand;
@@ -27,6 +29,9 @@ body {
     padding-bottom: 0.5rem;
 }
 
+.main-font {
+    font-family: Nunito, Raleway, sans-serif !important;
+}
 .quicksand {
     font-family: Quicksand;
 }
