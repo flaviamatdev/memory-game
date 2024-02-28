@@ -1,53 +1,37 @@
 <h2 class="color-primary">Monte o seu jogo</h2>
 
 <div class="main-instructions mb-4">
-    <mat-label>Preencha o formulário abaixo com as informações para o jogo ou, se preferir, você pode:</mat-label>
-
-    <div class="ms-4">
-        <mat-checkbox (change)="onChangeInputType($event.checked)" color="primary">
-            Enviar arquivo de configuração
-        </mat-checkbox>
-    </div>
+    <mat-label>Preencha o formulário abaixo com as informações para o jogo:</mat-label>
 </div>
 
-<div *ngIf="insertDataManually; else showUploadConfigFile">
-    <form [formGroup]="form">
-        <mat-divider></mat-divider>
-        <span class="subtitle color-primary">Dados Principais</span>
-        <div class="form-line">
-            <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
+<form [formGroup]="form">
+    <span class="subtitle color-primary">Dados Principais</span>
+    <div class="form-line">
+        <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
 
-            <app-select class="input-card-id" label="Modo de identificação das cartas" 
-                [form]="form" controlName="cardIdType" [options]="options.cardId">
-            </app-select>
-        </div>
-
-        <mat-divider></mat-divider>
-        <span class="subtitle color-primary">Imagem de Fundo</span>
-
-        <div class="form-line">
-            <app-select-yes-no label="Inserir imagem de fundo?"
-                [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
-            </app-select-yes-no>
-
-            <div *ngIf="flag.addBackgroundImg" class="form-item">
-                <app-background-image-form [form]="form" controlName="backgroundImgSrc"></app-background-image-form>
-            </div>
-        </div>
-
-        <mat-divider></mat-divider>
-        <span class="subtitle color-primary">Imagens das Cartas</span>
-        <app-card-images-form [parent]="this"></app-card-images-form>
-    </form>
-
-    <div class="mt-4 text-center">
-        <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
+        <app-select class="input-card-id" label="Modo de identificação das cartas" 
+            [form]="form" controlName="cardIdType" [options]="options.cardId">
+        </app-select>
     </div>
+
+    <mat-divider></mat-divider>
+    <span class="subtitle color-primary">Imagem de Fundo</span>
+
+    <div class="form-line">
+        <app-select-yes-no label="Inserir imagem de fundo?"
+            [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
+        </app-select-yes-no>
+
+        <div *ngIf="flag.addBackgroundImg" class="form-item">
+            <app-background-image-form [form]="form" controlName="backgroundImgSrc"></app-background-image-form>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <span class="subtitle color-primary">Imagens das Cartas</span>
+    <app-card-images-form [parent]="this"></app-card-images-form>
+</form>
+
+<div class="mt-4 text-center">
+    <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
 </div>
-
-<ng-template #showUploadConfigFile>
-    <div>
-        <input type="file" #inputFile hidden (change)="onSelectConfigFile($event)" accept="txt">
-        <button mat-raised-button color="primary" (click)="inputFile.click()">Selecionar arquivo</button>
-    </div>
-</ng-template>

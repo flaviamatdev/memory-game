@@ -16,7 +16,6 @@ export class GameConfigFormComponent implements OnInit {
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     form: FormGroup;
-    insertDataManually: boolean = true;
     options: { [key: string]: any[] } = {};
     flag: any = {};
 
@@ -55,22 +54,6 @@ export class GameConfigFormComponent implements OnInit {
         }
     }
 
-    onChangeInputType($insertConfigFile: boolean) {
-        this.insertDataManually = !$insertConfigFile;
-
-        if ($insertConfigFile) {
-            this.form = this.fb.group({});
-            return;
-        }
-        
-        this.ngOnInit();
-    }
-
-    onSelectConfigFile($event: any) {
-        let file: File = $event?.target?.files[0];
-        // TODO
-        debugger
-    }
 
     onChangeAddBackgroundImg($value: boolean) {
         this.flag.addBackgroundImg = $value;
