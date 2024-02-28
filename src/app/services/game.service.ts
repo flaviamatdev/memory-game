@@ -95,7 +95,7 @@ export class GameService {
     private _getFinalShuffledCardsWithId(cards: Card[]) {
         cards.forEach((card, i) => card.id = `${i + 1}`);
 
-        if (this._gameConfig.cardIdType === CardIdTypeEnum.IMAGES) {
+        if (this._gameConfig.cardIdType === CardIdTypeEnum.ICONS) {
             cards.forEach((card, i) => card.icon = ICONS[i]);
         }
 

@@ -5,11 +5,10 @@
         </div>
 
         <div class="back bg-primary-2">
-            <div [ngSwitch]="cardIdType">
-                <fa-icon *ngSwitchCase="ID_TYPE.IMAGES" [icon]="card.icon" size="3x"></fa-icon>
-
-                <div *ngSwitchDefault class="card-id-number quicksand">{{ card.id }}</div>
-            </div>
+            <fa-icon *ngIf="showFrontAsIcon; else showCardId" [icon]="card.icon" size="3x"></fa-icon>
+            <ng-template #showCardId>
+                <div class="card-id-number quicksand">{{ card.id }}</div>
+            </ng-template>
         </div>
     </div>
 </div>

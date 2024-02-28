@@ -1,5 +1,11 @@
 export enum CardIdTypeEnum {
     NUMBERS = 1,
-    IMAGES,
-    ROW_COLUMN
+    ROW_COLUMN,
+    ICONS    
+}
+
+export const CardIdTypeName = {
+    [CardIdTypeEnum.NUMBERS]: 'Números',
+    [CardIdTypeEnum.ROW_COLUMN]: 'Linha/Coluna',
+    [CardIdTypeEnum.ICONS]: 'Ícones',
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { NUM_ICONS } from 'src/app/shared/constants/icons';
-import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
+import { CardIdTypeEnum, CardIdTypeName } from 'src/app/shared/enums/card-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 
 @Component({
@@ -45,11 +45,21 @@ export class GameConfigFormComponent implements OnInit {
     }
 
     private _setOptions() {
+        const cardIdTypeName = CardIdTypeName;
         this.options = {
             cardId: [
-                { id: CardIdTypeEnum.NUMBERS, label: 'Números' },
-                { id: CardIdTypeEnum.IMAGES, label: `Ícones (máximo ${NUM_ICONS} cartas)` },
-                { id: CardIdTypeEnum.ROW_COLUMN, label: 'Linhas e colunas' },
+                { 
+                    id: CardIdTypeEnum.NUMBERS, 
+                    label: cardIdTypeName[CardIdTypeEnum.NUMBERS] 
+                },
+                { 
+                    id: CardIdTypeEnum.ROW_COLUMN, 
+                    label: cardIdTypeName[CardIdTypeEnum.ROW_COLUMN] 
+                },
+                { 
+                    id: CardIdTypeEnum.ICONS, 
+                    label: `${cardIdTypeName[CardIdTypeEnum.ICONS]} (máximo ${NUM_ICONS} cartas)` 
+                },
             ],
         }
     }

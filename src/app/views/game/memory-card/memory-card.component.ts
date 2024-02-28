@@ -10,13 +10,11 @@ import { Card } from 'src/app/shared/model/card';
 })
 export class MemoryCardComponent implements OnInit {
 
-    readonly ID_TYPE = CardIdTypeEnum;
-
     @Input() card!: Card;
 
     @Output() onSelect = new EventEmitter<Card>();
 
-    cardIdType: CardIdTypeEnum;
+    showFrontAsIcon: boolean;
 
     private _isRotated: boolean;
 
@@ -27,7 +25,7 @@ export class MemoryCardComponent implements OnInit {
 	}
 
     ngOnInit(): void {
-        this.cardIdType = this.gameService.config.cardIdType;
+        this.showFrontAsIcon = (this.gameService.config.cardIdType === CardIdTypeEnum.ICONS);
 
         this.gameService.getCoveredCards().subscribe(coveredCards => 
             coveredCards.map(card => this._isRotated = (card.id == this.card.id) ? false : this._isRotated)
