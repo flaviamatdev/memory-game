@@ -5,13 +5,22 @@
 </mat-toolbar>
 
 <div class="p-3 text-center">
-
     <h1>Bem vindo!</h1>
 
     <div class="d-flex-col main-font">
         <span>Este é um espaço para você criar um jogo da memória customizado para jogar coletivamente.</span>
         <span>As cartas possuem identificadores para facilitar a interação entre o mediador e os jogadores.</span>
-        <span>Temos 3 tipos de identificadores: Números, Ícones e Linhas/Colunas</span>
+        <span>Temos 3 tipos de identificadores para as cartas:</span>
+
+        <div class="card-id-info-box">
+            <div *ngFor="let data of cardIds" class="card-id-info">
+                <div>{{ data.text.title }}</div>
+                <div>
+                    <img [src]="data.src" alt="Image">
+                </div>
+                <div class="card-id-bottom-text">{{ data.text.bottom }}</div>
+            </div>
+        </div>
     </div>
 
     <div class="mt-4">
