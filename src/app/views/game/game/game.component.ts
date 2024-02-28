@@ -62,8 +62,6 @@ export class GameComponent implements OnInit {
             this.gameService.setIdAsRowColumn(r, currCardRow);
             this.cardRows.push(currCardRow);
         }
-
-        this._printPairs();//.
     }
 
     // TODO remover
