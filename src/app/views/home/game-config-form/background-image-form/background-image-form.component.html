@@ -6,7 +6,7 @@
 
     <div class="form-item">
         <div class="input-preview">
-            <div [ngSwitch]="isUrl" class="form-item">
+            <div [ngSwitch]="isUrl" [ngClass]="isUrl ? 'form-item' : ''">
                 <div *ngSwitchCase="true">
                     <app-input-text label="Link da imagem" [form]="form" [controlName]="myControlName.url" 
                         (onChange)="onInsertUrl($event)">
