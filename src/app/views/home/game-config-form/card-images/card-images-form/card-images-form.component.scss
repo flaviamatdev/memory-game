@@ -8,6 +8,17 @@
     gap: 1em;
 }
 
+.num-pairs {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: flex-start;
+
+    button {
+        margin-top: 1.5rem;
+    }
+}
+
 .file-warning {
     display: flex;
     align-items: center;

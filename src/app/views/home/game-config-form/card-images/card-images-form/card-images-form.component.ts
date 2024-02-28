@@ -46,9 +46,12 @@ export class CardImagesFormComponent implements OnInit {
         return this.form.get('singleImgPerPair').value as boolean;
     }
 
+    private get _numPairs() {
+        return this.form?.get('numPairs')?.value as number;
+    }
 
     onChangeSingleImgPerPair() {
-        this._setPairConfig(this.form.get('numPairs')?.value);
+        this._setPairConfig(this._numPairs);
     }
 
     onChangeCardImageSrcType($value: ImageSourceTypeEnum) {
@@ -61,13 +64,18 @@ export class CardImagesFormComponent implements OnInit {
         this._setPairConfig(0);
     }
 
-    onInsertNumImages($value: number) {
-        if ($value < this.MIN_NUM_PAIRS) {
+    get disableAddUrlPairsBtn(): boolean {
+        return this.form?.get('numPairs')?.invalid ?? false;
+    }
+
+    addUrlPairs() {
+        let numPairs = this._numPairs;
+        if (numPairs < this.MIN_NUM_PAIRS) {
             this.pairConfig = null;
             return;
         }
 
-        this._setPairConfig($value);
+        this._setPairConfig(numPairs);
     }
 
     private _setPairConfig(numPairs: number) {

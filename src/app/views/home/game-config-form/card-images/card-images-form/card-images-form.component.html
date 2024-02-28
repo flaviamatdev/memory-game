@@ -9,11 +9,17 @@
     </app-select-image-src-type>
 
     <div [ngSwitch]="cardImageSrcType">
-        <app-input-number *ngSwitchCase="IMAGE_SRC_TYPE.URL" 
-            label="Nº de pares"  [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS"
-            (onChange)="onInsertNumImages($event)">
-        </app-input-number>
+        <div *ngSwitchCase="IMAGE_SRC_TYPE.URL" class="num-pairs">
+            <app-input-number label="Nº de pares" labelComment="(após preencher, clique no botão ao lado)"
+                [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS">
+            </app-input-number>
 
+            <button mat-stroked-button type="button" color="primary" (click)="addUrlPairs()" 
+                [disabled]="disableAddUrlPairsBtn">
+                <mat-icon>add</mat-icon> Adicionar links
+            </button>
+        </div>
+        
         <app-upload-image *ngSwitchCase="IMAGE_SRC_TYPE.UPLOAD" 
             label="Selecione a pasta que contém as imagens das cartas" 
             [form]="form" controlName="cardImages" [selectAllDir]="true">
@@ -26,11 +32,10 @@
     <span>Envio de arquivos diferentes por par: {{ warningMsgForDiffImagesPerPair }} 
         Veja um exemplo <a class="example-link" (click)="openExample()">aqui</a>.
     </span>
-    
 </div>
 
 <div *ngIf="showCardImageUrlInputs" class="form-line">
-    <div class="form-item mt-2">
+    <div class="form-item mt-3">
         <app-card-images-url-input [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
         </app-card-images-url-input>
     </div>
