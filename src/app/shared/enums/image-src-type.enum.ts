@@ -1,4 +1,4 @@
 export enum ImageSourceTypeEnum {
-    URL = 1,
-    UPLOAD = 2,
+    UPLOAD = 1,
+    URL = 2,
 }

@@ -15,13 +15,13 @@ export class SelectImageSrcTypeComponent extends SelectComponent implements OnIn
 
         this.options = [
             { 
+                id: ImageSourceTypeEnum.UPLOAD, 
+                label: labels.upload
+            },
+            { 
                 id: ImageSourceTypeEnum.URL, 
                 label: labels.url
             },
-            { 
-                id: ImageSourceTypeEnum.UPLOAD, 
-                label: labels.upload
-            }
         ];
     }
 
@@ -34,7 +34,7 @@ export class SelectImageSrcTypeComponent extends SelectComponent implements OnIn
 
         return {
             title: `Como deseja inserir a${suffix} image${imgSuffix}?`,
-            url: `Link${suffix} da${suffix} image${imgSuffix}`,
+            url: `Inserir link${suffix} da${suffix} image${imgSuffix}`,
             upload: `Enviar arquivo${suffix}`
         }
     }
