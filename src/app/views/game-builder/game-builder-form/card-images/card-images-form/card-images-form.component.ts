@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
-import { GameConfigFormComponent } from '../../game-config-form.component';
-import { PairConfig } from '../../pair-config.model';
 import { DialogService } from 'src/app/services/dialog.service';
+import { GameConfigFormComponent } from '../../game-builder-form.component';
+import { PairConfig } from '../../pair-config.model';
 import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 
 @Component({

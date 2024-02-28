@@ -7,9 +7,9 @@ import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 
 @Component({
-    selector: 'app-game-config-form',
-    templateUrl: './game-config-form.component.html',
-    styleUrls: ['./game-config-form.component.scss']
+    selector: 'app-game-builder-form',
+    templateUrl: './game-builder-form.component.html',
+    styleUrls: ['./game-builder-form.component.scss']
 })
 export class GameConfigFormComponent implements OnInit {
 
