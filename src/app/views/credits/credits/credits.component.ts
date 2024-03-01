@@ -5,11 +5,17 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './credits.component.html',
     styleUrls: ['./credits.component.scss']
 })
-export class CreditsComponent implements OnInit {
+export class CreditsComponent {
 
-    constructor() { }
-
-    ngOnInit(): void {
-    }
+    readonly CREDITS = [
+        {
+            text: 'Código fonte adaptado de ',
+            url: 'https://bariscanyilmaz.github.io/memory-game-angular'
+        },
+        {
+            text: 'Efeitos sonoros: ',
+            url: 'https://pixabay.com/sound-effects'
+        },
+    ];
 
 }
