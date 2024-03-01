@@ -41,11 +41,20 @@ export class GameService {
         return this._gameConfig;
     }
 
-    get isGameFinished() {
+    get isGameFinished(): boolean {
         return this._pairCount == 0;
     }
 
+    get isPlaying(): boolean {
+        return !!this._gameConfig;
+    }
+
+    liveGame() {
+        this._gameConfig = null;
+    }
+
     goHome() {
+        this.liveGame();
         this.router.navigate(['']);
     }
 

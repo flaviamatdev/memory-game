@@ -95,38 +95,11 @@ export class GameComponent implements OnInit {
     }
 
     newGame() {
-        this._checkGameFinishedAndDoIt(
-            'Tem certeza que deseja iniciar novo jogo?',
-            () => this._startNewGame()
-        );
-    }
-
-    goHome() {
-        this._checkGameFinishedAndDoIt(
-            'Tem certeza que deseja sair do jogo?',
-            () => this._goHome()
-        );
-    }
-
-    private _checkGameFinishedAndDoIt(confirmQuestion: string, callback: Function) {
+        const callback = () => this._startNewGame();
         if (!this.gameService.isGameFinished) {
-            this._openConfirmationDialog(confirmQuestion, callback);
-            return;
+            return this.dialogService.openLiveGameConfirmationDialog(callback, 'Tem certeza que deseja iniciar novo jogo?');
         }
-
         callback();
-    }
-
-    private _openConfirmationDialog(confirmQuestion: string, callback: Function) {
-        this.dialogService.openConfirmationDialog({
-            header: {
-                icon: 'pan_tool',
-                iconColor: 'darkorange',
-                title: 'Espere! O jogo ainda não acabou!'
-            },
-            bodyText: confirmQuestion,
-            okCallback: callback
-        });
     }
 
     onChooseCard($card: Card) {

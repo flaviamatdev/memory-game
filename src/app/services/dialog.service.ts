@@ -33,6 +33,18 @@ export class DialogService {
         });
     }
 
+    openLiveGameConfirmationDialog(callback: Function, confirmQuestion?: string) {
+        this.openConfirmationDialog({
+            header: {
+                icon: 'pan_tool',
+                iconColor: 'darkorange',
+                title: 'Espere! O jogo ainda não acabou!'
+            },
+            bodyText: confirmQuestion ?? 'Tem certeza que deseja sair do jogo?',
+            okCallback: callback
+        });
+    }
+
     openCustomDialog(component: any, width: number, data: any = {}) {
         this.dialog.open(component, {
             width: this._getWidthAccordingScreen(width),
