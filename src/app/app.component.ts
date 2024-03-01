@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
             {
                 icon: 'copyright',
                 text: 'Créditos',
-                routerLink: '/', // TODO
+                routerLink: '/credits',
             },
         ]
     }
