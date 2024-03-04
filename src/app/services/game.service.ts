@@ -4,9 +4,9 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
 import { VALUES } from '../shared/constants/global.values';
-import { ICONS } from '../shared/constants/icons';
+import { ICONS, NUM_ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
-import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
+import { CardIdTypeEnum, CardIdTypeName } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { CardImage } from '../shared/model/card-image.model';
@@ -22,6 +22,7 @@ const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 })
 export class GameService {
 
+    private _toolbarTitle: string = this._defaultToolbarTitle;
     private _gameConfig: GameConfig;
     private _pairCount: number = 0;
     private _coverCards = new BehaviorSubject<Card[]>([]);
@@ -37,22 +38,60 @@ export class GameService {
         library.addIcons(...ICONS);
     }
 
+    get toolbarTitle() {
+        return this._toolbarTitle;
+    }
+
+    private get _defaultToolbarTitle() {
+        return 'Jogo da memória';
+    }
+
     get config() {
         return this._gameConfig;
     }
 
-    get isGameFinished() {
+    get isGameFinished(): boolean {
         return this._pairCount == 0;
     }
 
+    get isPlaying(): boolean {
+        return !!this._gameConfig && !this.isGameFinished;
+    }
+
+    liveGame() {
+        this._gameConfig = null;
+        this._pairCount = 0;
+        this._toolbarTitle = this._defaultToolbarTitle;
+    }
+
     goHome() {
+        this.liveGame();
         this.router.navigate(['']);
+    }
+
+    getCardIpOptions() {
+        const cardIdTypeName = CardIdTypeName;
+        return [
+            { 
+                id: CardIdTypeEnum.NUMBERS, 
+                label: cardIdTypeName[CardIdTypeEnum.NUMBERS] 
+            },
+            { 
+                id: CardIdTypeEnum.ROW_COLUMN, 
+                label: cardIdTypeName[CardIdTypeEnum.ROW_COLUMN] 
+            },
+            { 
+                id: CardIdTypeEnum.ICONS, 
+                label: `${cardIdTypeName[CardIdTypeEnum.ICONS]} (máximo ${NUM_ICONS} cartas)` 
+            },
+        ]
     }
 
     create(gameConfig: GameConfig) {
         this._gameConfig = gameConfig;
         try {
             let cards = this._getCards();
+            this._toolbarTitle = gameConfig.title;
             this.audioService.load();
             this.router.navigate(['game'], {
                 state: {

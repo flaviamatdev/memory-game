@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { NUM_ICONS } from 'src/app/shared/constants/icons';
-import { CardIdTypeEnum, CardIdTypeName } from 'src/app/shared/enums/card-id-type.enum';
+import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
+import { CardImage } from 'src/app/shared/model/card-image.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
+import { GameBuilderComponent } from '../game-builder/game-builder.component';
 
 @Component({
     selector: 'app-game-builder-form',
@@ -14,6 +15,8 @@ import { GameConfig } from 'src/app/shared/model/game-config.model';
 export class GameConfigFormComponent implements OnInit {
 
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
+
+    @Input() parent: GameBuilderComponent;
 
     form: FormGroup;
     options: { [key: string]: any[] } = {};
@@ -26,8 +29,15 @@ export class GameConfigFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.flag = {
+            isDemo: this._isDemo
+        }
         this._initForm();
         this._setOptions();
+    }
+
+    private get _isDemo() {
+        return this.parent.isDemo;
     }
 
     private _initForm() {
@@ -42,25 +52,24 @@ export class GameConfigFormComponent implements OnInit {
             cardImageSrcType: new FormControl(null, Validators.required),
             cardImages: new FormControl(null, Validators.required),
         });
+
+        if (this._isDemo) {
+            this.form.addControl('numPairs', new FormControl(null, Validators.required));
+            this.form.removeControl('addBackgroundImg');
+            this.form.removeControl('backgroundImgSrc');
+            this.form.removeControl('cardImageSrcType');
+            this.form.removeControl('cardImages');
+        }
     }
 
     private _setOptions() {
-        const cardIdTypeName = CardIdTypeName;
         this.options = {
-            cardId: [
-                { 
-                    id: CardIdTypeEnum.NUMBERS, 
-                    label: cardIdTypeName[CardIdTypeEnum.NUMBERS] 
-                },
-                { 
-                    id: CardIdTypeEnum.ROW_COLUMN, 
-                    label: cardIdTypeName[CardIdTypeEnum.ROW_COLUMN] 
-                },
-                { 
-                    id: CardIdTypeEnum.ICONS, 
-                    label: `${cardIdTypeName[CardIdTypeEnum.ICONS]} (máximo ${NUM_ICONS} cartas)` 
-                },
-            ],
+            cardId: this.gameService.getCardIpOptions(),
+        }
+
+        if (this._isDemo) {
+            this.options.numPairs = [];
+            ([4, 6, 8, 10]).forEach(value => this.options.numPairs.push({ id: value, label: value }));
         }
     }
 
@@ -83,9 +92,29 @@ export class GameConfigFormComponent implements OnInit {
         gameConfig.singleImgPerPair = data.singleImgPerPair;
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
-        gameConfig.cardImages = data.cardImages;
+        gameConfig.cardImages = data.cardImages ?? [];
+
+        if (this._isDemo) {
+            this._setDemoCardImages(gameConfig, data.numPairs);
+        }
         
         this.gameService.create(gameConfig);
+    }
+
+    private _setDemoCardImages(gameConfig: GameConfig, numPairs: number) {
+        const dirPath = 'assets/images/demo-game-cards';
+
+        for (let i = 1; i <= numPairs; i++) {
+            let filename = `num${i}_draw.png`;
+            gameConfig.cardImages.push(new CardImage(`${dirPath}/draw/${filename}`, filename));
+        }
+
+        if (!gameConfig.singleImgPerPair) {
+            for (let i = 1; i <= numPairs; i++) {
+                let filename = `num${i}_word.png`;               
+                gameConfig.cardImages.push(new CardImage(`${dirPath}/words/${filename}`, filename));
+            }
+        }
     }
 
 }

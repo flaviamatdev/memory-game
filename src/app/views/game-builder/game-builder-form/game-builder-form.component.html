@@ -1,31 +1,52 @@
-<form [formGroup]="form">
-    <span class="subtitle color-primary">Dados Principais</span>
-    <div class="form-line">
-        <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
+<div *ngIf="flag.isDemo; else showFullBuilderForm">
+    <form [formGroup]="form">
+        <div class="form-line">
+            <app-select class="form-item" label="Modo de identificação das cartas" 
+                [form]="form" controlName="cardIdType" [options]="options.cardId">
+            </app-select>
 
-        <app-select class="input-card-id" label="Modo de identificação das cartas" 
-            [form]="form" controlName="cardIdType" [options]="options.cardId">
-        </app-select>
-    </div>
+            <app-select-yes-no class="form-item" label="Cada par possui imagens iguais?" 
+                [form]="form" controlName="singleImgPerPair">
+            </app-select-yes-no>
 
-    <mat-divider></mat-divider>
-    <span class="subtitle color-primary">Imagem de Fundo</span>
-
-    <div class="form-line">
-        <app-select-yes-no label="Inserir imagem de fundo?"
-            [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
-        </app-select-yes-no>
-
-        <div *ngIf="flag.addBackgroundImg" class="form-item">
-            <app-background-image-form [form]="form" controlName="backgroundImgSrc"></app-background-image-form>
+            <app-select class="form-item" label="Nº de pares" [form]="form" controlName="numPairs" 
+                [options]="options.numPairs">
+            </app-select>
         </div>
-    </div>
-
-    <mat-divider></mat-divider>
-    <span class="subtitle color-primary">Imagens das Cartas</span>
-    <app-card-images-form [parent]="this"></app-card-images-form>
-</form>
+    </form>
+</div>
+<ng-template #showFullBuilderForm>
+    <form [formGroup]="form">
+        <span class="subtitle color-primary">Dados Principais</span>
+        <div class="form-line">
+            <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
+    
+            <app-select class="input-card-id" label="Modo de identificação das cartas" 
+                [form]="form" controlName="cardIdType" [options]="options.cardId">
+            </app-select>
+        </div>
+    
+        <mat-divider></mat-divider>
+        <span class="subtitle color-primary">Imagem de Fundo</span>
+    
+        <div class="form-line">
+            <app-select-yes-no label="Inserir imagem de fundo?"
+                [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
+            </app-select-yes-no>
+    
+            <div *ngIf="flag.addBackgroundImg" class="form-item">
+                <app-background-image-form [form]="form" controlName="backgroundImgSrc"></app-background-image-form>
+            </div>
+        </div>
+    
+        <mat-divider></mat-divider>
+        <span class="subtitle color-primary">Imagens das Cartas</span>
+        <app-card-images-form [parent]="this"></app-card-images-form>
+    </form>
+</ng-template>
 
 <div class="mt-4 text-center">
-    <button mat-raised-button type="submit" color="primary" (click)="submit()">Criar jogo</button>
+    <button mat-raised-button type="submit" color="primary" (click)="submit()">
+        {{ flag.isDemo ? 'Jogar' : 'Criar jogo' }} 
+    </button>
 </div>

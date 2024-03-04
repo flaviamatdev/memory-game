@@ -5,8 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
-import { GameModule } from './views/game/game.module';
-import { HomeModule } from './views/home/home.module';
 
 @NgModule({
     declarations: [
@@ -18,8 +16,6 @@ import { HomeModule } from './views/home/home.module';
         BrowserAnimationsModule,
         FormsModule,
         MaterialModule,
-        HomeModule,
-        GameModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

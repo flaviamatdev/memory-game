@@ -6,7 +6,6 @@ import { MaterialModule } from 'src/app/material.module';
 import { DialogModule } from 'src/app/shared/components/dialog/dialog.module';
 import { GameComponent } from './game/game.component';
 import { MemoryCardComponent } from './memory-card/memory-card.component';
-import { NavbarComponent } from './navbar/navbar.component';
 
 const routes: Routes = [
     {
@@ -26,7 +25,6 @@ const routes: Routes = [
     declarations: [
         GameComponent,
         MemoryCardComponent,
-        NavbarComponent
     ],
 })
 export class GameModule { }

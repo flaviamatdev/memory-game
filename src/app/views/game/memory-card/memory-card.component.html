@@ -4,7 +4,7 @@
             <img *ngIf="card.img" [src]="card.img.base64" alt="card">
         </div>
 
-        <div class="back bg-primary-2">
+        <div class="back bg-primary">
             <fa-icon *ngIf="showFrontAsIcon; else showCardId" [icon]="card.icon" size="3x"></fa-icon>
             <ng-template #showCardId>
                 <div class="card-id-number quicksand">{{ card.id }}</div>

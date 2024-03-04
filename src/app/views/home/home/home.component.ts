@@ -47,7 +47,7 @@ export class HomeComponent {
     }
 
     buildGame() {
-        this.router.navigateByUrl('builder');
+        this.router.navigateByUrl('game-builder');
     }
 
 }

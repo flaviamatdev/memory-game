@@ -7,13 +7,17 @@ const routes: Routes = [
         loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
     },
     {
-        path: 'builder',
+        path: 'game-builder',
         loadChildren: () => import('./views/game-builder/game-builder.module').then(m => m.GameBuilderModule)
     },
     {
         path: 'game',
         loadChildren: () => import('./views/game/game.module').then(m => m.GameModule)
-    }
+    },
+    {
+        path: 'credits',
+        loadChildren: () => import('./views/credits/credits.module').then(m => m.CreditsModule)
+    },
 ];
 
 @NgModule({

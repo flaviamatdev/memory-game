@@ -1,0 +1,8 @@
+<h1>Créditos</h1>
+
+<div class="d-flex-col">
+    <div *ngFor="let item of CREDITS">
+        <span>{{ item.text }}</span>
+        <a [href]="item.url" target="_blank" rel="noopener">{{ item.url }}</a>
+    </div>
+</div>
