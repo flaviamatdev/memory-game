@@ -15,6 +15,7 @@ export class GameComponent implements OnInit {
     title: string;
     backgroundStyle: any = '';
     cardRows: Card[][] = [];
+    soundIcon: any = {};
 
     private _cards: Card[];
     private _boardDim: BoardDim;
@@ -39,6 +40,7 @@ export class GameComponent implements OnInit {
             this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
         }
         this._setBoardDim(gameConfig.numPairs * 2);
+        this._setSoundIcon();
         this._startGame();
     }
 
@@ -50,6 +52,13 @@ export class GameComponent implements OnInit {
         let numCols = (numCards % 5 == 0 ? 5 : 4);
         let numRows = numCards / numCols
         this._boardDim = new BoardDim(numRows, numCols);
+    }
+        
+    private _setSoundIcon() {
+        this.soundIcon = (this.gameService.playSound ? 
+            { icon: 'volume_up', tooltip: 'Desligar sons' } :
+            { icon: 'volume_off', tooltip: 'Ligar sons' }
+        )
     }
 
     private _startGame() {
@@ -64,34 +73,15 @@ export class GameComponent implements OnInit {
         }
     }
 
-    // TODO remover
-    private _printPairs() {
-        let numCards = this.cardRows.length;
-        if (!numCards) {
-            return;
-        }
-
-        let indices: number[] = [];
-        let pairs: string[] = [];
-
-        let cards: Card[] = [];
-        this.cardRows.forEach(rowCards => cards.push(...rowCards));
-
-        cards.forEach((card, i) => {
-            if (indices.includes(i)) {
-                return;
-            }
-            let j = cards.findIndex((c, j) => c.code === card.code && j != i);
-            indices.push(...[i, j]);
-            pairs.push(`${card.id}, ${cards[j].id}`);
-        })
-
-        console.log('pairs', pairs);
-    }
-
     private _startNewGame() {
         this._cards = this.gameService.restartGame(this._cards);
         this._startGame();
+    }
+
+    
+    swapPlaySound() {
+        this.gameService.swapPlaySound();
+        this._setSoundIcon();
     }
 
     newGame() {

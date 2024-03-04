@@ -23,6 +23,7 @@ const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 export class GameService {
 
     private _toolbarTitle: string = this._defaultToolbarTitle;
+    private _playSound: boolean = true;
     private _gameConfig: GameConfig;
     private _pairCount: number = 0;
     private _coverCards = new BehaviorSubject<Card[]>([]);
@@ -205,7 +206,9 @@ export class GameService {
             return;
         }
 
-        this.audioService.play(AudioEnum.TURN_CARD);
+        if (this._playSound) {
+            this.audioService.play(AudioEnum.TURN_CARD);
+        }        
 
         if (this._selectedCard1 === null) {
             this._selectedCard1 = choosen;
@@ -219,9 +222,11 @@ export class GameService {
         this._selectedCard2 = choosen;
         if (this._selectedCard1.code == this._selectedCard2.code) {
             this._pairCount--;
-            setTimeout(() => {
-                this.audioService.play(AudioEnum.CORRECT);
-            }, 100);
+            if (this._playSound) {
+                setTimeout(() => {
+                    this.audioService.play(AudioEnum.CORRECT);
+                }, 100);
+            }
         }
         else {
             this._coverCards.next([this._selectedCard1, this._selectedCard2]);
@@ -233,7 +238,7 @@ export class GameService {
         let win = this.isGameFinished;
 
         setTimeout(() => {
-            if (win) {
+            if (win && this.playSound) {
                 this.audioService.play(AudioEnum.WIN);
             }
         }, VALUES.winNotificationTimeout / 2);
@@ -248,6 +253,14 @@ export class GameService {
 
     getCoveredCards() {
         return this._coverCards.asObservable().pipe(delay(1200));
+    }
+
+    get playSound() {
+        return this._playSound;
+    }
+
+    swapPlaySound() {
+        this._playSound = !this._playSound;
     }
 
 }
