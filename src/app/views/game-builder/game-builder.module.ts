@@ -14,7 +14,12 @@ import { GameBuilderComponent } from './game-builder/game-builder.component';
 const routes: Routes = [
     {
         path: '',
-        component: GameBuilderComponent
+        component: GameBuilderComponent,
+    },
+    {
+        path: 'demo',
+        component: GameBuilderComponent,
+        data: { demo: true }
     }
 ]
 
@@ -25,7 +30,7 @@ const routes: Routes = [
         BackgroundImageFormComponent,
         CardImagesFormComponent,
         CardImagesUrlInputComponent,
-        ImageFilenameExampleDialogComponent
+        ImageFilenameExampleDialogComponent,
     ],
     imports: [
         CommonModule,

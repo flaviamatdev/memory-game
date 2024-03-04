@@ -7,7 +7,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
     },
     {
-        path: 'builder',
+        path: 'game-builder',
         loadChildren: () => import('./views/game-builder/game-builder.module').then(m => m.GameBuilderModule)
     },
     {

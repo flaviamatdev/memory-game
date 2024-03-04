@@ -33,8 +33,13 @@ export class AppComponent implements OnInit {
             {
                 icon: 'construction',
                 text: 'Crie seu jogo',
-                routerLink: '/builder',
-            },        
+                routerLink: '/game-builder',
+            },
+            {
+                icon: 'extension',
+                text: 'Demo',
+                routerLink: '/game-builder/demo',
+            },
             {
                 icon: 'copyright',
                 text: 'Créditos',
