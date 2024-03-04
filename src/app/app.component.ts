@@ -10,7 +10,6 @@ import { GameService } from './services/game.service';
 })
 export class AppComponent implements OnInit {
 
-    title: string = 'Jogo da Memória';
     menuList: MenuItem[] = [];
 
     constructor(
@@ -46,6 +45,10 @@ export class AppComponent implements OnInit {
                 routerLink: '/credits',
             },
         ]
+    }
+
+    get toolbarTitle() {
+        return this.gameService.toolbarTitle;
     }
 
     goTo(menuItem: MenuItem) {        

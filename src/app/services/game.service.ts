@@ -22,6 +22,7 @@ const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 })
 export class GameService {
 
+    private _toolbarTitle: string = this._defaultToolbarTitle;
     private _gameConfig: GameConfig;
     private _pairCount: number = 0;
     private _coverCards = new BehaviorSubject<Card[]>([]);
@@ -35,6 +36,14 @@ export class GameService {
         private toastService: ToastService,
     ) {
         library.addIcons(...ICONS);
+    }
+
+    get toolbarTitle() {
+        return this._toolbarTitle;
+    }
+
+    private get _defaultToolbarTitle() {
+        return 'Jogo da memória';
     }
 
     get config() {
@@ -52,6 +61,7 @@ export class GameService {
     liveGame() {
         this._gameConfig = null;
         this._pairCount = 0;
+        this._toolbarTitle = this._defaultToolbarTitle;
     }
 
     goHome() {
@@ -81,6 +91,7 @@ export class GameService {
         this._gameConfig = gameConfig;
         try {
             let cards = this._getCards();
+            this._toolbarTitle = gameConfig.title;
             this.audioService.load();
             this.router.navigate(['game'], {
                 state: {
