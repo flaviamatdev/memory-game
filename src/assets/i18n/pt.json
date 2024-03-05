@@ -1,0 +1,12 @@
+{
+	"demo.heading": "Oi",
+	"example": "Meu Exemplo",
+	"mainTitle": "App de Jogo da Memória Coletivo",
+
+	"TRANSLATION": "{{ pt }}",
+    "TRANSLATION_TS": "pt",
+    "TRANSLATION_ACRONYM": {
+        "pt": "{{ pt.pt }}",
+        "en": "{{ pt.en }}"
+    }
+}
