@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogData } from '../shared/components/dialog/confirmation-dialog/confirmation-dialog-data';
 import { ConfirmationDialogComponent } from '../shared/components/dialog/confirmation-dialog/confirmation-dialog.component';
+import { DIALOG_TRANSLATION } from '../shared/components/dialog/dialog-values';
+import { TranslationService } from '../shared/components/translation/translation.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +12,7 @@ export class DialogService {
 
     constructor(
         private dialog: MatDialog,
+        private translationService: TranslationService,
     ) { }
 
     private _getWidthAccordingScreen(widthPercent?: number) {
@@ -38,9 +41,9 @@ export class DialogService {
             header: {
                 icon: 'pan_tool',
                 iconColor: 'darkorange',
-                title: 'Espere! O jogo ainda não acabou!'
+                title: this.translationService.getTranslationObj(DIALOG_TRANSLATION.gameIsNotOverWarning)
             },
-            bodyText: confirmQuestion ?? 'Tem certeza que deseja sair do jogo?',
+            bodyText: confirmQuestion ?? this.translationService.getTranslationObj(DIALOG_TRANSLATION.liveGameConfirmation),
             okCallback: callback
         });
     }
