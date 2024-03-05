@@ -1,23 +1,29 @@
 <div class="text-center">
-    <h1>Bem vindo!</h1>
+    <h1>{{ 'WELCOME' | translate }}</h1>
 
     <div class="d-flex-col">
-        <span>Este é um espaço para você criar um jogo da memória customizado para jogar coletivamente.</span>
-        <span>As cartas possuem identificadores para facilitar a interação entre o mediador e os jogadores.</span>
-        <span>Temos 3 tipos de identificadores para as cartas:</span>
+        <span *ngFor="let text of TRANSLATIONS.texts">{{ 'TRANSLATION' | translate: text }}</span>
 
         <div class="card-id-info-box">
-            <div *ngFor="let data of cardIds" class="card-id-info">
-                <div>{{ data.text.title }}</div>
+            <div *ngFor="let data of TRANSLATIONS.cardIds" class="card-id-info">
+                <div>{{ 'TRANSLATION' | translate: data.text.title }}</div>
                 <div>
                     <img [src]="data.src" alt="Image">
                 </div>
-                <div class="card-id-bottom-text">{{ data.text.bottom }}</div>
+                <div class="card-id-bottom-text">{{ 'TRANSLATION' | translate: data.text.bottom }}</div>
             </div>
         </div>
     </div>
 
-    <div class="mt-5">
-        <button mat-raised-button color="primary" (click)="buildGame()">Crie seu jogo customizado</button>
+    <div class="d-flex-col mt-5">
+        <button mat-raised-button color="primary" (click)="buildGame()">
+            <mat-icon>construction</mat-icon>
+            {{ 'TRANSLATION' | translate: TRANSLATIONS.btn.buildGame }}
+        </button>
+
+        <button mat-stroked-button color="primary" (click)="playDemo()">
+            <mat-icon>extension</mat-icon>
+            {{ 'TRANSLATION' | translate: TRANSLATIONS.btn.playDemo }}
+        </button>
     </div>
 </div>

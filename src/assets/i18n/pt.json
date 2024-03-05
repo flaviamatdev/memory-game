@@ -1,7 +1,6 @@
 {
-	"demo.heading": "Oi",
-	"example": "Meu Exemplo",
-	"mainTitle": "App de Jogo da Memória Coletivo",
+    "TITLE": "Jogo da Memória",
+    "WELCOME": "Bem vindo!",
 
 	"TRANSLATION": "{{ pt }}",
     "TRANSLATION_TS": "pt",
