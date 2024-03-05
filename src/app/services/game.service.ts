@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
+import { TranslationService } from '../shared/components/translation/translation.service';
 import { VALUES } from '../shared/constants/global.values';
 import { ICONS, NUM_ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
@@ -22,7 +23,7 @@ const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 })
 export class GameService {
 
-    private _toolbarTitle: string = this._defaultToolbarTitle;
+    private _toolbarTitle: string;
     private _playSound: boolean = true;
     private _gameConfig: GameConfig;
     private _pairCount: number = 0;
@@ -33,6 +34,7 @@ export class GameService {
     constructor(
         library: FaIconLibrary,
         private router: Router,
+        private translationService: TranslationService,
         private audioService: AudioService,
         private toastService: ToastService,
     ) {
@@ -43,8 +45,15 @@ export class GameService {
         return this._toolbarTitle;
     }
 
-    private get _defaultToolbarTitle() {
-        return 'Jogo da memória';
+    setToolbarTitleDefault() {
+        if (!this.isPlaying) {
+            this._setDefaultToolbarTitle();
+        }
+    }
+
+    private _setDefaultToolbarTitle() {
+        this.translationService.getTranslationByKey('TOOLBAR_TITLE')
+            .subscribe(toolbarTitle => this._toolbarTitle = toolbarTitle);
     }
 
     get config() {
@@ -60,9 +69,9 @@ export class GameService {
     }
 
     liveGame() {
+        this._setDefaultToolbarTitle();
         this._gameConfig = null;
         this._pairCount = 0;
-        this._toolbarTitle = this._defaultToolbarTitle;
     }
 
     goHome() {

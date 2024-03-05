@@ -20,7 +20,11 @@ export class TranslationService {
         return this._storedLang || this.translate.getBrowserLang();
     }
 
-    getTranslation(translationObj: any) {
+    getTranslationByKey(key: any) {
+        return this.translate.get(key);
+    }
+
+    getTranslationObj(translationObj: any) {
         return this.translate.getParsedResult(translationObj, this._getBrowserLang());
     }
 

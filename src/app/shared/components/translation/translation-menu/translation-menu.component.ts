@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TranslationService } from '../translation.service';
 import { TRANSLATION_VALUES } from './translation-values';
 
@@ -10,6 +10,8 @@ import { TRANSLATION_VALUES } from './translation-values';
 export class TranslationMenuComponent implements OnInit {
 
     readonly VALUES = TRANSLATION_VALUES;
+
+    @Output() onChange = new EventEmitter();
 
     languages: any[] = [];
     selectedLanguage: string;
@@ -39,6 +41,7 @@ export class TranslationMenuComponent implements OnInit {
     changeLanguage(lang: string) {
         this.service.setLang(lang);
         this._setSelectedLang();
+        this.onChange.emit(lang);
     }
 
 }
