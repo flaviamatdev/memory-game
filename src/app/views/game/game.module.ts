@@ -6,6 +6,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { DialogModule } from 'src/app/shared/components/dialog/dialog.module';
 import { GameComponent } from './game/game.component';
 import { MemoryCardComponent } from './memory-card/memory-card.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
     {
@@ -20,6 +21,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         FontAwesomeModule,
         MaterialModule,
+        TranslateModule,
         DialogModule,
     ],
     declarations: [
