@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/material.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
@@ -10,6 +11,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     imports: [
         CommonModule,
         MaterialModule,
+        TranslateModule,
     ]
 })
 export class DialogModule { }
