@@ -2,10 +2,16 @@
     "TOOLBAR_TITLE": "Jogo da Memória",
     "WELCOME": "Bem vindo!",
 
+    "ANSWER": {
+        "YES": "Sim",
+        "NO": "Não"
+    },
+
 	"TRANSLATION": "{{ pt }}",
     "TRANSLATION_TS": "pt",
     "TRANSLATION_ACRONYM": {
         "pt": "{{ pt.pt }}",
         "en": "{{ pt.en }}"
-    }
+    }    
+
 }

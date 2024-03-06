@@ -2,6 +2,11 @@
     "TOOLBAR_TITLE": "Memory Game",
     "WELCOME": "Welcome!",
 
+    "ANSWER": {
+        "YES": "Yes",
+        "NO": "No"
+    },
+
 	"TRANSLATION": "{{ en }}",
     "TRANSLATION_TS": "en",
     "TRANSLATION_ACRONYM": {
