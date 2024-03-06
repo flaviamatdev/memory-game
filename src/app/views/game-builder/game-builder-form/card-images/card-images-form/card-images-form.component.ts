@@ -38,11 +38,11 @@ export class CardImagesFormComponent implements OnInit {
         this.addUrls = ($value === ImageSourceTypeEnum.URL);
         if (this.addUrls) {
             this.form.addControl('numPairs', new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
-            this._setUrlPairConfig();
         } else {
             this.form.removeControl('numPairs');
-            this.urlPairConfig = null;
         }
+
+        this._setUrlPairConfig();
     }
 
     onChangeSingleImgPerPair() {
@@ -57,15 +57,17 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     private _setUrlPairConfig() {
+        let singleImgPerPair = this.form.get('singleImgPerPair').value as boolean;
         let cardImageSrcType = this.form.get('cardImageSrcType').value as ImageSourceTypeEnum;
         let numPairs = this.form.get('numPairs')?.value as number;
 
-        if (cardImageSrcType !== ImageSourceTypeEnum.URL || numPairs < this.MIN_NUM_PAIRS) {
+        let isUpload = (cardImageSrcType === ImageSourceTypeEnum.UPLOAD);
+        this.showFilePatternWarning = (isUpload && singleImgPerPair === false);
+
+        if (isUpload || numPairs < this.MIN_NUM_PAIRS) {
             this.urlPairConfig = null;
             return;
         }
-
-        let singleImgPerPair = this.form.get('singleImgPerPair').value as boolean;
 
         let missingValue = ([ singleImgPerPair, cardImageSrcType, numPairs ]).some(value => value == null);
         if (missingValue) {

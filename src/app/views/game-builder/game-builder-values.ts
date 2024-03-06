@@ -81,7 +81,7 @@ export const GAME_BUILDER_TRANSLATION = {
 
         cardImages: {
             pair: {
-                pt: 'Par nº',
+                pt: 'Par nº ',
                 en: 'Pair #'
             },
             url: {
