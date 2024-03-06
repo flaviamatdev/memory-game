@@ -7,7 +7,12 @@
         "NO": "No"
     },
 
-    "REQUIRED_FIELD": "Required field",
+    "FORM_INPUT": {
+        "REQUIRED": "Required field",
+        "INVALID": "Invalid value",
+        "MIN_VALUE": "Minimum value is {{ min }}",
+        "MAX_VALUE": "Maximum value is {{ max }}"
+    },
 
     "DELETE_IMAGE": "Delete image",
 

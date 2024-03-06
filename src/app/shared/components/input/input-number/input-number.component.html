@@ -14,19 +14,19 @@
     
         <mat-error *ngIf="isRequired">
             <mat-icon aria-hidden="false">cancel</mat-icon>
-            Campo <strong>obrigatório</strong>
+            <strong>{{ 'FORM_INPUT.REQUIRED' | translate }}</strong>
         </mat-error>
         <mat-error *ngIf="min!=null && formControl.hasError('min')">
             <mat-icon aria-hidden="false">cancel</mat-icon>
-            Valor mínimo é <strong>{{ min }}</strong>
+            <strong>{{ 'FORM_INPUT.MIN_VALUE' | translate: { min: min } }}</strong>
         </mat-error>
         <mat-error *ngIf="max!=null && formControl.hasError('max')">
             <mat-icon aria-hidden="false">cancel</mat-icon>
-            Valor máximo é <strong>{{ max }}</strong>
+            <strong>{{ 'FORM_INPUT.MAX_VALUE' | translate: { max: max } }}</strong>
         </mat-error>
         <mat-error *ngIf="min==null && max==null && isInvalid">
             <mat-icon aria-label="false">cancel</mat-icon>
-            Valor inserido <strong>inválido</strong>
+            <strong>{{ 'FORM_INPUT.INVALID' | translate }}</strong>
         </mat-error>
     </mat-form-field>
 </div>
