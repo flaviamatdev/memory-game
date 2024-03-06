@@ -1,5 +1,5 @@
-# MemoryGame
+# Memory Game Angular
 
-Projeto original: [https://github.com/bariscanyilmaz/memory-game-angular](https://github.com/bariscanyilmaz/memory-game-angular)
+Available: [click](https://flaviamatdev.github.io/memory-game)
 
-Demo: [click](https://bariscanyilmaz.github.io/memory-game-angular/)
+Source code for game control and animations adapted from: [https://github.com/bariscanyilmaz/memory-game-angular](https://github.com/bariscanyilmaz/memory-game-angular)
