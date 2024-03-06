@@ -10,6 +10,7 @@
     "FORM_INPUT": {
         "REQUIRED": "Required field",
         "INVALID": "Invalid value",
+        "MIN_LENGTH": "Minimun length: {{ minLength }} characters",
         "MIN_VALUE": "Minimum value is {{ min }}",
         "MAX_VALUE": "Maximum value is {{ max }}"
     },

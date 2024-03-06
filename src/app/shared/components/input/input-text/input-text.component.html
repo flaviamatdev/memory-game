@@ -26,5 +26,10 @@
             <mat-icon aria-label="false">cancel</mat-icon>
             <strong>{{ 'FORM_INPUT.INVALID' | translate }}</strong>
         </mat-error>
+
+        <mat-error *ngIf="minLength && hasError('minLength')">
+            <mat-icon aria-label="false">cancel</mat-icon>
+            <strong>{{ 'FORM_INPUT.MIN_LENGTH' | translate: { minLength: minLength } }}</strong>
+        </mat-error>
     </mat-form-field>
 </div>

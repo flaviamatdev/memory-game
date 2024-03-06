@@ -10,6 +10,7 @@
     "FORM_INPUT": {
         "REQUIRED": "Campo obrigatório",
         "INVALID": "Valor inserido inválido",
+        "MIN_LENGTH": "Tamanho mínimo: {{ minLength }} caracteres",
         "MIN_VALUE": "Valor mínimo é {{ min }}",
         "MAX_VALUE": "Valor máximo é {{ max }}"
     },
