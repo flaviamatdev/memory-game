@@ -42,21 +42,21 @@ export class CardImagesFormComponent implements OnInit {
             this.form.removeControl('numPairs');
         }
 
-        this._setUrlPairConfig();
+        this._handleInputChange();
     }
 
     onChangeSingleImgPerPair() {
-        this._setUrlPairConfig();
+        this._handleInputChange();
     }
 
     onChangeNumPairsForUrl($numPairs: number) {
         if ($numPairs < this.MIN_NUM_PAIRS) {
             return;
         }
-        this._setUrlPairConfig();
+        this._handleInputChange();
     }
 
-    private _setUrlPairConfig() {
+    private _handleInputChange() {
         let singleImgPerPair = this.form.get('singleImgPerPair').value as boolean;
         let cardImageSrcType = this.form.get('cardImageSrcType').value as ImageSourceTypeEnum;
         let numPairs = this.form.get('numPairs')?.value as number;
