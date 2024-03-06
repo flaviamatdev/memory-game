@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
@@ -29,6 +30,7 @@ export class GameConfigFormComponent implements OnInit {
         private fb: FormBuilder,
         private gameService: GameService,
         private toastService: ToastService,
+        private translationService: TranslationService,
     ) { }
 
     ngOnInit(): void {
@@ -112,13 +114,14 @@ export class GameConfigFormComponent implements OnInit {
         let data = {...this.form.value };
 
         let gameConfig = new GameConfig();
-        gameConfig.title = data.title;
+        gameConfig.title = data.title.toUpperCase();
         gameConfig.singleImgPerPair = data.singleImgPerPair;
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
         gameConfig.cardImages = data.cardImages ?? [];
 
         if (this._isDemo) {
+            gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
             this._setDemoCardImages(gameConfig, data.numPairs);
         }
         

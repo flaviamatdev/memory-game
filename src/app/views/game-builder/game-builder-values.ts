@@ -36,6 +36,13 @@ export const GAME_BUILDER_TRANSLATION = {
         },
     },
 
+    gameTitle: {
+        demo: {
+            pt: 'Jogo da Memória (Demo)',
+            en: 'Demo Memory Game'
+        }
+    },
+
     input: {
         gameTitle: {
             pt: 'Título do jogo',

@@ -20,10 +20,14 @@ export class AppComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.gameService.setToolbarTitleDefault();
+        this._resetToolbarTitle();
     }
 
     onChangeLanguage() {
+        this._resetToolbarTitle();
+    }
+
+    private _resetToolbarTitle() {
         this.gameService.setToolbarTitleDefault();
     }
 
@@ -39,6 +43,7 @@ export class AppComponent implements OnInit {
             });
         }
 
+        this._resetToolbarTitle();
         this.router.navigateByUrl(menuItem.routerLink);
     }
 

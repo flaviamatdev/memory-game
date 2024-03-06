@@ -29,7 +29,7 @@ export class TranslationService {
     }
 
     getLang(): string {
-        return (this._storedLang || this._browserLang).toUpperCase();
+        return (this._storedLang || this._browserLang);
     }
 
     getAllLanguages() {

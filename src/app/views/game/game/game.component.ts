@@ -16,7 +16,6 @@ export class GameComponent implements OnInit {
 
     readonly TRANSLATION = GAME_TRANSLATION;
 
-    title: string;
     backgroundStyle: any = '';
     cardRows: Card[][] = [];
     soundIcon: any = {};
@@ -40,7 +39,6 @@ export class GameComponent implements OnInit {
             return;
         }
 
-        this.title = gameConfig.title.toUpperCase();
         if (gameConfig.backgroundImgSrc) {
             this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
         }
