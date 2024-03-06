@@ -12,7 +12,6 @@
     "DELETE_IMAGE": "Delete image",
 
 	"TRANSLATION": "{{ en }}",
-    "TRANSLATION_TS": "en",
     "TRANSLATION_ACRONYM": {
         "pt": "{{ en.pt }}",
         "en": "{{ en.en }}"
