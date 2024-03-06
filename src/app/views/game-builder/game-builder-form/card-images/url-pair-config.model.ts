@@ -1,4 +1,4 @@
-export class PairConfig {
+export class UrlPairConfig {
     
     constructor(
         public numPairs: number,

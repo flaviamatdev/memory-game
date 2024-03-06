@@ -7,22 +7,15 @@
         (onChange)="onChangeCardImageSrcType($event)">
     </app-select-image-src-type>
 
-    <div [ngSwitch]="cardImageSrcType">
-        <div *ngSwitchCase="IMAGE_SRC_TYPE.URL" class="num-pairs">
-            <app-input-number label="{{ 'TRANSLATION' | translate: TRANSLATION.input.numPairs }}" 
-                labelComment="{{ 'TRANSLATION' | translate: TRANSLATION.input.numPairsComment }}"
-                [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS">
-            </app-input-number>
-
-            <button mat-stroked-button type="button" color="primary" (click)="addUrlPairs()" 
-                [disabled]="disableAddUrlPairsBtn">
-                <mat-icon>add</mat-icon> 
-                {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.url.addUrlsBtn }}
-            </button>
-        </div>
+    <div [ngSwitch]="addUrls">
+        <app-input-number *ngSwitchCase="true"
+            [labelTranslate]="TRANSLATION.input.numPairs" 
+            [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS"
+            (onChange)="onChangeNumPairsForUrl($event)">
+        </app-input-number>
         
-        <app-upload-image *ngSwitchCase="IMAGE_SRC_TYPE.UPLOAD" 
-            label="{{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.pickDirPath }}" 
+        <app-upload-image *ngSwitchCase="false" 
+            [labelTranslate]="TRANSLATION.input.cardImages.upload.pickDirPath" 
             [form]="form" controlName="cardImages" [selectAllDir]="true">
         </app-upload-image>
     </div>
@@ -38,9 +31,9 @@
     </span>
 </div>
 
-<div *ngIf="showCardImageUrlInputs" class="form-line">
+<div *ngIf="urlPairConfig" class="form-line">
     <div class="form-item mt-3">
-        <app-card-images-url-input [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
+        <app-card-images-url-input [form]="form" controlName="cardImages" [urlPairConfig]="urlPairConfig">
         </app-card-images-url-input>
     </div>
 </div>

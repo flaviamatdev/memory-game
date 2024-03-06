@@ -59,11 +59,6 @@ export const GAME_BUILDER_TRANSLATION = {
             en: 'Number of pairs'
         },
 
-        numPairsComment: {
-            pt: '(após preencher, clique no botão ao lado)',
-            en: '(after filling out, click on the button next to it)'
-        },
-
         cardIdType: {
             pt: 'Modo de identificação das cartas',
             en: 'Card identification mode'
@@ -90,10 +85,6 @@ export const GAME_BUILDER_TRANSLATION = {
                 en: 'Pair #'
             },
             url: {
-                addUrlsBtn: {
-                    pt: 'Adicionar links',
-                    en: 'Add links'
-                },
                 pairImageLink: {
                     pt: 'Link da Imagem do Par ',
                     en: 'Image Link of Pair #'
