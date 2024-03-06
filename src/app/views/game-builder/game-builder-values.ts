@@ -6,7 +6,7 @@ export const GAME_BUILDER_TRANSLATION = {
     pageTitle: {
         gameBuilder: {
             pt: 'Monte o seu jogo',
-            en: 'Build your game'
+            en: 'Create your game'
         },
         demoBuilder: {
             pt: 'Jogo Demonstração',
