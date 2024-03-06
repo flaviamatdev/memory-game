@@ -17,6 +17,8 @@
 
     "DELETE_IMAGE": "Excluir imagem",
 
+    "CLOSE": "Fechar",
+
 	"TRANSLATION": "{{ pt }}",
     "TRANSLATION_ACRONYM": {
         "pt": "{{ pt.pt }}",

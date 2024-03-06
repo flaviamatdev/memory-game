@@ -130,12 +130,24 @@ export const GAME_BUILDER_TRANSLATION = {
             pt: 'Jogar',
             en: 'Play'
         }
-    }
-}
+    },
 
-/* 
-{
-            pt: '',
-            en: ''
+    diffImagesPerPairDialog: {
+        title: {
+            pt: 'Envio de arquivos diferentes por par',
+            en: 'Sending different files per pair'
         },
-*/
+        instruction: {
+            pt: 'Exemplo de nome para arquivos de images para cada par',
+            en: 'Example name for image files for each pair'
+        },
+        pairName: {
+            pt: 'nome do par',
+            en: 'pair name'
+        },
+        imageId: {
+            pt: 'identificacao da imagem',
+            en: 'image identification'
+        }
+    },
+}

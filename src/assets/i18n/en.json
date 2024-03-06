@@ -17,6 +17,8 @@
 
     "DELETE_IMAGE": "Delete image",
 
+    "CLOSE": "Close",
+
 	"TRANSLATION": "{{ en }}",
     "TRANSLATION_ACRONYM": {
         "pt": "{{ en.pt }}",
