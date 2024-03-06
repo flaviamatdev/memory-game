@@ -57,7 +57,6 @@ export class UploadImageComponent extends AbstractInputComponent implements OnIn
     private _clearInput() {
         this._numFiles = 0;
         this._inputElem.nativeElement.value = "";
-        this.onClearInput.emit();
     }
 
     openInputFile() {
@@ -70,6 +69,7 @@ export class UploadImageComponent extends AbstractInputComponent implements OnIn
 
         if ( !(fileList?.length) || fileList.item(0) == null ) {
             this._clearInput();
+            this.onClearInput.emit();
             return;
         }
         
