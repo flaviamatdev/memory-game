@@ -15,6 +15,5 @@
     "TRANSLATION_ACRONYM": {
         "pt": "{{ pt.pt }}",
         "en": "{{ pt.en }}"
-    }    
-
+    }
 }
