@@ -5,6 +5,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
+import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 import { GameBuilderComponent } from '../game-builder/game-builder.component';
 
 @Component({
@@ -14,6 +15,7 @@ import { GameBuilderComponent } from '../game-builder/game-builder.component';
 })
 export class GameConfigFormComponent implements OnInit {
 
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     @Input() parent: GameBuilderComponent;
@@ -21,6 +23,7 @@ export class GameConfigFormComponent implements OnInit {
     form: FormGroup;
     options: { [key: string]: any[] } = {};
     flag: any = {};
+    submitBtnTranslation: any = {};
 
     constructor(
         private fb: FormBuilder,
@@ -34,6 +37,7 @@ export class GameConfigFormComponent implements OnInit {
         }
         this._initForm();
         this._setOptions();
+        this._setSubmitBtn();
     }
 
     private get _isDemo() {
@@ -73,6 +77,12 @@ export class GameConfigFormComponent implements OnInit {
         }
     }
 
+    private _setSubmitBtn() {
+        this.submitBtnTranslation = (this._isDemo ? 
+            this.TRANSLATION.submitBtn.playDemo :
+            this.TRANSLATION.submitBtn.createGame
+        );
+    }
 
     onChangeAddBackgroundImg($value: boolean) {
         this.flag.addBackgroundImg = $value;

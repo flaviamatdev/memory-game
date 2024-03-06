@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 
 @Component({
     selector: 'app-game-builder',
@@ -8,20 +9,23 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameBuilderComponent implements OnInit {
 
-    pageTitle: string = 'Monte o seu jogo';
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
+
+    pageTitleTranslation: any = {};
 
     private _isDemo: boolean;
-
+    
     constructor(
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
     ) {}
 
     ngOnInit(): void {
         this.route.data?.subscribe(data => {
             this._isDemo = data.demo ?? false;
-            if (this._isDemo) {
-                this.pageTitle = 'Demo'
-            }
+            this.pageTitleTranslation = (this._isDemo ? 
+                this.TRANSLATION.pageTitle.demoBuilder :
+                this.TRANSLATION.pageTitle.gameBuilder
+            );
         });
     }
 

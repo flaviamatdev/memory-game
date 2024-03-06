@@ -1,7 +1,7 @@
-<h1 class="color-primary">{{ pageTitle }}</h1>
+<h1 class="color-primary">{{ 'TRANSLATION' | translate: pageTitleTranslation }}</h1>
 
 <div class="main-instructions mb-4">
-    <mat-label>Preencha o formulário abaixo com as informações para o jogo:</mat-label>
+    <mat-label>{{ 'TRANSLATION' | translate: TRANSLATION.instruction }}</mat-label>
 </div>
 
 <app-game-builder-form [parent]="this"></app-game-builder-form>

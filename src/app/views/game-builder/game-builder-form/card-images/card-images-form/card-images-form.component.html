@@ -1,5 +1,5 @@
 <div class="form-line">
-    <app-select-yes-no label="Cada par possui imagens iguais?" 
+    <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleImgPerPair }}" 
         [form]="form" controlName="singleImgPerPair" (onChange)="onChangeSingleImgPerPair()">
     </app-select-yes-no>
 
@@ -10,18 +10,20 @@
 
     <div [ngSwitch]="cardImageSrcType">
         <div *ngSwitchCase="IMAGE_SRC_TYPE.URL" class="num-pairs">
-            <app-input-number label="Nº de pares" labelComment="(após preencher, clique no botão ao lado)"
+            <app-input-number label="{{ 'TRANSLATION' | translate: TRANSLATION.input.numPairs }}" 
+                labelComment="{{ 'TRANSLATION' | translate: TRANSLATION.input.numPairsComment }}"
                 [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS">
             </app-input-number>
 
             <button mat-stroked-button type="button" color="primary" (click)="addUrlPairs()" 
                 [disabled]="disableAddUrlPairsBtn">
-                <mat-icon>add</mat-icon> Adicionar links
+                <mat-icon>add</mat-icon> 
+                {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.url.addUrlsBtn }}
             </button>
         </div>
         
         <app-upload-image *ngSwitchCase="IMAGE_SRC_TYPE.UPLOAD" 
-            label="Selecione a pasta que contém as imagens das cartas" 
+            label="{{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.pickDirPath }}" 
             [form]="form" controlName="cardImages" [selectAllDir]="true">
         </app-upload-image>
     </div>
@@ -29,8 +31,11 @@
 
 <div *ngIf="showFilePatternWarning" class="file-warning">
     <mat-icon>warning</mat-icon>
-    <span>Envio de arquivos diferentes por par: {{ warningMsgForDiffImagesPerPair }} 
-        Veja um exemplo <a class="example-link" (click)="openExample()">aqui</a>.
+    <span>
+        {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.diffImagesPerPair.warning }}
+        <a class="example-link" (click)="openExample()">
+            {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.diffImagesPerPair.warningLink }}
+        </a>.
     </span>
 </div>
 

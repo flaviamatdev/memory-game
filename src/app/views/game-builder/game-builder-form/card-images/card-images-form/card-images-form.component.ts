@@ -7,6 +7,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { GameConfigFormComponent } from '../../game-builder-form.component';
 import { PairConfig } from '../../pair-config.model';
 import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
+import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 
 @Component({
     selector: 'app-card-images-form',
@@ -15,6 +16,7 @@ import { ImageFilenameExampleDialogComponent } from '../card-image-filename-exam
 })
 export class CardImagesFormComponent implements OnInit {
 
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
     readonly FILENAME_SEP = VALUES.upload.fileNameSeparator;
     readonly IMAGE_SRC_TYPE = ImageSourceTypeEnum;
     readonly MIN_NUM_PAIRS = 2;
@@ -89,11 +91,6 @@ export class CardImagesFormComponent implements OnInit {
         }
 
         this.pairConfig = new PairConfig(numPairs, this._singleImgPerPair);
-    }
-    
-
-    get warningMsgForDiffImagesPerPair() {
-        return this.gameService.warningMsgForDiffImagesPerPair;
     }
 
     openExample() {

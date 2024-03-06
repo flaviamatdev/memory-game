@@ -4,6 +4,7 @@ import { UploadImageComponent } from 'src/app/shared/components/input/image/uplo
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
+import { GAME_BUILDER_TRANSLATION } from '../../game-builder-values';
 
 @Component({
     selector: 'app-background-image-form',
@@ -11,6 +12,8 @@ import { FormUtil } from 'src/app/shared/util/form.util';
     styleUrls: ['./background-image-form.component.scss']
 })
 export class BackgroundImageFormComponent implements OnInit {
+
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input.backgroundImg;
 
     @Input() form: FormGroup;
     @Input() controlName: string;

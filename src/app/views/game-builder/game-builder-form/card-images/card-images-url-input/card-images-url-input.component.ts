@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PairConfig } from '../../pair-config.model';
 import { CardImage } from 'src/app/shared/model/card-image.model';
+import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 
 @Component({
     selector: 'app-card-images-url-input',
@@ -9,6 +10,8 @@ import { CardImage } from 'src/app/shared/model/card-image.model';
     styleUrls: ['./card-images-url-input.component.scss']
 })
 export class CardImagesUrlInputComponent implements OnInit, OnChanges {
+
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input.cardImages;
 
     @Input() form: FormGroup;
     @Input() controlName: string;

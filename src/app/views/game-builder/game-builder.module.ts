@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/material.module';
 import { InputModule } from 'src/app/shared/components/input/input.module';
 import { BackgroundImageFormComponent } from './game-builder-form/background-image-form/background-image-form.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
         MaterialModule,
         ReactiveFormsModule,
         FormsModule,
+        TranslateModule,
         InputModule,
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

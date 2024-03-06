@@ -166,10 +166,6 @@ export class GameService {
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
     }
 
-    get warningMsgForDiffImagesPerPair(): string {
-        return `os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} .`;
-    }
-
     private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {
         let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
         let occurrences = ArrayUtil.getNumOccurrences(filenames);

@@ -1,36 +1,48 @@
 <div *ngIf="flag.isDemo; else showFullBuilderForm">
     <form [formGroup]="form">
         <div class="form-line">
-            <app-select class="form-item" label="Modo de identificação das cartas" 
+            <app-select class="form-item" 
+                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.cardIdType }}" 
                 [form]="form" controlName="cardIdType" [options]="options.cardId">
             </app-select>
 
-            <app-select-yes-no class="form-item" label="Cada par possui imagens iguais?" 
+            <app-select-yes-no class="form-item" 
+                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleImgPerPair }}" 
                 [form]="form" controlName="singleImgPerPair">
             </app-select-yes-no>
 
-            <app-select class="form-item" label="Nº de pares" [form]="form" controlName="numPairs" 
-                [options]="options.numPairs">
+            <app-select class="form-item" 
+                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.numPairs }}" 
+                [form]="form" controlName="numPairs" [options]="options.numPairs">
             </app-select>
         </div>
     </form>
 </div>
 <ng-template #showFullBuilderForm>
     <form [formGroup]="form">
-        <span class="subtitle color-primary">Dados Principais</span>
+        <span class="subtitle color-primary">
+            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.mainData }}
+        </span>
+
         <div class="form-line">
-            <app-input-text class="input-title" label="Título" [form]="form" controlName="title"></app-input-text>
+            <app-input-text class="input-title" 
+                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.gameTitle }}" 
+                [form]="form" controlName="title">
+            </app-input-text>
     
-            <app-select class="input-card-id" label="Modo de identificação das cartas" 
+            <app-select class="input-card-id" 
+                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleImgPerPair }}" 
                 [form]="form" controlName="cardIdType" [options]="options.cardId">
             </app-select>
         </div>
     
         <mat-divider></mat-divider>
-        <span class="subtitle color-primary">Imagem de Fundo</span>
+        <span class="subtitle color-primary">
+            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.backgroundImg }}
+        </span>
     
         <div class="form-line">
-            <app-select-yes-no label="Inserir imagem de fundo?"
+            <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.backgroundImg.add }}" 
                 [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
             </app-select-yes-no>
     
@@ -40,13 +52,15 @@
         </div>
     
         <mat-divider></mat-divider>
-        <span class="subtitle color-primary">Imagens das Cartas</span>
+        <span class="subtitle color-primary">
+            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.cardImages }}
+        </span>
         <app-card-images-form [parent]="this"></app-card-images-form>
     </form>
 </ng-template>
 
 <div class="mt-4 text-center">
     <button mat-raised-button type="submit" color="primary" (click)="submit()">
-        {{ flag.isDemo ? 'Jogar' : 'Criar jogo' }} 
+        {{ 'TRANSLATION' | translate: submitBtnTranslation }} 
     </button>
 </div>
