@@ -27,6 +27,7 @@ export class GameService {
     private _playSound: boolean = true;
     private _gameConfig: GameConfig;
     private _pairCount: number = 0;
+    private _foundPairCodes: string[] = []
     private _coverCards = new BehaviorSubject<Card[]>([]);
     private _selectedCard1: Card = null;
     private _selectedCard2: Card = null;
@@ -72,6 +73,7 @@ export class GameService {
         this._setDefaultToolbarTitle();
         this._gameConfig = null;
         this._pairCount = 0;
+        this._foundPairCodes = [];
     }
 
     goHome() {
@@ -111,6 +113,7 @@ export class GameService {
 
     private _reset() {
         this._pairCount = this._gameConfig.numPairs;
+        this._foundPairCodes = [];
         this._coverCards.next([]);
     }
 
@@ -189,7 +192,7 @@ export class GameService {
 
 
     onChooseCard(choosen: Card): boolean {
-        if (this.isGameFinished) {
+        if (this.isGameFinished || this._foundPairCodes.includes(choosen.code)) {
             return;
         }
 
@@ -208,14 +211,8 @@ export class GameService {
 
         this._selectedCard2 = choosen;
         if (this._selectedCard1.code == this._selectedCard2.code) {
-            this._pairCount--;
-            if (this._playSound) {
-                setTimeout(() => {
-                    this.audioService.play(AudioEnum.CORRECT);
-                }, 100);
-            }
-        }
-        else {
+            this._handleFoundPair(choosen);
+        } else {
             this._coverCards.next([this._selectedCard1, this._selectedCard2]);
         }
 
@@ -232,6 +229,17 @@ export class GameService {
 
         return win;
     }
+
+    private _handleFoundPair(choosen: Card) {
+        this._pairCount--;
+        this._foundPairCodes.push(choosen.code);
+        if (this._playSound) {
+            setTimeout(() => {
+                this.audioService.play(AudioEnum.CORRECT);
+            }, 100);
+        }
+    }
+
 
     restartGame(cards: Card[]) {
         this._reset();
