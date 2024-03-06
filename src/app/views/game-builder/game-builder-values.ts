@@ -22,7 +22,7 @@ export const GAME_BUILDER_TRANSLATION = {
     sectionTitle: {
         mainData: {
             pt: 'Dados Principais',
-            en: ''
+            en: 'Main Data'
         },
 
         backgroundImg: {
