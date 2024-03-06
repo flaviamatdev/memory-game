@@ -1,5 +1,7 @@
 <div id="{{controlName}}-div" [ngClass]="inputClass">
-    <app-input-label [label]="label" [comment]="labelComment" [required]="isRequired"></app-input-label>
+    <app-input-label [label]="label" [labelTranslate]="labelTranslate"
+        [comment]="labelComment" [required]="isRequired">
+    </app-input-label>
 
     <mat-form-field appearance="outline" class="w-100 mat-form-field-label-out" floatLabel="never" color="primary">
         <input matInput
@@ -17,17 +19,17 @@
 
         <mat-error *ngIf="isRequired">
             <mat-icon aria-label="false">cancel</mat-icon>
-            Campo <strong>obrigatório</strong>
+            <strong>{{ 'FORM_INPUT.REQUIRED' | translate }}</strong>
         </mat-error>
 
         <mat-error *ngIf="isInvalid">
             <mat-icon aria-label="false">cancel</mat-icon>
-            Valor inserido <strong>inválido</strong>
+            <strong>{{ 'FORM_INPUT.INVALID' | translate }}</strong>
         </mat-error>
 
-        <mat-error *ngIf="hasError('minLength')">
+        <mat-error *ngIf="minLength && hasError('minLength')">
             <mat-icon aria-label="false">cancel</mat-icon>
-            Tamanho mínimo: <strong>{{ minLength }}</strong> caracteres
+            <strong>{{ 'FORM_INPUT.MIN_LENGTH' | translate: { minLength: minLength } }}</strong>
         </mat-error>
     </mat-form-field>
 </div>

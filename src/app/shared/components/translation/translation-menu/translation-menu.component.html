@@ -1,0 +1,16 @@
+<button mat-button [matMenuTriggerFor]="langMenu" class="material-icons-outlined" aria-label="Choose Lang"
+    matTooltip="{{ 'TRANSLATION' | translate: VALUES.menuBtn.tooltip }}" matTooltipPosition="right">
+    <mat-icon>language</mat-icon> {{ selectedLanguage }}
+
+    <mat-menu #langMenu>
+        <button *ngFor="let langBtn of languages" mat-menu-item (click)="changeLanguage(langBtn.lang)"
+            matTooltip="{{ langBtn.tooltip | translate: VALUES.language }}" matTooltipPosition="right">
+            <div class="button-div">
+                <mat-icon>
+                    <img width="100%" [src]="langBtn.flag" [alt]="langBtn.lang">
+                </mat-icon>
+                <span>{{ langBtn.title }}</span>
+            </div>
+        </button>
+    </mat-menu>
+</button>

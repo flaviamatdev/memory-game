@@ -10,8 +10,20 @@ export class SelectYesNoComponent extends SelectComponent implements OnInit {
 
     ngOnInit(): void {
         this.options = [
-            { id: true, label: 'Sim' },
-            { id: false, label: 'Não' }
+            { 
+                id: true, 
+                label: { 
+                    pt: 'Sim', 
+                    en: 'Yes' 
+                } 
+            },
+            { 
+                id: false, 
+                label: {
+                    pt: 'Não',
+                    en: 'No'
+                }
+            }
         ];
     }
 

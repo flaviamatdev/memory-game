@@ -5,15 +5,17 @@
         </button>
 
         <span class="toolbar-title">{{ toolbarTitle }}</span>
+
+        <app-translation-menu (onChange)="onChangeLanguage()"></app-translation-menu>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-sidenav-container>
     <mat-sidenav #sidenav class="sidenav">
         <mat-nav-list>
-            <mat-list-item *ngFor="let menu of menuList" (click)="sidenav.close(); goTo(menu)">
+            <mat-list-item *ngFor="let menu of MENU_LIST" (click)="sidenav.close(); goTo(menu)">
                 <mat-icon color="primary">{{ menu.icon }}</mat-icon>
-                <span class="mb-0 ms-1">{{ menu.text }}</span>
+                <span class="mb-0 ms-1">{{ 'TRANSLATION' | translate: menu.text }}</span>
             </mat-list-item>
         </mat-nav-list>
     </mat-sidenav>

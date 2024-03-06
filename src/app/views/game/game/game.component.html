@@ -1,10 +1,11 @@
 <div class="board-background" [style.background-image]="backgroundStyle">
     <div class="new-game-btn">
-        <button mat-icon-button (click)="swapPlaySound()" color="primary" [matTooltip]="soundIcon.tooltip">
+        <button mat-icon-button (click)="swapPlaySound()" color="primary" 
+            matTooltip="{{ 'TRANSLATION' | translate: soundIcon.tooltip }}">
             <mat-icon>{{ soundIcon.icon }}</mat-icon>
         </button>
         <button mat-stroked-button (click)="newGame()" color="primary">
-            <mat-icon>refresh</mat-icon> Novo jogo
+            <mat-icon>refresh</mat-icon> {{ 'TRANSLATION' | translate: TRANSLATION.btn.newGame }}
         </button>
     </div>
 

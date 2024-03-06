@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PairConfig } from '../../pair-config.model';
+import { UrlPairConfig } from '../url-pair-config.model';
 import { CardImage } from 'src/app/shared/model/card-image.model';
+import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 
 @Component({
     selector: 'app-card-images-url-input',
@@ -10,9 +11,11 @@ import { CardImage } from 'src/app/shared/model/card-image.model';
 })
 export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input.cardImages;
+
     @Input() form: FormGroup;
     @Input() controlName: string;
-    @Input() pairConfig: PairConfig;
+    @Input() urlPairConfig: UrlPairConfig;
 
     indices: number[];
 
@@ -31,14 +34,14 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.pairConfig && !changes.pairConfig.firstChange) {
+        if (changes.urlPairConfig && !changes.urlPairConfig.firstChange) {
             this._init();
         }
     }
 
     private _init() {
         this._cardImageMap = {};
-        this._numCardImages = this.pairConfig.numCards;
+        this._numCardImages = this.urlPairConfig.numCards;
         this._initFormArray();
         this._setIndicesAndFillFormArray();
     }
@@ -53,7 +56,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
     }
 
     private _setIndicesAndFillFormArray() {
-        let indices = [...Array(this.pairConfig.numPairs).keys()];
+        let indices = [...Array(this.urlPairConfig.numPairs).keys()];
         indices.forEach(i => {
             this._formArray.push(this._buildSubFormArray());
         });
@@ -66,7 +69,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
             url: new FormControl(null, Validators.required)
         });
 
-        if (!this.pairConfig.singleImgPerPair) {
+        if (!this.urlPairConfig.singleImgPerPair) {
             subForm.addControl('url2', new FormControl(null, Validators.required))
         }
 

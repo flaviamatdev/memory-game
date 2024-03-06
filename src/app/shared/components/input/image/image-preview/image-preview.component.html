@@ -1,9 +1,9 @@
 <div *ngIf="src" class="form-line">
-    <img [src]="src" alt="Imagem">
+    <img [src]="src" alt="Image">
 
     <div class="delete-btn">
-        <button mat-icon-button mat-stroked-button type="button" (click)="deleteFile()" matTooltip="Excluir imagem"
-            color="accent">
+        <button mat-icon-button mat-stroked-button type="button" (click)="deleteFile()" 
+            matTooltip="{{ 'DELETE_IMAGE' | translate }}" color="accent">
             <mat-icon>delete</mat-icon>
         </button>
     </div>

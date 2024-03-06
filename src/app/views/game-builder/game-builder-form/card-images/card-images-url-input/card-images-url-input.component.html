@@ -1,9 +1,9 @@
 <div *ngIf="indices">
-    <div *ngIf="pairConfig.singleImgPerPair; else showDoubleInput">
+    <div *ngIf="urlPairConfig.singleImgPerPair; else showDoubleInput">
         <div *ngFor="let i of indices">
             <div class="d-flex-row">
                 <div class="flex-8">
-                    <app-input-text [label]="'Link da Imagem do Par '+(i+1)" 
+                    <app-input-text label="{{ 'TRANSLATION' | translate: TRANSLATION.url.pairImageLink }}{{ (i+1) }}" 
                         [form]="getSubForm(i)" controlName="url" (onChange)="onInsertUrl($event, i)">
                     </app-input-text>
                 </div>
@@ -17,19 +17,19 @@
 
     <ng-template #showDoubleInput>
         <div *ngFor="let i of indices" class="d-flex-col">
-            <div class="mt-2 fst-italic">Par {{i+1}}</div>
+            <div class="mt-2 fst-italic">{{ 'TRANSLATION' | translate: TRANSLATION.pair }}{{i+1}}</div>
 
             <div class="d-flex-row">
-                <app-input-text  class="flex-4" [label]="'Link da Imagem 1 do Par '+(i+1)" 
-                    [form]="getSubForm(i)" controlName="url" 
-                    (onChange)="onInsertUrl($event, i)">
+                <app-input-text  class="flex-4" 
+                    label="{{ 'TRANSLATION' | translate: TRANSLATION.url.diffImages.pairImageLink1 }}{{(i+1)}}" 
+                    [form]="getSubForm(i)" controlName="url" (onChange)="onInsertUrl($event, i)">
                 </app-input-text>
             
                 <app-image-preview class="flex-2" [src]="getUrl(i)" (onDelete)="deleteUrl(i)"></app-image-preview>
 
-                <app-input-text class="flex-4" [label]="'Link da Imagem 2 do Par '+(i+1)" 
-                    [form]="getSubForm(i)" controlName="url2" 
-                    (onChange)="onInsertUrl($event, i, 1)">
+                <app-input-text class="flex-4" 
+                    label="{{ 'TRANSLATION' | translate: TRANSLATION.url.diffImages.pairImageLink2 }}{{(i+1)}}" 
+                    [form]="getSubForm(i)" controlName="url2" (onChange)="onInsertUrl($event, i, 1)">
                 </app-input-text>
             
                 <app-image-preview class="flex-2" [src]="getUrl(i,1)" (onDelete)="deleteUrl(i,1)"></app-image-preview>

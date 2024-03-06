@@ -1,27 +1,21 @@
 <div class="form-line">
-    <app-select-yes-no label="Cada par possui imagens iguais?" 
+    <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleImgPerPair }}" 
         [form]="form" controlName="singleImgPerPair" (onChange)="onChangeSingleImgPerPair()">
     </app-select-yes-no>
 
-    <app-select-image-src-type
-        [form]="form" controlName="cardImageSrcType" [multiple]="true"
+    <app-select-image-src-type [form]="form" controlName="cardImageSrcType" [multiple]="true"
         (onChange)="onChangeCardImageSrcType($event)">
     </app-select-image-src-type>
 
-    <div [ngSwitch]="cardImageSrcType">
-        <div *ngSwitchCase="IMAGE_SRC_TYPE.URL" class="num-pairs">
-            <app-input-number label="Nº de pares" labelComment="(após preencher, clique no botão ao lado)"
-                [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS">
-            </app-input-number>
-
-            <button mat-stroked-button type="button" color="primary" (click)="addUrlPairs()" 
-                [disabled]="disableAddUrlPairsBtn">
-                <mat-icon>add</mat-icon> Adicionar links
-            </button>
-        </div>
+    <div [ngSwitch]="addUrls">
+        <app-input-number *ngSwitchCase="true"
+            [labelTranslate]="TRANSLATION.input.numPairs" 
+            [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS"
+            (onChange)="onChangeNumPairsForUrl($event)">
+        </app-input-number>
         
-        <app-upload-image *ngSwitchCase="IMAGE_SRC_TYPE.UPLOAD" 
-            label="Selecione a pasta que contém as imagens das cartas" 
+        <app-upload-image *ngSwitchCase="false" 
+            [labelTranslate]="TRANSLATION.input.cardImages.upload.pickDirPath" 
             [form]="form" controlName="cardImages" [selectAllDir]="true">
         </app-upload-image>
     </div>
@@ -29,14 +23,17 @@
 
 <div *ngIf="showFilePatternWarning" class="file-warning">
     <mat-icon>warning</mat-icon>
-    <span>Envio de arquivos diferentes por par: {{ warningMsgForDiffImagesPerPair }} 
-        Veja um exemplo <a class="example-link" (click)="openExample()">aqui</a>.
+    <span>
+        {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.diffImagesPerPair.warning }}
+        <a class="example-link" (click)="openExample()">
+            {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.diffImagesPerPair.warningLink }}
+        </a>.
     </span>
 </div>
 
-<div *ngIf="showCardImageUrlInputs" class="form-line">
+<div *ngIf="urlPairConfig" class="form-line">
     <div class="form-item mt-3">
-        <app-card-images-url-input [form]="form" controlName="cardImages" [pairConfig]="pairConfig">
+        <app-card-images-url-input [form]="form" controlName="cardImages" [urlPairConfig]="urlPairConfig">
         </app-card-images-url-input>
     </div>
 </div>

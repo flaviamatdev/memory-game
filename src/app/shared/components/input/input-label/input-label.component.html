@@ -1,5 +1,10 @@
-<mat-label>
-    {{ label }}
+<mat-label *ngIf="labelTranslate; else showRegularLabel">
+    {{ 'TRANSLATION' | translate: labelTranslate }}
     <span class="input-label-comment" *ngIf="comment">{{ comment }}</span>
     <span class="input-label-required"> {{ required ? '*' : '' }}</span>
 </mat-label>
+<ng-template #showRegularLabel>
+    {{ label }}
+    <span class="input-label-comment" *ngIf="comment">{{ comment }}</span>
+    <span class="input-label-required"> {{ required ? '*' : '' }}</span>
+</ng-template>

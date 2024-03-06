@@ -1,5 +1,7 @@
 <div id="{{controlName}}-div" [ngClass]="inputClass">
-    <app-input-label [label]="label" [comment]="labelComment" [required]="isRequired"></app-input-label>
+    <app-input-label [label]="label" [labelTranslate]="labelTranslate"
+        [comment]="labelComment" [required]="isRequired">
+    </app-input-label>
 
     <mat-form-field appearance="outline" class="w-100 mat-form-field-label-out" floatLabel="never" color="primary">
         <mat-select [formControl]="formControl" [multiple]="multiple" 
@@ -7,17 +9,25 @@
 
             <mat-option #allOption *ngIf="allOptionLabel" [value]="ALL_OPTION">
                 {{ allOptionLabel }}
-            </mat-option>
-
-            <mat-option *ngFor="let option of options" [value]="getOptionValue(option)" 
-                [disabled]="multiple && allOptionSelected">
-                {{ option[labelAttribute] }}
-            </mat-option>
+            </mat-option>            
+            
+            <div *ngIf="optionsTranslate?.length; else showRegularOptions">
+                <mat-option *ngFor="let option of optionsTranslate" [value]="getOptionValue(option)" 
+                    [disabled]="multiple && allOptionSelected">
+                    {{ 'TRANSLATION' | translate: option[labelAttribute] }}
+                </mat-option>
+            </div>
+            <ng-template #showRegularOptions>
+                <mat-option *ngFor="let option of options" [value]="getOptionValue(option)" 
+                    [disabled]="multiple && allOptionSelected">
+                    {{ option[labelAttribute] }}
+                </mat-option>
+            </ng-template>           
         </mat-select>
 
         <mat-error *ngIf="isRequired">
             <mat-icon aria-label="false">cancel</mat-icon>
-            Campo <strong>obrigatório</strong>
+            <strong>{{ 'FORM_INPUT.REQUIRED' | translate }}</strong>
         </mat-error>
     </mat-form-field>
 </div>

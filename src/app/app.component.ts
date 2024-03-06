@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MENUS } from './menu-values';
 import { DialogService } from './services/dialog.service';
 import { GameService } from './services/game.service';
 
@@ -10,7 +11,7 @@ import { GameService } from './services/game.service';
 })
 export class AppComponent implements OnInit {
 
-    menuList: MenuItem[] = [];
+    readonly MENU_LIST = MENUS;
 
     constructor(
         private router: Router,
@@ -19,39 +20,22 @@ export class AppComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this._setMenu();
+        this._resetToolbarTitle();
     }
 
-    private _setMenu() {
-        this.menuList = [
-            {
-                icon: 'home',
-                text: 'Início',
-                routerLink: '/',
-            },
-            {
-                icon: 'construction',
-                text: 'Crie seu jogo',
-                routerLink: '/game-builder',
-            },
-            {
-                icon: 'extension',
-                text: 'Demo',
-                routerLink: '/game-builder/demo',
-            },
-            {
-                icon: 'copyright',
-                text: 'Créditos',
-                routerLink: '/credits',
-            },
-        ]
+    onChangeLanguage() {
+        this._resetToolbarTitle();
+    }
+
+    private _resetToolbarTitle() {
+        this.gameService.setToolbarTitleDefault();
     }
 
     get toolbarTitle() {
         return this.gameService.toolbarTitle;
     }
 
-    goTo(menuItem: MenuItem) {        
+    goTo(menuItem: any) {        
         if (this.gameService.isPlaying) {
             return this.dialogService.openLiveGameConfirmationDialog(() => {
                 this.gameService.liveGame();
@@ -59,13 +43,8 @@ export class AppComponent implements OnInit {
             });
         }
 
+        this._resetToolbarTitle();
         this.router.navigateByUrl(menuItem.routerLink);
     }
 
-}
-
-class MenuItem {
-    icon: string;
-    text: string;
-    routerLink: string;
 }

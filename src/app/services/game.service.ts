@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
+import { TranslationService } from '../shared/components/translation/translation.service';
 import { VALUES } from '../shared/constants/global.values';
-import { ICONS, NUM_ICONS } from '../shared/constants/icons';
+import { ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
-import { CardIdTypeEnum, CardIdTypeName } from '../shared/enums/card-id-type.enum';
+import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { CardImage } from '../shared/model/card-image.model';
@@ -22,10 +23,11 @@ const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 })
 export class GameService {
 
-    private _toolbarTitle: string = this._defaultToolbarTitle;
+    private _toolbarTitle: string;
     private _playSound: boolean = true;
     private _gameConfig: GameConfig;
     private _pairCount: number = 0;
+    private _foundPairCodes: string[] = []
     private _coverCards = new BehaviorSubject<Card[]>([]);
     private _selectedCard1: Card = null;
     private _selectedCard2: Card = null;
@@ -33,6 +35,7 @@ export class GameService {
     constructor(
         library: FaIconLibrary,
         private router: Router,
+        private translationService: TranslationService,
         private audioService: AudioService,
         private toastService: ToastService,
     ) {
@@ -43,8 +46,15 @@ export class GameService {
         return this._toolbarTitle;
     }
 
-    private get _defaultToolbarTitle() {
-        return 'Jogo da memória';
+    setToolbarTitleDefault() {
+        if (!this.isPlaying) {
+            this._setDefaultToolbarTitle();
+        }
+    }
+
+    private _setDefaultToolbarTitle() {
+        this.translationService.getTranslationByKey('TOOLBAR_TITLE')
+            .subscribe(toolbarTitle => this._toolbarTitle = toolbarTitle);
     }
 
     get config() {
@@ -60,32 +70,15 @@ export class GameService {
     }
 
     liveGame() {
+        this._setDefaultToolbarTitle();
         this._gameConfig = null;
         this._pairCount = 0;
-        this._toolbarTitle = this._defaultToolbarTitle;
+        this._foundPairCodes = [];
     }
 
     goHome() {
         this.liveGame();
         this.router.navigate(['']);
-    }
-
-    getCardIpOptions() {
-        const cardIdTypeName = CardIdTypeName;
-        return [
-            { 
-                id: CardIdTypeEnum.NUMBERS, 
-                label: cardIdTypeName[CardIdTypeEnum.NUMBERS] 
-            },
-            { 
-                id: CardIdTypeEnum.ROW_COLUMN, 
-                label: cardIdTypeName[CardIdTypeEnum.ROW_COLUMN] 
-            },
-            { 
-                id: CardIdTypeEnum.ICONS, 
-                label: `${cardIdTypeName[CardIdTypeEnum.ICONS]} (máximo ${NUM_ICONS} cartas)` 
-            },
-        ]
     }
 
     create(gameConfig: GameConfig) {
@@ -120,6 +113,7 @@ export class GameService {
 
     private _reset() {
         this._pairCount = this._gameConfig.numPairs;
+        this._foundPairCodes = [];
         this._coverCards.next([]);
     }
 
@@ -155,10 +149,6 @@ export class GameService {
         });
 
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
-    }
-
-    get warningMsgForDiffImagesPerPair(): string {
-        return `os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} .`;
     }
 
     private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {
@@ -202,7 +192,7 @@ export class GameService {
 
 
     onChooseCard(choosen: Card): boolean {
-        if (this.isGameFinished) {
+        if (this.isGameFinished || this._foundPairCodes.includes(choosen.code)) {
             return;
         }
 
@@ -221,14 +211,8 @@ export class GameService {
 
         this._selectedCard2 = choosen;
         if (this._selectedCard1.code == this._selectedCard2.code) {
-            this._pairCount--;
-            if (this._playSound) {
-                setTimeout(() => {
-                    this.audioService.play(AudioEnum.CORRECT);
-                }, 100);
-            }
-        }
-        else {
+            this._handleFoundPair(choosen);
+        } else {
             this._coverCards.next([this._selectedCard1, this._selectedCard2]);
         }
 
@@ -245,6 +229,17 @@ export class GameService {
 
         return win;
     }
+
+    private _handleFoundPair(choosen: Card) {
+        this._pairCount--;
+        this._foundPairCodes.push(choosen.code);
+        if (this._playSound) {
+            setTimeout(() => {
+                this.audioService.play(AudioEnum.CORRECT);
+            }, 100);
+        }
+    }
+
 
     restartGame(cards: Card[]) {
         this._reset();

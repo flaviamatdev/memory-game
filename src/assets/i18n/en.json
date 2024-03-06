@@ -1,0 +1,27 @@
+{
+    "TOOLBAR_TITLE": "Memory Game",
+    "WELCOME": "Welcome!",
+
+    "ANSWER": {
+        "YES": "Yes",
+        "NO": "No"
+    },
+
+    "FORM_INPUT": {
+        "REQUIRED": "Required field",
+        "INVALID": "Invalid value",
+        "MIN_LENGTH": "Minimun length: {{ minLength }} characters",
+        "MIN_VALUE": "Minimum value is {{ min }}",
+        "MAX_VALUE": "Maximum value is {{ max }}"
+    },
+
+    "DELETE_IMAGE": "Delete image",
+
+    "CLOSE": "Close",
+
+	"TRANSLATION": "{{ en }}",
+    "TRANSLATION_ACRONYM": {
+        "pt": "{{ en.pt }}",
+        "en": "{{ en.en }}"
+    }
+}

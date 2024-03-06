@@ -4,6 +4,8 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { GameService } from 'src/app/services/game.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { Card } from 'src/app/shared/model/card';
+import { GAME_TRANSLATION } from './game-values';
+import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 
 @Component({
     selector: 'app-game',
@@ -12,7 +14,8 @@ import { Card } from 'src/app/shared/model/card';
 })
 export class GameComponent implements OnInit {
 
-    title: string;
+    readonly TRANSLATION = GAME_TRANSLATION;
+
     backgroundStyle: any = '';
     cardRows: Card[][] = [];
     soundIcon: any = {};
@@ -24,6 +27,7 @@ export class GameComponent implements OnInit {
         private router: Router,
         private gameService: GameService,
         private dialogService: DialogService,
+        private translationService: TranslationService,
     ) {
         this._cards = this.router.getCurrentNavigation()?.extras?.state?.cards;
     }
@@ -35,7 +39,6 @@ export class GameComponent implements OnInit {
             return;
         }
 
-        this.title = gameConfig.title.toUpperCase();
         if (gameConfig.backgroundImgSrc) {
             this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
         }
@@ -56,9 +59,9 @@ export class GameComponent implements OnInit {
         
     private _setSoundIcon() {
         this.soundIcon = (this.gameService.playSound ? 
-            { icon: 'volume_up', tooltip: 'Desligar sons' } :
-            { icon: 'volume_off', tooltip: 'Ligar sons' }
-        )
+            { icon: 'volume_up',  tooltip: this.TRANSLATION.btn.sound.turnOnTooltip } :
+            { icon: 'volume_off', tooltip: this.TRANSLATION.btn.sound.turnOffTooltip }
+        );
     }
 
     private _startGame() {
@@ -87,7 +90,10 @@ export class GameComponent implements OnInit {
     newGame() {
         const callback = () => this._startNewGame();
         if (!this.gameService.isGameFinished) {
-            return this.dialogService.openLiveGameConfirmationDialog(callback, 'Tem certeza que deseja iniciar novo jogo?');
+            return this.dialogService.openLiveGameConfirmationDialog(
+                callback, 
+                this.translationService.getTranslationObj(this.TRANSLATION.startNewGameConfirmation)
+            );
         }
         callback();
     }
@@ -106,9 +112,9 @@ export class GameComponent implements OnInit {
             header: {
                 icon: 'mood',
                 iconColor: 'limegreen',
-                title: 'Parabéns!'
+                title: this.translationService.getTranslationObj(this.TRANSLATION.finishGame.congratulations)
             },
-            bodyText: 'Deseja jogar novamente?',
+            bodyText: this.translationService.getTranslationObj(this.TRANSLATION.finishGame.playAgain),
             okCallback: () => this._startNewGame()
         });
     }

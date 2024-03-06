@@ -2,9 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
+import { TranslationService } from 'src/app/shared/components/translation/translation.service';
+import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
+import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 import { GameBuilderComponent } from '../game-builder/game-builder.component';
 
 @Component({
@@ -14,6 +16,7 @@ import { GameBuilderComponent } from '../game-builder/game-builder.component';
 })
 export class GameConfigFormComponent implements OnInit {
 
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     @Input() parent: GameBuilderComponent;
@@ -21,11 +24,13 @@ export class GameConfigFormComponent implements OnInit {
     form: FormGroup;
     options: { [key: string]: any[] } = {};
     flag: any = {};
+    submitBtnTranslation: any = {};
 
     constructor(
         private fb: FormBuilder,
         private gameService: GameService,
         private toastService: ToastService,
+        private translationService: TranslationService,
     ) { }
 
     ngOnInit(): void {
@@ -34,6 +39,7 @@ export class GameConfigFormComponent implements OnInit {
         }
         this._initForm();
         this._setOptions();
+        this._setSubmitBtn();
     }
 
     private get _isDemo() {
@@ -63,8 +69,22 @@ export class GameConfigFormComponent implements OnInit {
     }
 
     private _setOptions() {
+        const cardIdTypeNameTranslations = CardIdTypeNameTranslations;
         this.options = {
-            cardId: this.gameService.getCardIpOptions(),
+            cardId: [
+                { 
+                    id: CardIdTypeEnum.NUMBERS, 
+                    label: cardIdTypeNameTranslations[CardIdTypeEnum.NUMBERS] 
+                },
+                { 
+                    id: CardIdTypeEnum.ROW_COLUMN, 
+                    label: cardIdTypeNameTranslations[CardIdTypeEnum.ROW_COLUMN] 
+                },
+                { 
+                    id: CardIdTypeEnum.ICONS, 
+                    label: cardIdTypeNameTranslations[CardIdTypeEnum.ICONS]
+                },
+            ],
         }
 
         if (this._isDemo) {
@@ -73,6 +93,12 @@ export class GameConfigFormComponent implements OnInit {
         }
     }
 
+    private _setSubmitBtn() {
+        this.submitBtnTranslation = (this._isDemo ? 
+            this.TRANSLATION.submitBtn.playDemo :
+            this.TRANSLATION.submitBtn.createGame
+        );
+    }
 
     onChangeAddBackgroundImg($value: boolean) {
         this.flag.addBackgroundImg = $value;
@@ -88,13 +114,14 @@ export class GameConfigFormComponent implements OnInit {
         let data = {...this.form.value };
 
         let gameConfig = new GameConfig();
-        gameConfig.title = data.title;
+        gameConfig.title = data.title.toUpperCase();
         gameConfig.singleImgPerPair = data.singleImgPerPair;
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
         gameConfig.cardImages = data.cardImages ?? [];
 
         if (this._isDemo) {
+            gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
             this._setDemoCardImages(gameConfig, data.numPairs);
         }
         
