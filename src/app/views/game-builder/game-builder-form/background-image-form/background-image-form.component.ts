@@ -17,7 +17,6 @@ export class BackgroundImageFormComponent implements OnInit {
 
     @Input() form: FormGroup;
     @Input() controlName: string;
-    @Input() multiple: boolean = false;
 
     @ViewChild('upload') private _uploadChild: UploadImageComponent;
 

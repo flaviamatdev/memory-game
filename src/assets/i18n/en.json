@@ -7,6 +7,10 @@
         "NO": "No"
     },
 
+    "REQUIRED_FIELD": "Required field",
+
+    "DELETE_IMAGE": "Delete image",
+
 	"TRANSLATION": "{{ en }}",
     "TRANSLATION_TS": "en",
     "TRANSLATION_ACRONYM": {

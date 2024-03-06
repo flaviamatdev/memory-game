@@ -1,5 +1,7 @@
 <div id="{{controlName}}-div" [ngClass]="inputClass">
-    <app-input-label *ngIf="label" [label]="label" [comment]="labelComment" [required]="isRequired"></app-input-label>
+    <app-input-label *ngIf="label" [label]="label" [labelTranslate]="labelTranslate"
+        [comment]="labelComment" [required]="isRequired">
+    </app-input-label>
 
     <mat-form-field appearance="outline" class="w-100 mat-form-field-label-out" floatLabel="never" color="primary">
         <input matInput 

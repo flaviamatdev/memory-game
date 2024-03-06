@@ -13,6 +13,7 @@ export class SelectComponent extends AbstractInputComponent implements OnInit, O
     readonly ALL_OPTION = 'all';
     
     @Input() options: any[] = [];
+    @Input() optionsTranslate: any[] = [];
     @Input() valueAttribute: string = 'id';
     @Input() labelAttribute: string = 'label';
     @Input() multiple = false;

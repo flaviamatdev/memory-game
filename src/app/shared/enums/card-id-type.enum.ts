@@ -4,12 +4,6 @@ export enum CardIdTypeEnum {
     ICONS    
 }
 
-export const CardIdTypeName = {
-    [CardIdTypeEnum.NUMBERS]: 'Números',
-    [CardIdTypeEnum.ROW_COLUMN]: 'Linha/Coluna',
-    [CardIdTypeEnum.ICONS]: 'Ícones',
-}
-
 export const CardIdTypeNameTranslations = {
     [CardIdTypeEnum.NUMBERS]: {
         pt: 'Números',

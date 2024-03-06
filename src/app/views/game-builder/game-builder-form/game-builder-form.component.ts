@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { CardIdTypeEnum } from 'src/app/shared/enums/card-id-type.enum';
+import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
@@ -67,8 +67,22 @@ export class GameConfigFormComponent implements OnInit {
     }
 
     private _setOptions() {
+        const cardIdTypeNameTranslations = CardIdTypeNameTranslations;
         this.options = {
-            cardId: this.gameService.getCardIpOptions(),
+            cardId: [
+                { 
+                    id: CardIdTypeEnum.NUMBERS, 
+                    label: cardIdTypeNameTranslations[CardIdTypeEnum.NUMBERS] 
+                },
+                { 
+                    id: CardIdTypeEnum.ROW_COLUMN, 
+                    label: cardIdTypeNameTranslations[CardIdTypeEnum.ROW_COLUMN] 
+                },
+                { 
+                    id: CardIdTypeEnum.ICONS, 
+                    label: cardIdTypeNameTranslations[CardIdTypeEnum.ICONS]
+                },
+            ],
         }
 
         if (this._isDemo) {

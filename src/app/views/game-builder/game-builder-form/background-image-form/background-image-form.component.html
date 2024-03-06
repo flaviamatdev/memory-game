@@ -1,6 +1,5 @@
 <div class="input-image">
-    <app-select-image-src-type label="{{ 'TRANSLATION' | translate: TRANSLATION.srcType }}" 
-        [form]="form" [controlName]="myControlName.srcType" [multiple]="multiple"
+    <app-select-image-src-type [form]="form" [controlName]="myControlName.srcType"
         (onChange)="onChooseInputType($event)">
     </app-select-image-src-type>
 
@@ -8,13 +7,13 @@
         <div class="input-preview">
             <div [ngSwitch]="isUrl" [ngClass]="isUrl ? 'form-item' : ''">
                 <div *ngSwitchCase="true">
-                    <app-input-text label="{{ 'TRANSLATION' | translate: TRANSLATION.url }}" 
+                    <app-input-text [labelTranslate]="TRANSLATION.url" 
                         [form]="form" [controlName]="myControlName.url" (onChange)="onInsertUrl($event)">
                     </app-input-text>
                 </div>
 
                 <div *ngSwitchCase="false">
-                    <app-upload-image #upload label="{{ 'TRANSLATION' | translate: TRANSLATION.upload }}" 
+                    <app-upload-image #upload [labelTranslate]="TRANSLATION.upload" 
                         [form]="form" [controlName]="myControlName.upload">
                     </app-upload-image>
                 </div>

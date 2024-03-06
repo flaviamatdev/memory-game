@@ -8,6 +8,7 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 })
 export class AbstractInputComponent {
 
+    @Input() labelTranslate: any;
     @Input() label: string;
     @Input() labelComment: string;
     @Input() form: FormGroup;

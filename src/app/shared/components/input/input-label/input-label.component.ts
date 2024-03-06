@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class InputLabelComponent {
 
+    @Input() labelTranslate: any;
     @Input() label: string;
     @Input() required = true;
     @Input() comment: string;

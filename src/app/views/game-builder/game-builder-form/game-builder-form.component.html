@@ -3,16 +3,16 @@
         <div class="form-line">
             <app-select class="form-item" 
                 label="{{ 'TRANSLATION' | translate: TRANSLATION.input.cardIdType }}" 
-                [form]="form" controlName="cardIdType" [options]="options.cardId">
+                [form]="form" controlName="cardIdType" [optionsTranslate]="options.cardId">
             </app-select>
 
             <app-select-yes-no class="form-item" 
-                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleImgPerPair }}" 
+                [labelTranslate]="TRANSLATION.input.singleImgPerPair" 
                 [form]="form" controlName="singleImgPerPair">
             </app-select-yes-no>
 
             <app-select class="form-item" 
-                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.numPairs }}" 
+                [labelTranslate]="TRANSLATION.input.numPairs" 
                 [form]="form" controlName="numPairs" [options]="options.numPairs">
             </app-select>
         </div>
@@ -26,13 +26,13 @@
 
         <div class="form-line">
             <app-input-text class="input-title" 
-                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.gameTitle }}" 
+                [labelTranslate]="TRANSLATION.input.gameTitle" 
                 [form]="form" controlName="title">
             </app-input-text>
     
             <app-select class="input-card-id" 
-                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleImgPerPair }}" 
-                [form]="form" controlName="cardIdType" [options]="options.cardId">
+                [labelTranslate]="TRANSLATION.input.singleImgPerPair" 
+                [form]="form" controlName="cardIdType" [optionsTranslate]="options.cardId">
             </app-select>
         </div>
     
@@ -42,7 +42,7 @@
         </span>
     
         <div class="form-line">
-            <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.backgroundImg.add }}" 
+            <app-select-yes-no [labelTranslate]="TRANSLATION.input.backgroundImg.add" 
                 [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
             </app-select-yes-no>
     

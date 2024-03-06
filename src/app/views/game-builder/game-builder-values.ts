@@ -67,18 +67,10 @@ export const GAME_BUILDER_TRANSLATION = {
                 pt: 'Inserir imagem de fundo?',
                 en: 'Insert background image?'
             },
-            srcType: {
-                pt: 'Como deseja inserir a imagem?',
-                en: 'How do you want to insert the image?'
-            },
-            srcTypes: {
-                pt: 'Como deseja inserir as imagens?',
-                en: 'How do you want to insert the images?'
-            },
             url: {
                 pt: 'Link da imagem',
                 en: 'Image link'
-            },            
+            },
             upload: {
                 pt: 'Selecione a imagem',
                 en: 'Upload the image'

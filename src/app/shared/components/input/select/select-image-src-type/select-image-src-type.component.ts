@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectComponent } from '../select/select.component';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { SRC_TYPE_TRANSLATION_VALUES } from './select-image-src-type-values';
 
 @Component({
     selector: 'app-select-image-src-type',
@@ -9,34 +10,26 @@ import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 })
 export class SelectImageSrcTypeComponent extends SelectComponent implements OnInit {
 
-    ngOnInit(): void {
-        let labels = this._getLabels();
-        this.label = this.label ?? labels.title;
+    readonly TRANSLATION = SRC_TYPE_TRANSLATION_VALUES;
 
+    ngOnInit(): void {
+        let translation = (this.multiple ? 
+            this.TRANSLATION.multiple : 
+            this.TRANSLATION.nonMultiple
+        );
+
+        this.labelTranslate = translation.input;
+        
         this.options = [
             { 
                 id: ImageSourceTypeEnum.UPLOAD, 
-                label: labels.upload
+                label: translation.options.upload
             },
             { 
                 id: ImageSourceTypeEnum.URL, 
-                label: labels.url
+                label: translation.options.url
             },
         ];
-    }
-
-    private _getLabels() {
-        let suffix = '', imgSuffix = 'm';
-        if (this.multiple) {
-            suffix = 's';
-            imgSuffix = 'ns';
-        }
-
-        return {
-            title: `Como deseja inserir a${suffix} image${imgSuffix}?`,
-            url: `Inserir link${suffix} da${suffix} image${imgSuffix}`,
-            upload: `Enviar arquivo${suffix}`
-        }
     }
 
     // override

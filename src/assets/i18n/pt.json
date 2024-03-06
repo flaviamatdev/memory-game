@@ -7,6 +7,10 @@
         "NO": "Não"
     },
 
+    "REQUIRED_FIELD": "Campo obrigatório",
+
+    "DELETE_IMAGE": "Excluir imagem",
+
 	"TRANSLATION": "{{ pt }}",
     "TRANSLATION_TS": "pt",
     "TRANSLATION_ACRONYM": {

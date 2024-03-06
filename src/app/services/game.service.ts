@@ -5,9 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
 import { TranslationService } from '../shared/components/translation/translation.service';
 import { VALUES } from '../shared/constants/global.values';
-import { ICONS, NUM_ICONS } from '../shared/constants/icons';
+import { ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
-import { CardIdTypeEnum, CardIdTypeName } from '../shared/enums/card-id-type.enum';
+import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { CardImage } from '../shared/model/card-image.model';
@@ -77,24 +77,6 @@ export class GameService {
     goHome() {
         this.liveGame();
         this.router.navigate(['']);
-    }
-
-    getCardIpOptions() {
-        const cardIdTypeName = CardIdTypeName;
-        return [
-            { 
-                id: CardIdTypeEnum.NUMBERS, 
-                label: cardIdTypeName[CardIdTypeEnum.NUMBERS] 
-            },
-            { 
-                id: CardIdTypeEnum.ROW_COLUMN, 
-                label: cardIdTypeName[CardIdTypeEnum.ROW_COLUMN] 
-            },
-            { 
-                id: CardIdTypeEnum.ICONS, 
-                label: `${cardIdTypeName[CardIdTypeEnum.ICONS]} (máximo ${NUM_ICONS} cartas)` 
-            },
-        ]
     }
 
     create(gameConfig: GameConfig) {
