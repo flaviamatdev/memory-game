@@ -16,7 +16,7 @@ export const MENUS = [
         routerLink: '/game-builder',
     },
     {
-        icon: 'extension',
+        icon: 'sports_esports',
         text: {
             pt: 'Demo',
             en: 'Demo'
