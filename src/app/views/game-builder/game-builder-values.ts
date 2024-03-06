@@ -72,8 +72,8 @@ export const GAME_BUILDER_TRANSLATION = {
                 en: 'Image link'
             },
             upload: {
-                pt: 'Selecione a imagem',
-                en: 'Upload the image'
+                pt: 'Enviar arquivo',
+                en: 'Upload image file'
             }
         },
 

@@ -11,7 +11,7 @@ export const SRC_TYPE_TRANSLATION_VALUES = {
                 en: 'Image link'
             },
             upload: {
-                pt: 'Selecione a imagem',
+                pt: 'Enviar arquivo',
                 en: 'Upload image file'
             }
         },
@@ -28,7 +28,7 @@ export const SRC_TYPE_TRANSLATION_VALUES = {
                 en: 'Image links'
             },
             upload: {
-                pt: 'Selecione as imagens',
+                pt: 'Enviar arquivos',
                 en: 'Upload image files'
             }
         }        
