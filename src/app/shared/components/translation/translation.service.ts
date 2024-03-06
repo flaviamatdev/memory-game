@@ -24,8 +24,8 @@ export class TranslationService {
         return this.translate.get(key);
     }
 
-    getTranslationObj(translationObj: any) {
-        return this.translate.getParsedResult(translationObj, this._getBrowserLang());
+    getTranslationObj(translationObj: any, params?: Object) {
+        return this.translate.getParsedResult(translationObj, this._getBrowserLang(), params);
     }
 
     getLang(): string {

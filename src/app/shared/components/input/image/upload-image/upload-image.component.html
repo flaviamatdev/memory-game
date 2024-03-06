@@ -4,9 +4,27 @@
     </app-input-label>
 
     <div *ngIf="selectAllDir else regularInput" >
-        <input type="file" #uploadInput (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" multiple webkitdirectory>
+        <input type="file" #uploadInput hidden (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" multiple webkitdirectory>
     </div>
     <ng-template #regularInput>
-        <input type="file" #uploadInput (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" [multiple]="multiple">
+        <input type="file" #uploadInput hidden (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" [multiple]="multiple">
     </ng-template>
+
+    <div class="d-flex-row">
+        <button mat-raised-button type="button" color="primary" (click)="openInputFile()">
+            {{ 'TRANSLATION' | translate: btnTranslation }}
+        </button>
+
+        <div *ngIf="numFiles == 0; else showChosenFiles">
+            {{ 'TRANSLATION' | translate: TRANSLATION.noFileChosen }}
+        </div>
+        <ng-template #showChosenFiles>
+            <div [ngSwitch]="multiple">
+                <span *ngSwitchCase="false">{{ singleChosedFileName }}</span>
+                <span *ngSwitchCase="true">
+                    {{ numFiles }} {{ 'TRANSLATION' | translate: TRANSLATION.multiple.chosenFilesMsg }}
+                </span>
+            </div>
+        </ng-template>
+    </div>
 </div>
