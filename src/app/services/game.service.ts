@@ -179,10 +179,14 @@ export class GameService {
         return cards;
     }
 
-
-    setIdAsRowColumn(rowIndex: number, currCardRow: Card[]) {
+    setIdAsRowColumn(cards: Card[], numCols: number) {
         if (this._gameConfig.cardIdType == CardIdTypeEnum.ROW_COLUMN) {
-            currCardRow.forEach((card, col) => card.id = `${this._getLetter(rowIndex)}${col+1}`);
+            let numRows = cards.length / numCols;
+            for (let r = 0; r < numRows; r++) {
+                let idx = r * numCols;
+                let currCardRow = cards.slice(idx, idx + numCols);
+                currCardRow.forEach((card, col) => card.id = `${this._getLetter(r)}${col+1}`);
+            }
         }
     }
 

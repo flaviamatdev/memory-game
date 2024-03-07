@@ -29,6 +29,7 @@ export class GameComponent implements OnInit {
     soundIcon: any = {};
 
     private _cards: Card[] = [];
+    private _numCols: number = 0;
 
     constructor(
         private router: Router,
@@ -66,10 +67,12 @@ export class GameComponent implements OnInit {
             return;
         }
 
-        let numCards = (this.gameService.config.numPairs * 2);
-        let numCols = ([5,4,3]).filter(n => numCards % n == 0)[0];
-        let boardWidth = ((STYLE.cardWidth + 2*STYLE.cardMargin) * numCols) + ((numCols-1) * STYLE.gapBetweenCards);
+        let numCards = this._cards.length;
+        this._numCols = ([5,4,3]).filter(n => numCards % n == 0)[0];
+        let boardWidth = ((STYLE.cardWidth + 2*STYLE.cardMargin) * this._numCols) + ((this._numCols-1) * STYLE.gapBetweenCards);
         this.boardStyle = { width: `${boardWidth}px` };
+
+        this.gameService.setIdAsRowColumn(this._cards, this._numCols);
     }
 
     @HostListener('window:resize', ['$event'])
@@ -105,6 +108,7 @@ export class GameComponent implements OnInit {
         this._cards = [];
         setTimeout(() => {
             this._cards = this.gameService.restartGame(cards);
+            this.gameService.setIdAsRowColumn(this._cards, this._numCols);
         }, 1);
     }
 
@@ -129,4 +133,11 @@ export class GameComponent implements OnInit {
         });
     }
 
+}
+
+class BoardDim {
+    constructor(
+        public numRows: number,
+        public numCols: number,
+    ) { }
 }
