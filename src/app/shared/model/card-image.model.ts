@@ -1,6 +1,6 @@
 export class CardImage {
     constructor(
-        public base64: string,
+        public src: string,
         public filename?: string
     ) {}
 }

@@ -83,7 +83,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     getUrl(pairIndex: number, imgIndex: number = 0): string {
         try {
-            return this._cardImageMap[this._buildCardImageKey(pairIndex, imgIndex)]?.base64;
+            return this._cardImageMap[this._buildCardImageKey(pairIndex, imgIndex)]?.src;
         } catch (error) {
             return null;
         }
@@ -96,7 +96,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
     onInsertUrl($url: string, pairIndex: number, imgIndex: number = 0) {
         let key = this._buildCardImageKey(pairIndex, imgIndex);
         this._cardImageMap[key] = {
-            base64: $url,
+            src: $url,
             filename: `pair${pairIndex+1}_img${imgIndex+1}`
         };
 

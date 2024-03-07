@@ -72,7 +72,7 @@ export class BackgroundImageFormComponent implements OnInit {
             this._setImage(null);
             return;
         }
-        this._setImage(cardImages[0].base64);
+        this._setImage(cardImages[0].src);
     }
 
     onInsertUrl($url: string) {
