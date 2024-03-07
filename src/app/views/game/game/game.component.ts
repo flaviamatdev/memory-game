@@ -35,7 +35,7 @@ export class GameComponent implements OnInit {
     ngOnInit(): void {
         let gameConfig = this.gameService.config;
         if (!gameConfig || !(this._cards?.length)) {
-            this._goHome();
+            this.gameService.goHome();
             return;
         }
 
@@ -45,10 +45,6 @@ export class GameComponent implements OnInit {
         this._setBoardDim(gameConfig.numPairs * 2);
         this._setSoundIcon();
         this._startGame();
-    }
-
-    private _goHome() {
-        this.gameService.goHome();
     }
 
     private _setBoardDim(numCards: number) {
