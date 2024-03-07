@@ -75,7 +75,7 @@ export class GameComponent implements OnInit {
     @HostListener('window:resize', ['$event'])
     onResize($event) {
         this._setWidth($event.target.innerWidth);
-    }    
+    }
 
     private _setSoundIcon() {
         this.soundIcon = (this.gameService.playSound ? 
