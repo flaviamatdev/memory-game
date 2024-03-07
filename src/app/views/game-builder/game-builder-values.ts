@@ -15,8 +15,13 @@ export const GAME_BUILDER_TRANSLATION = {
     },
 
     instruction: {
-        pt: 'Preencha o formulário abaixo com as informações para o jogo:',
-        en: 'Fill out the form below with the information for the game:'
+        pt: 'Preencha o formulário abaixo com as informações para o jogo',
+        en: 'Fill out the form below with the information for the game'
+    },
+
+    uploadConfigFile: {
+        pt: 'Enviar arquivo de configuração',
+        en: 'Upload configuration file'
     },
 
     sectionTitle: {

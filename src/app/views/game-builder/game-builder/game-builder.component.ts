@@ -12,6 +12,8 @@ export class GameBuilderComponent implements OnInit {
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
 
     pageTitleTranslation: any = {};
+    flag: { [key: string]: boolean } = {};
+    uploadConfigFile: boolean = false;
 
     private _isDemo: boolean;
     
@@ -26,11 +28,25 @@ export class GameBuilderComponent implements OnInit {
                 this.TRANSLATION.pageTitle.demoBuilder :
                 this.TRANSLATION.pageTitle.gameBuilder
             );
+            this._initFlags();
         });
+    }
+
+    private _initFlags() {
+        this.flag = {
+            isDemo: this._isDemo,
+            uploadConfigFile: false,
+            showForm: true
+        }
     }
 
     get isDemo() {
         return this._isDemo;
+    }
+
+    onChangeUploadConfigFile($doUpload: boolean) {
+        this.flag.uploadConfigFile = $doUpload;
+        this.flag.showForm = !$doUpload;
     }
     
 }

@@ -2,6 +2,18 @@
 
 <div class="main-instructions mb-4">
     <mat-label>{{ 'TRANSLATION' | translate: TRANSLATION.instruction }}</mat-label>
+
+    <div *ngIf="!flag.isDemo" class="ms-5">
+        <mat-checkbox (change)="onChangeUploadConfigFile($event.checked)" color="primary">
+            {{ 'TRANSLATION' | translate: TRANSLATION.uploadConfigFile }}
+        </mat-checkbox>
+    </div>
 </div>
 
-<app-game-builder-form [parent]="this"></app-game-builder-form>
+<app-game-builder-form *ngIf="flag.showForm" [parent]="this"></app-game-builder-form>
+
+<div *ngIf="flag.uploadConfigFile">
+    <button mat-raised-button color="primary">
+        Enviar arquivo
+    </button>
+</div>
