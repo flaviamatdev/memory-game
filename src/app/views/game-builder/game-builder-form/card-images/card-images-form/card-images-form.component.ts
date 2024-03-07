@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -8,10 +9,30 @@ import { GameConfigFormComponent } from '../../game-builder-form.component';
 import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 import { UrlPairConfig } from '../url-pair-config.model';
 
+const ANIMATION_TIMEOUT = 500;
+const STATE = {
+    show: 'show',
+    hide: 'hide'
+};
+
 @Component({
     selector: 'app-card-images-form',
     templateUrl: './card-images-form.component.html',
-    styleUrls: ['./card-images-form.component.scss']
+    styleUrls: ['./card-images-form.component.scss'],
+    animations: [
+        trigger('showContent', [
+            state(STATE.show, style({
+                overflow: 'hidden',
+                height: '*'
+            })),
+            state(STATE.hide, style({
+                overflow: 'hidden',
+                height: '0px',
+                opacity: '0'
+            })),
+            transition('*=>*', animate(`${ANIMATION_TIMEOUT}ms ease-in-out`))
+        ])
+    ]
 })
 export class CardImagesFormComponent implements OnInit {
 
@@ -22,6 +43,7 @@ export class CardImagesFormComponent implements OnInit {
     @Input() parent: GameConfigFormComponent;
 
     form: FormGroup;
+    stateUrlInputs = STATE.hide;
     urlPairConfig: UrlPairConfig;
     addUrls: boolean;
     showFilePatternWarning: boolean = false;
@@ -65,17 +87,25 @@ export class CardImagesFormComponent implements OnInit {
         this.showFilePatternWarning = (isUpload && singleImgPerPair === false);
 
         if (isUpload || numPairs < this.MIN_NUM_PAIRS) {
-            this.urlPairConfig = null;
+            this._removeUrlInputs();
             return;
         }
 
         let missingValue = ([ singleImgPerPair, cardImageSrcType, numPairs ]).some(value => value == null);
         if (missingValue) {
-            this.urlPairConfig = null;
+            this._removeUrlInputs();
             return;
         }
 
         this.urlPairConfig = new UrlPairConfig(numPairs, singleImgPerPair);
+        this.stateUrlInputs = STATE.show;
+    }
+
+    private _removeUrlInputs() {
+        this.stateUrlInputs = STATE.hide;
+        setTimeout(() => {
+            this.urlPairConfig = null;
+        }, ANIMATION_TIMEOUT);        
     }
 
     openExample() {
