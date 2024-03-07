@@ -134,10 +134,3 @@ export class GameComponent implements OnInit {
     }
 
 }
-
-class BoardDim {
-    constructor(
-        public numRows: number,
-        public numCols: number,
-    ) { }
-}
