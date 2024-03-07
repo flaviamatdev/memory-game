@@ -1,18 +1,41 @@
 .mat-toolbar-row {
     height: 80px !important;
+    white-space: normal;
+}
+
+@media screen and (max-width: 540px) {
+    .mat-toolbar-row  {
+        height: 65px !important;
+        padding: 0 8px;
+    }
 }
 
 .toolbar-title {
-    margin-left: auto;
-    margin-right: auto;
+    text-align: center;
+    margin: auto;
     font-family: Quicksand;
     font-size: 48px;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+}
+@media screen and (max-width: 550px) {
+    .toolbar-title {
+        font-size: 30px;
+        line-height: 30px;
+    }
+}
+@media screen and (max-width: 360px) {
+    .toolbar-title {
+        font-size: 20px;
+        line-height: 30px;
+    }    
 }
 
 .sidenav {
     width: 220px;
+}
+@media screen and (max-width: 290px) {
+    .sidenav {
+        width: auto;
+    }    
 }
 
 .content {
