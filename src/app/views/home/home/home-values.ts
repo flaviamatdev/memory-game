@@ -53,8 +53,8 @@ export const HOME_TRANSLATIONS = {
 
     btn: {
         buildGame: {
-            pt: 'Crie seu jogo customizado',
-            en: 'Create your custom game',
+            pt: 'Crie seu jogo',
+            en: 'Create your game',
         },
         playDemo: {
             pt: 'Jogar Demo',
