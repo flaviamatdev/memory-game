@@ -95,8 +95,8 @@ export class GameConfigFormComponent implements OnInit {
 
     private _setSubmitBtn() {
         this.submitBtnTranslation = (this._isDemo ? 
-            this.TRANSLATION.submitBtn.playDemo :
-            this.TRANSLATION.submitBtn.createGame
+            this.TRANSLATION.btn.submit.playDemo :
+            this.TRANSLATION.btn.submit.createGame
         );
     }
 
@@ -105,31 +105,52 @@ export class GameConfigFormComponent implements OnInit {
         this.form.get('backgroundImgSrc').setValue(null);
     }
 
+    download() {
+        if (this._isDemo) {
+            return;
+        }
+        if (this._isInvalidForm) {
+            return this.toastService.showInvalidFormError();
+        }
+        this.gameService.downloadGameConfig( this._buildGameConfig() );
+    }
+
     submit() {
-        this.form.markAllAsTouched();
-        if (this.form.invalid) {
+        if (this._isInvalidForm) {
             return this.toastService.showInvalidFormError();
         }
 
-        let data = {...this.form.value };
-
-        let gameConfig = new GameConfig();
-        gameConfig.title = data.title.toUpperCase();
-        gameConfig.singleImgPerPair = data.singleImgPerPair;
-        gameConfig.cardIdType = data.cardIdType;
-        gameConfig.backgroundImgSrc = data.backgroundImgSrc;
-        gameConfig.cardImages = data.cardImages ?? [];
-
+        let gameConfig = this._buildGameConfig();
         if (this._isDemo) {
             gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
-            this._setDemoCardImages(gameConfig, data.numPairs);
+            this._setDemoCardImages(gameConfig);
         }
         
         this.gameService.create(gameConfig);
     }
 
-    private _setDemoCardImages(gameConfig: GameConfig, numPairs: number) {
+    private get _isInvalidForm() {
+        this.form.markAllAsTouched();
+        return this.form.invalid;
+    }
+
+    private _buildGameConfig() {
+        let data = {...this.form.value };
+        let gameConfig = new GameConfig();
+        gameConfig.title = data.title.toUpperCase();
+        gameConfig.singleImgPerPair = data.singleImgPerPair;
+        gameConfig.cardIdType = data.cardIdType;
+        gameConfig.backgroundImgSrc = data.backgroundImgSrc;
+        gameConfig.cardImages = data.cardImages;
+        return gameConfig;
+    }
+
+    private _setDemoCardImages(gameConfig: GameConfig) {
+        gameConfig.cardImages = [];
+
         const dirPath = 'assets/images/demo-game-cards';
+
+        let numPairs: number = this.form.value.numPairs;
 
         for (let i = 1; i <= numPairs; i++) {
             let filename = `num${i}_draw.png`;

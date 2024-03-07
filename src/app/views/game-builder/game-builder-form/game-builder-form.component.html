@@ -59,9 +59,20 @@
     </form>
 </ng-template>
 
-<div class="mt-4 text-center">
-    <button mat-raised-button type="submit" color="primary" (click)="submit()">
-        <mat-icon>sports_esports</mat-icon>
-        {{ 'TRANSLATION' | translate: submitBtnTranslation }} 
-    </button>
+<div class="d-flex-col mt-4">
+    <div>
+        <button mat-raised-button type="submit" color="primary" (click)="submit()">
+            <mat-icon>sports_esports</mat-icon>
+            {{ 'TRANSLATION' | translate: submitBtnTranslation }} 
+        </button>
+    </div>
+
+    <div *ngIf="!flag.isDemo" class="download-btn">
+        <button mat-stroked-button type="button" color="primary" (click)="download()">
+            <mat-icon>download</mat-icon>
+            {{ 'TRANSLATION' | translate: TRANSLATION.btn.download.label }}
+        </button>
+
+        <span>{{ 'TRANSLATION' | translate: TRANSLATION.btn.download.comment }}</span>
+    </div>
 </div>

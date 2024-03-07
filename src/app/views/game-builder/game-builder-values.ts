@@ -119,14 +119,26 @@ export const GAME_BUILDER_TRANSLATION = {
         },
     },
 
-    submitBtn: {
-        createGame: {
-            pt: 'Criar jogo',
-            en: 'Create game'
+    btn: {
+        submit: {
+            createGame: {
+                pt: 'Criar jogo',
+                en: 'Create game'
+            },
+            playDemo: {
+                pt: 'Jogar',
+                en: 'Play'
+            }
         },
-        playDemo: {
-            pt: 'Jogar',
-            en: 'Play'
+        download: {
+            label: {
+                pt: 'Baixar arquivo',
+                en: 'Download game file'
+            },
+            comment: {
+                pt: 'Baixe o arquivo de configuração do jogo para poder usar posteriormente.',
+                en: 'Download the game configuration file for later use.'
+            }
         }
     },
 

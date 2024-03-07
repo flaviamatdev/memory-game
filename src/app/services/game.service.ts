@@ -13,6 +13,7 @@ import { Card } from '../shared/model/card';
 import { CardImage } from '../shared/model/card-image.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
+import { FileUtil } from '../shared/util/file.util';
 import { AudioService } from './audio.service';
 import { ToastService } from './toast.service';
 
@@ -79,6 +80,10 @@ export class GameService {
     goHome() {
         this.liveGame();
         this.router.navigate(['']);
+    }
+
+    downloadGameConfig(gameConfig: GameConfig) {
+        FileUtil.downloadData(gameConfig, gameConfig.title);
     }
 
     create(gameConfig: GameConfig) {
