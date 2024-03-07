@@ -1,4 +1,4 @@
-<div class="board-background" [style.background-image]="backgroundStyle">
+<div class="board-background" [style.background-image]="backgroundImgSrc">
     <div class="buttons">
         <button mat-icon-button (click)="swapPlaySound()" color="primary" 
             matTooltip="{{ 'TRANSLATION' | translate: soundIcon.tooltip }}">
@@ -9,9 +9,9 @@
         </button>
     </div>
 
-    <div class="board">
-        <div class="cards" *ngFor="let cardRow of cardRows; let r=index">
-            <app-memory-card *ngFor="let card of cardRow" [card]="card" (onSelect)="onChooseCard($event)">
+    <div class="board" [ngStyle]="boardStyle">
+        <div class="cards">
+            <app-memory-card *ngFor="let card of cards" [card]="card" (onSelect)="onChooseCard($event)">
             </app-memory-card>
         </div>
     </div>
