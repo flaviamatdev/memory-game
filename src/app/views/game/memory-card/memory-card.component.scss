@@ -1,15 +1,20 @@
+.card-id-number {
+    font-size: var(--card-id-font-size);
+    font-weight: bold;
+}
+
 .card {
-    height: 100px;
-    width: 100px;
+    height: var(--card-width);
+    width: var(--card-width);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    margin: 10px;
+    margin: var(--card-margin);
     cursor: pointer;
 
     img {
-        width: 100px;
+        width: var(--card-width);
         height: auto;
         border-radius: 4px;
     }
@@ -50,9 +55,4 @@
     .card-inner {
         transform: rotateY(180deg);
     }
-}
-
-.card-id-number {
-    font-size: 50px;
-    font-weight: bold;
 }

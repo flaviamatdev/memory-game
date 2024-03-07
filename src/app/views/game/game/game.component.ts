@@ -1,11 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService } from 'src/app/services/dialog.service';
 import { GameService } from 'src/app/services/game.service';
+import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { Card } from 'src/app/shared/model/card';
 import { GAME_TRANSLATION } from './game-values';
-import { TranslationService } from 'src/app/shared/components/translation/translation.service';
+
+/* Values in pixels defined at component scss */
+const STYLE = {
+    minWindowWidth: 768,
+    cardWidth: 100,
+    cardMargin: 10,
+    gapBetweenCards: 16, /* 1rem */
+}
 
 @Component({
     selector: 'app-game',
@@ -16,12 +24,11 @@ export class GameComponent implements OnInit {
 
     readonly TRANSLATION = GAME_TRANSLATION;
 
-    backgroundStyle: any = '';
-    cardRows: Card[][] = [];
+    backgroundImgSrc: any = '';
+    boardStyle: any= {};
     soundIcon: any = {};
 
-    private _cards: Card[];
-    private _boardDim: BoardDim;
+    private _cards: Card[] = [];
 
     constructor(
         private router: Router,
@@ -29,34 +36,47 @@ export class GameComponent implements OnInit {
         private dialogService: DialogService,
         private translationService: TranslationService,
     ) {
-        this._cards = this.router.getCurrentNavigation()?.extras?.state?.cards;
+        this._cards = this.router.getCurrentNavigation()?.extras?.state?.cards ?? [];
+    }
+
+    get cards() {
+        return this._cards;
     }
 
     ngOnInit(): void {
         let gameConfig = this.gameService.config;
         if (!gameConfig || !(this._cards?.length)) {
-            this._goHome();
+            this.gameService.goHome();
             return;
         }
 
         if (gameConfig.backgroundImgSrc) {
-            this.backgroundStyle = `url(${gameConfig.backgroundImgSrc})`;
+            this.backgroundImgSrc = `url(${gameConfig.backgroundImgSrc})`;
         }
-        this._setBoardDim(gameConfig.numPairs * 2);
+        this._setWidth(window.screen.width);
         this._setSoundIcon();
-        this._startGame();
     }
 
-    private _goHome() {
-        this.gameService.goHome();
+    private _setWidth(windowWidth: number) {
+        if (windowWidth < STYLE.minWindowWidth) {
+            this.boardStyle = {
+                board: {},
+                card: {}
+            }
+            return;
+        }
+
+        let numCards = (this.gameService.config.numPairs * 2);
+        let numCols = ([5,4,3]).filter(n => numCards % n == 0)[0];
+        let boardWidth = ((STYLE.cardWidth + 2*STYLE.cardMargin) * numCols) + ((numCols-1) * STYLE.gapBetweenCards);
+        this.boardStyle = { width: `${boardWidth}px` };
     }
 
-    private _setBoardDim(numCards: number) {
-        let numCols = (numCards % 5 == 0 ? 5 : 4);
-        let numRows = numCards / numCols
-        this._boardDim = new BoardDim(numRows, numCols);
+    @HostListener('window:resize', ['$event'])
+    onResize($event) {
+        this._setWidth($event.target.innerWidth);
     }
-        
+
     private _setSoundIcon() {
         this.soundIcon = (this.gameService.playSound ? 
             { icon: 'volume_up',  tooltip: this.TRANSLATION.btn.sound.turnOnTooltip } :
@@ -64,24 +84,6 @@ export class GameComponent implements OnInit {
         );
     }
 
-    private _startGame() {
-        this.cardRows = [];
-        const numCols = this._boardDim.numCols;
-
-        for (let r = 0; r < this._boardDim.numRows; r++) {
-            let idx = r * numCols;
-            let currCardRow = this._cards.slice(idx, idx + numCols);
-            this.gameService.setIdAsRowColumn(r, currCardRow);
-            this.cardRows.push(currCardRow);
-        }
-    }
-
-    private _startNewGame() {
-        this._cards = this.gameService.restartGame(this._cards);
-        this._startGame();
-    }
-
-    
     swapPlaySound() {
         this.gameService.swapPlaySound();
         this._setSoundIcon();
@@ -96,6 +98,14 @@ export class GameComponent implements OnInit {
             );
         }
         callback();
+    }
+
+    private _startNewGame() {
+        let cards = this._cards;
+        this._cards = [];
+        setTimeout(() => {
+            this._cards = this.gameService.restartGame(cards);
+        }, 1);
     }
 
     onChooseCard($card: Card) {
@@ -119,11 +129,4 @@ export class GameComponent implements OnInit {
         });
     }
 
-}
-
-class BoardDim {
-    constructor(
-        public numRows: number,
-        public numCols: number,
-    ) { }
 }

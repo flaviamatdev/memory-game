@@ -1,4 +1,10 @@
-.button-div {
+@media screen and (max-width: 400px) {
+    .mat-button {
+        padding: 0 8px;
+    }
+}
+
+.lang-menu-item-list {
     display: flex;
     align-items: center;
 

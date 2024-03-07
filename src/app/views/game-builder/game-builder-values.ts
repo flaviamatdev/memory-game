@@ -60,8 +60,8 @@ export const GAME_BUILDER_TRANSLATION = {
         },
 
         cardIdType: {
-            pt: 'Modo de identificação das cartas',
-            en: 'Card identification mode'
+            pt: 'Como identificar as cartas',
+            en: 'How to identify the cards'
         },
 
         backgroundImg: {

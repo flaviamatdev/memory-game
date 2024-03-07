@@ -5,7 +5,7 @@
     <mat-menu #langMenu>
         <button *ngFor="let langBtn of languages" mat-menu-item (click)="changeLanguage(langBtn.lang)"
             matTooltip="{{ langBtn.tooltip | translate: VALUES.language }}" matTooltipPosition="right">
-            <div class="button-div">
+            <div class="lang-menu-item-list">
                 <mat-icon>
                     <img width="100%" [src]="langBtn.flag" [alt]="langBtn.lang">
                 </mat-icon>

@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    gap: 1rem;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -36,41 +37,36 @@
     background-color: rgba(255, 255, 255, 0.4)
 }
 
-.new-game-btn {
+.buttons {
     display: flex;
     justify-content: flex-end;
     padding: 0 1rem;
 }
 
 .board {
+    --card-width: 100px;
+    --card-margin: 10px;
+    --card-id-font-size: 50px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
     opacity: 1 !important;
 }
+@media screen and (max-width: 767px) {
+    .board {
+        --card-width: 80px;
+        --card-id-font-size: 40px;
+    }
+}
 
-.board-row {
+.cards {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
 }
-.board-grid-space {
-    width: 30px;
-}
-.board-grid-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Quicksand;
-    font-size: 48px;
-}
-.board-grid-col {
-    width: 100px;
-    margin: 0 10px 16px 10px;
-}
-.board-grid-row {
-    height: 100px;
-    margin: 10px 0;
-}
+
