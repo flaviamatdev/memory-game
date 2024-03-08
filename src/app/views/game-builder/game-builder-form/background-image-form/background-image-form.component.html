@@ -13,9 +13,9 @@
                 </div>
 
                 <div *ngSwitchCase="false">
-                    <app-upload-image #upload [labelTranslate]="TRANSLATION.upload" 
+                    <app-upload #upload [isImage]="true" [labelTranslate]="TRANSLATION.upload" 
                         [form]="form" [controlName]="myControlName.upload" (onClearInput)="deleteFile()">
-                    </app-upload-image>
+                    </app-upload>
                 </div>
             </div>
 

@@ -1,21 +1,23 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ToastService } from 'src/app/services/toast.service';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
-import { TranslationService } from '../../../translation/translation.service';
-import { AbstractInputComponent } from '../../abstract-input.component';
-import { UPLOAD_TRANSLATION } from '../upload-image-values';
+import { TranslationService } from '../../translation/translation.service';
+import { AbstractInputComponent } from '../abstract-input.component';
+import { UPLOAD_TRANSLATION } from './upload-values';
+
+const ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
 @Component({
     selector: 'app-upload',
     templateUrl: './upload.component.html',
-    styleUrls: ['./upload.component.scss', '../../abstract-input.component.scss']
+    styleUrls: ['./upload.component.scss', '../abstract-input.component.scss']
 })
 export class UploadComponent extends AbstractInputComponent implements OnInit {
 
     readonly TRANSLATION = UPLOAD_TRANSLATION;
 
+    @Input() isImage: boolean = false;
     @Input() accept: any;
-    @Input() fileTypeTranslationParamKey: string = 'regular';
     @Input() multiple: boolean = false;
     @Input() selectAllDir: boolean = false;
 
@@ -25,14 +27,15 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     btnTranslation: any;
     singleChosedFileName: string;
 
-    @ViewChild('uploadInput') protected _inputElem: ElementRef;
+    @ViewChild('uploadInput') private _inputElem: ElementRef;
     
-    protected _numFiles: number = 0;
-    protected _uploadFiles: FileUpload[];
+    private _numFiles: number = 0;
+    private _fileUploads: FileUpload[];
+    private _fileTypeTranslationParamKey: string = 'regular';
 
     constructor(
-        protected toastService: ToastService,
-        protected translationService: TranslationService,
+        private toastService: ToastService,
+        private translationService: TranslationService,
     ) {
         super();
     }
@@ -47,16 +50,21 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
             this.TRANSLATION.multiple.btn : 
             this.TRANSLATION.nonMultiple.btn
         );
+
+        if (this.isImage) {
+            this.accept = ACCEPT_IMG;
+            this._fileTypeTranslationParamKey = 'image';
+        }
     }
 
     reset() {
-        this._uploadFiles = [];
+        this._fileUploads = [];
         this._clearInput();
         this.formControl.reset();
         this.singleChosedFileName = null;
     }
 
-    protected _clearInput() {
+    private _clearInput() {
         this._numFiles = 0;
         this._inputElem.nativeElement.value = "";
     }
@@ -66,7 +74,7 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     }
 
     onSelectFiles($event: any) {        
-        this._uploadFiles = [];
+        this._fileUploads = [];
         let fileList: FileList = $event?.target?.files;
 
         if ( !(fileList?.length) || fileList.item(0) == null ) {
@@ -85,7 +93,7 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
         files.forEach(file => this._readFile(file));
     }
 
-    protected _extractFiles(fileList: FileList) {
+    private _extractFiles(fileList: FileList) {
         this._numFiles = fileList.length ?? 0;
 
         let files: File[] = [];
@@ -103,9 +111,9 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
         };
     }
 
-    protected _showOutAcceptErrorMsg() {
+    private _showOutAcceptErrorMsg() {
         let accept = this.accept.join(', ');
-        let fileType = this.translationService.getTranslationObj(this.TRANSLATION.fileType[this.fileTypeTranslationParamKey]);
+        let fileType = this.translationService.getTranslationObj(this.TRANSLATION.fileType[this._fileTypeTranslationParamKey]);
         let translation = (this.multiple ?
             this.TRANSLATION.multiple.acceptErrorMsg :
             this.TRANSLATION.nonMultiple.acceptErrorMsg
@@ -117,25 +125,21 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
         this.toastService.error(msg, 7000);
     }
 
-    protected _readFile(file: File) {
+    private _readFile(file: File) {
         const reader = new FileReader();
         reader.onload = (fileReaderEvent: any) => {
-            this._uploadFiles.push(this._getUploadFile(fileReaderEvent, file));
-            if (this._uploadFiles.length == this._numFiles) {
+            this._fileUploads.push(new FileUpload(fileReaderEvent.target.result, file.name));
+            if (this._fileUploads.length == this._numFiles) {
                 this._finishReadFiles();
             }
         }
         reader.readAsDataURL(file);
     }
 
-    protected _getUploadFile = (fileReaderEvent: any, file: File): FileUpload => {
-        return new FileUpload(fileReaderEvent.target.result, file.name);
-    }
-
-    protected _finishReadFiles() {
-        this.formControl?.setValue(this._uploadFiles);
-        this.onUpload.emit(this._uploadFiles);
-        this.singleChosedFileName = this._uploadFiles[0].filename;
+    private _finishReadFiles() {
+        this.formControl?.setValue(this._fileUploads);
+        this.onUpload.emit(this._fileUploads);
+        this.singleChosedFileName = this._fileUploads[0].filename;
     }
 
 }
