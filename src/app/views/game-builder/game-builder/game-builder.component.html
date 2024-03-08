@@ -13,7 +13,5 @@
 <app-game-builder-form *ngIf="flag.showForm" [parent]="this"></app-game-builder-form>
 
 <div *ngIf="flag.uploadConfigFile">
-    <button mat-raised-button color="primary">
-        Enviar arquivo
-    </button>
+    <app-upload accept="application/json" (onUpload)="onUploadConfigFile($event)"></app-upload>
 </div>

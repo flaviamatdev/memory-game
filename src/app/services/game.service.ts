@@ -12,6 +12,7 @@ import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { CardImage } from '../shared/model/card-image.model';
 import { GameConfig } from '../shared/model/game-config.model';
+import { UploadFile } from '../shared/model/upload-file.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { FileUtil } from '../shared/util/file.util';
 import { AudioService } from './audio.service';
@@ -80,10 +81,6 @@ export class GameService {
     goHome() {
         this.liveGame();
         this.router.navigate(['']);
-    }
-
-    downloadGameConfig(gameConfig: GameConfig) {
-        FileUtil.downloadData(gameConfig, gameConfig.title);
     }
 
     create(gameConfig: GameConfig) {
@@ -265,6 +262,19 @@ export class GameService {
 
     swapPlaySound() {
         this._playSound = !this._playSound;
+    }
+
+    downloadGameConfig(gameConfig: GameConfig) {
+        FileUtil.downloadJson(gameConfig, gameConfig.title);
+    }
+
+    createGameFromUploadedConfigFile(uploadFile: UploadFile) {
+        try {
+            let json = FileUtil.uploadJson(uploadFile.src);
+            console.log(json);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 }

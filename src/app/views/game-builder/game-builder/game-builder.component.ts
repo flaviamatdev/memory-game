@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GameService } from 'src/app/services/game.service';
+import { UploadFile } from 'src/app/shared/model/upload-file.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 
 @Component({
@@ -13,12 +15,12 @@ export class GameBuilderComponent implements OnInit {
 
     pageTitleTranslation: any = {};
     flag: { [key: string]: boolean } = {};
-    uploadConfigFile: boolean = false;
 
     private _isDemo: boolean;
     
     constructor(
         private route: ActivatedRoute,
+        private gameService: GameService,
     ) {}
 
     ngOnInit(): void {
@@ -47,6 +49,10 @@ export class GameBuilderComponent implements OnInit {
     onChangeUploadConfigFile($doUpload: boolean) {
         this.flag.uploadConfigFile = $doUpload;
         this.flag.showForm = !$doUpload;
+    }
+
+    onUploadConfigFile(uploadFiles: UploadFile[]) {
+        this.gameService.createGameFromUploadedConfigFile(uploadFiles[0]);
     }
     
 }
