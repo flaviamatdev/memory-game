@@ -1,12 +1,12 @@
 import { CardIdTypeEnum } from "../enums/card-id-type.enum";
-import { UploadFile } from "./upload-file.model";
+import { FileUpload } from "./file-upload.model";
 
 export class GameConfig {
 
     title: string;
     backgroundImgSrc?: string;
     singleImgPerPair: boolean;
-    cardImages: UploadFile[];
+    cardImages: FileUpload[];
     cardIdType: CardIdTypeEnum;
 
     get numPairs(): number {

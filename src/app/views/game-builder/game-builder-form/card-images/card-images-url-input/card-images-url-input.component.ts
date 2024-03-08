@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UploadFile } from 'src/app/shared/model/upload-file.model';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 import { UrlPairConfig } from '../url-pair-config.model';
 
@@ -21,7 +21,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     private _formArray: FormArray;
     private _numCardImages: number;
-    private _cardImageMap: { [key: string]: UploadFile } = {};
+    private _cardImageMap: { [key: string]: FileUpload } = {};
 
     constructor(private fb: FormBuilder) {}
 

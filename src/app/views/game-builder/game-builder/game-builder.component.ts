@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
-import { UploadFile } from 'src/app/shared/model/upload-file.model';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 
 @Component({
@@ -51,7 +51,7 @@ export class GameBuilderComponent implements OnInit {
         this.flag.showForm = !$doUpload;
     }
 
-    onUploadConfigFile(uploadFiles: UploadFile[]) {
+    onUploadConfigFile(uploadFiles: FileUpload[]) {
         this.gameService.createGameFromUploadedConfigFile(uploadFiles[0]);
     }
     

@@ -5,7 +5,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
-import { UploadFile } from 'src/app/shared/model/upload-file.model';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 import { GameBuilderComponent } from '../game-builder/game-builder.component';
 
@@ -154,13 +154,13 @@ export class GameConfigFormComponent implements OnInit {
 
         for (let i = 1; i <= numPairs; i++) {
             let filename = `num${i}_draw.png`;
-            gameConfig.cardImages.push(new UploadFile(`${dirPath}/draw/${filename}`, filename));
+            gameConfig.cardImages.push(new FileUpload(`${dirPath}/draw/${filename}`, filename));
         }
 
         if (!gameConfig.singleImgPerPair) {
             for (let i = 1; i <= numPairs; i++) {
                 let filename = `num${i}_word.png`;               
-                gameConfig.cardImages.push(new UploadFile(`${dirPath}/words/${filename}`, filename));
+                gameConfig.cardImages.push(new FileUpload(`${dirPath}/words/${filename}`, filename));
             }
         }
     }

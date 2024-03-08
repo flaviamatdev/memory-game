@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ToastService } from 'src/app/services/toast.service';
-import { UploadFile } from 'src/app/shared/model/upload-file.model';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { TranslationService } from '../../../translation/translation.service';
 import { AbstractInputComponent } from '../../abstract-input.component';
 import { UPLOAD_TRANSLATION } from '../upload-image-values';
@@ -28,7 +28,7 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     @ViewChild('uploadInput') protected _inputElem: ElementRef;
     
     protected _numFiles: number = 0;
-    protected _uploadFiles: UploadFile[];
+    protected _uploadFiles: FileUpload[];
 
     constructor(
         protected toastService: ToastService,
@@ -128,8 +128,8 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
         reader.readAsDataURL(file);
     }
 
-    protected _getUploadFile = (fileReaderEvent: any, file: File): UploadFile => {
-        return new UploadFile(fileReaderEvent.target.result, file.name);
+    protected _getUploadFile = (fileReaderEvent: any, file: File): FileUpload => {
+        return new FileUpload(fileReaderEvent.target.result, file.name);
     }
 
     protected _finishReadFiles() {

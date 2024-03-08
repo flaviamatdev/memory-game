@@ -1,4 +1,4 @@
-import { UploadFile } from "./upload-file.model";
+import { FileUpload } from "./file-upload.model";
 
 export class Card {
     id: string;
@@ -6,6 +6,6 @@ export class Card {
 
     constructor(
         public code: string,
-        public img?: UploadFile
+        public img?: FileUpload
     ) {}
 }

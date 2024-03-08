@@ -11,7 +11,7 @@ import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { GameConfig } from '../shared/model/game-config.model';
-import { UploadFile } from '../shared/model/upload-file.model';
+import { FileUpload } from '../shared/model/file-upload.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { FileUtil } from '../shared/util/file.util';
 import { AudioService } from './audio.service';
@@ -152,7 +152,7 @@ export class GameService {
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
     }
 
-    private _getFilenamePrefixForDiffImagesPerPair(cardImages: UploadFile[]) {
+    private _getFilenamePrefixForDiffImagesPerPair(cardImages: FileUpload[]) {
         let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
         let occurrences = ArrayUtil.getNumOccurrences(filenames);
         let keys = Object.keys(occurrences);
@@ -166,7 +166,7 @@ export class GameService {
         return keys;
     }
 
-    private _getCardImageFilenamePrefix(cardImage: UploadFile) {
+    private _getCardImageFilenamePrefix(cardImage: FileUpload) {
         return cardImage.filename.split(IMG_FILENAME_SEP)[0];
     }
 
@@ -267,7 +267,7 @@ export class GameService {
         FileUtil.downloadJson(gameConfig, gameConfig.title);
     }
 
-    createGameFromUploadedConfigFile(uploadFile: UploadFile) {
+    createGameFromUploadedConfigFile(uploadFile: FileUpload) {
         try {
             let json = FileUtil.uploadJson(uploadFile.src);
             console.log(json);
