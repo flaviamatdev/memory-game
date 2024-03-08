@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UploadImageComponent } from 'src/app/shared/components/input/image/upload-image/upload-image.component';
+import { UploadImageComponent } from 'src/app/shared/components/input/upload/upload-image/upload-image.component';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 import { CardImage } from 'src/app/shared/model/card-image.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
