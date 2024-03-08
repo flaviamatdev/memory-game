@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UploadImageComponent } from 'src/app/shared/components/input/upload/upload-image/upload-image.component';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
-import { CardImage } from 'src/app/shared/model/card-image.model';
+import { UploadFile } from 'src/app/shared/model/upload-file.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../game-builder-values';
 
@@ -67,7 +67,7 @@ export class BackgroundImageFormComponent implements OnInit {
     }
 
 
-    private _onUpload(cardImages: CardImage[]) {
+    private _onUpload(cardImages: UploadFile[]) {
         if ( !(cardImages?.length) ) {
             this._setImage(null);
             return;

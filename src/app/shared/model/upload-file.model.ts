@@ -1,6 +1,6 @@
 export class UploadFile {
     constructor(
-        public src: any,
+        public src: string, /* base64 or url */
         public filename?: string
     ) {}
 }

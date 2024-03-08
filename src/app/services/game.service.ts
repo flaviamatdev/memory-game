@@ -10,7 +10,6 @@ import { AudioEnum } from '../shared/enums/audio.enum';
 import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
-import { CardImage } from '../shared/model/card-image.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { UploadFile } from '../shared/model/upload-file.model';
 import { ArrayUtil } from '../shared/util/array.util';
@@ -153,7 +152,7 @@ export class GameService {
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
     }
 
-    private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {
+    private _getFilenamePrefixForDiffImagesPerPair(cardImages: UploadFile[]) {
         let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
         let occurrences = ArrayUtil.getNumOccurrences(filenames);
         let keys = Object.keys(occurrences);
@@ -167,7 +166,7 @@ export class GameService {
         return keys;
     }
 
-    private _getCardImageFilenamePrefix(cardImage: CardImage) {
+    private _getCardImageFilenamePrefix(cardImage: UploadFile) {
         return cardImage.filename.split(IMG_FILENAME_SEP)[0];
     }
 

@@ -18,7 +18,6 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     @Input() fileTypeTranslationParamKey: string = 'regular';
     @Input() multiple: boolean = false;
     @Input() selectAllDir: boolean = false;
-    @Input() getUploadFileFn: Function;
 
     @Output() onClearInput = new EventEmitter();
     @Output() onUpload = new EventEmitter();
@@ -48,7 +47,6 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
             this.TRANSLATION.multiple.btn : 
             this.TRANSLATION.nonMultiple.btn
         );
-        this.getUploadFileFn = this.getUploadFileFn ?? this._getUploadFile
     }
 
     reset() {
@@ -122,7 +120,7 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     protected _readFile(file: File) {
         const reader = new FileReader();
         reader.onload = (fileReaderEvent: any) => {
-            this._uploadFiles.push(this.getUploadFileFn(fileReaderEvent, file));
+            this._uploadFiles.push(this._getUploadFile(fileReaderEvent, file));
             if (this._uploadFiles.length == this._numFiles) {
                 this._finishReadFiles();
             }
