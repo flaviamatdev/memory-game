@@ -93,7 +93,8 @@ export class GameService {
             gameConfig = this.configFileService.readUploadedConfigFile(uploadFile);
         } 
         catch (error) {
-            return this._handleCreateError(error);
+            this._handleCreateError(error);
+            throw error;
         }
 
         this.create(gameConfig);

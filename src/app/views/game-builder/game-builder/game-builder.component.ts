@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
+import { UploadComponent } from 'src/app/shared/components/input/upload/upload.component';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 
@@ -51,8 +52,12 @@ export class GameBuilderComponent implements OnInit {
         this.flag.showForm = !$doUpload;
     }
 
-    onUploadConfigFile(uploadFiles: FileUpload[]) {
-        this.gameService.createGameFromUploadedConfigFile(uploadFiles[0]);
+    onUploadConfigFile(uploadFiles: FileUpload[], uploadChild: UploadComponent) {
+        try {
+            this.gameService.createGameFromUploadedConfigFile(uploadFiles[0]);
+        } catch (error) {
+            uploadChild.reset();
+        }
     }
     
 }

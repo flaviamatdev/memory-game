@@ -58,7 +58,7 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     reset() {
         this._fileUploads = [];
         this._clearInput();
-        this.formControl.reset();
+        this.formControl?.reset();
         this.singleChosedFileName = null;
     }
 
@@ -136,9 +136,8 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
 
     private _finishReadFiles() {
         this.formControl?.setValue(this._fileUploads);
-        this.onUpload.emit(this._fileUploads);
         this.singleChosedFileName = this._fileUploads[0].filename;
-        this._clearInput();
+        this.onUpload.emit(this._fileUploads);
     }
 
 }
