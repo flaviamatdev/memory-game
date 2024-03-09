@@ -95,11 +95,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     onInsertUrl($url: string, pairIndex: number, imgIndex: number = 0) {
         let key = this._buildCardImageKey(pairIndex, imgIndex);
-        this._cardImageMap[key] = {
-            src: $url,
-            filename: `pair${pairIndex+1}_img${imgIndex+1}`
-        };
-
+        this._cardImageMap[key] = new FileUpload($url,  `pair${pairIndex+1}_img${imgIndex+1}`);
         this._updateFormControl();
     }
 

@@ -10,11 +10,11 @@ import { AudioEnum } from '../shared/enums/audio.enum';
 import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
-import { GameConfig } from '../shared/model/game-config.model';
 import { FileUpload } from '../shared/model/file-upload.model';
+import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
-import { FileUtil } from '../shared/util/file.util';
 import { AudioService } from './audio.service';
+import { GameConfigFileService } from './game-config-file.service';
 import { ToastService } from './toast.service';
 
 const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
@@ -39,6 +39,7 @@ export class GameService {
         private translationService: TranslationService,
         private audioService: AudioService,
         private toastService: ToastService,
+        private configFileService: GameConfigFileService,
     ) {
         library.addIcons(...ICONS);
     }
@@ -82,6 +83,22 @@ export class GameService {
         this.router.navigate(['']);
     }
 
+    downloadGameConfig(gameConfig: GameConfig) {
+        this.configFileService.downloadGameConfig(gameConfig);
+    }
+
+    createGameFromUploadedConfigFile(uploadFile: FileUpload) {
+        let gameConfig: GameConfig = null;
+        try {
+            gameConfig = this.configFileService.readUploadedConfigFile(uploadFile);
+        } 
+        catch (error) {
+            return this._handleCreateError(error);
+        }
+
+        this.create(gameConfig);
+    }
+
     create(gameConfig: GameConfig) {
         this._gameConfig = gameConfig;
         try {
@@ -95,12 +112,16 @@ export class GameService {
             });
         } 
         catch (error) {
-            this._gameConfig = null;
-            if ( !(error instanceof GameConfigError) ) {
-                return this.toastService.error('Ops! Ocorreu um erro inesperado. Tente novamente.');
-            }
-            this.toastService.error(error.message);
+            this._handleCreateError(error);
         }
+    }
+
+    private _handleCreateError(error: any) {
+        this._gameConfig = null;
+        if ( !(error instanceof GameConfigError) ) {
+            return this.toastService.error('Ops! Ocorreu um erro inesperado. Tente novamente.');
+        }
+        this.toastService.error(error.message);
     }
 
     private _getCards(): Card[] {
@@ -261,19 +282,6 @@ export class GameService {
 
     swapPlaySound() {
         this._playSound = !this._playSound;
-    }
-
-    downloadGameConfig(gameConfig: GameConfig) {
-        FileUtil.downloadJson(gameConfig, gameConfig.title);
-    }
-
-    createGameFromUploadedConfigFile(uploadFile: FileUpload) {
-        try {
-            let json = FileUtil.uploadJson(uploadFile.src);
-            console.log(json);
-        } catch (error) {
-            console.error(error);
-        }
     }
 
 }

@@ -5,8 +5,6 @@ import { TranslationService } from '../../translation/translation.service';
 import { AbstractInputComponent } from '../abstract-input.component';
 import { UPLOAD_TRANSLATION } from './upload-values';
 
-const ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
-
 @Component({
     selector: 'app-upload',
     templateUrl: './upload.component.html',
@@ -52,7 +50,7 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
         );
 
         if (this.isImage) {
-            this.accept = ACCEPT_IMG;
+            this.accept = FileUpload.ACCEPT_IMG;
             this._fileTypeTranslationParamKey = 'image';
         }
     }
