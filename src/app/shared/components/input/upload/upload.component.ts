@@ -138,6 +138,7 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
         this.formControl?.setValue(this._fileUploads);
         this.onUpload.emit(this._fileUploads);
         this.singleChosedFileName = this._fileUploads[0].filename;
+        this._clearInput();
     }
 
 }
