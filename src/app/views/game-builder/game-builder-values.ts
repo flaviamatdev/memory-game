@@ -141,8 +141,8 @@ export const GAME_BUILDER_TRANSLATION = {
                 en: 'Download game file'
             },
             comment: {
-                pt: 'Baixe o arquivo de configuração do jogo para poder usar posteriormente.',
-                en: 'Download the game configuration file for later use.'
+                pt: 'Para jogar depois',
+                en: 'For play later'
             }
         }
     },

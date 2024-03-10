@@ -21,9 +21,9 @@ form {
     font-size: 16px;
 }
 
-.d-flex-col {
-    gap: 1.5rem;
-    align-items: center;
+.d-flex-row {
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .download-btn {
