@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
 import { TranslationService } from '../shared/components/translation/translation.service';
 import { VALUES } from '../shared/constants/global.values';
-import { ICONS } from '../shared/constants/icons';
+import { ICONS, NUM_ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
 import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
@@ -135,6 +135,10 @@ export class GameService {
 
     private _getCards(): Card[] {
         this._reset();
+
+        if (this._gameConfig.cardIdType === CardIdTypeEnum.ICONS && this._pairCount * 2 > NUM_ICONS) {
+            throw new GameConfigError(ERROR_TRANSLATION.exceededMaxNumIcons);
+        }
 
         if (!this._gameConfig.singleImgPerPair) {
             return this._getCardsForDifferentImagesPerPair();
