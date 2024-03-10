@@ -1,5 +1,5 @@
 export class GameConfigError extends Error {
-    constructor(message: string) {
-        super(message);
+    constructor(public translation: any) {
+        super('Game Config Error');
     }
 }

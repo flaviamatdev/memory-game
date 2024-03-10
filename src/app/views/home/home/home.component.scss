@@ -3,7 +3,6 @@ h1 {
 }
 
 .d-flex-col {
-    gap: 1rem;
     align-items: center;
 }
 
@@ -32,5 +31,12 @@ h1 {
         width: 205px;
         font-size: 12px;
         color: gray;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 647px) {
+    .card-id-info .card-id-bottom-text {
+        height: fit-content;
     }
 }

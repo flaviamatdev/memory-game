@@ -5,18 +5,21 @@ import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
 import { TranslationService } from '../shared/components/translation/translation.service';
 import { VALUES } from '../shared/constants/global.values';
-import { ICONS } from '../shared/constants/icons';
+import { ICONS, NUM_ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
 import { CardIdTypeEnum } from '../shared/enums/card-id-type.enum';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
-import { CardImage } from '../shared/model/card-image.model';
+import { FileUpload } from '../shared/model/file-upload.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
+import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
+import { GameConfigFileService } from './game-config-file.service';
 import { ToastService } from './toast.service';
 
 const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
+const ERROR_TRANSLATION = ERROR_MSG_TRANSLATION;
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +41,7 @@ export class GameService {
         private translationService: TranslationService,
         private audioService: AudioService,
         private toastService: ToastService,
+        private configFileService: GameConfigFileService,
     ) {
         library.addIcons(...ICONS);
     }
@@ -81,6 +85,23 @@ export class GameService {
         this.router.navigate(['']);
     }
 
+    downloadGameConfig(gameConfig: GameConfig) {
+        this.configFileService.downloadGameConfig(gameConfig);
+    }
+
+    createGameFromUploadedConfigFile(uploadFile: FileUpload) {
+        let gameConfig: GameConfig = null;
+        try {
+            gameConfig = this.configFileService.readUploadedConfigFile(uploadFile);
+        } 
+        catch (error) {
+            this._handleCreateError(error);
+            throw error;
+        }
+
+        this.create(gameConfig);
+    }
+
     create(gameConfig: GameConfig) {
         this._gameConfig = gameConfig;
         try {
@@ -94,16 +115,30 @@ export class GameService {
             });
         } 
         catch (error) {
-            this._gameConfig = null;
-            if ( !(error instanceof GameConfigError) ) {
-                return this.toastService.error('Ops! Ocorreu um erro inesperado. Tente novamente.');
-            }
-            this.toastService.error(error.message);
+            this._handleCreateError(error);
         }
+    }
+
+    private _handleCreateError(error: any) {
+        this._gameConfig = null;
+        
+        if ( !(error instanceof GameConfigError) ) {
+            return this.toastService.error(
+                this.translationService.getTranslationObj(ERROR_TRANSLATION.unexpectedError)
+            );
+        }
+
+        this.toastService.error(
+            this.translationService.getTranslationObj(error.translation)
+        );
     }
 
     private _getCards(): Card[] {
         this._reset();
+
+        if (this._gameConfig.cardIdType === CardIdTypeEnum.ICONS && this._pairCount * 2 > NUM_ICONS) {
+            throw new GameConfigError(ERROR_TRANSLATION.exceededMaxNumIcons);
+        }
 
         if (!this._gameConfig.singleImgPerPair) {
             return this._getCardsForDifferentImagesPerPair();
@@ -151,7 +186,7 @@ export class GameService {
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
     }
 
-    private _getFilenamePrefixForDiffImagesPerPair(cardImages: CardImage[]) {
+    private _getFilenamePrefixForDiffImagesPerPair(cardImages: FileUpload[]) {
         let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
         let occurrences = ArrayUtil.getNumOccurrences(filenames);
         let keys = Object.keys(occurrences);
@@ -159,13 +194,13 @@ export class GameService {
         if (keys.length !== filenames.length / 2 ||
             Object.values(occurrences).some(count => count != 2)
         ) {
-            throw new GameConfigError('Em caso de imagens diferentes por par, os nomes dos arquivos devem seguir o padrão informado');
+            throw new GameConfigError(ERROR_TRANSLATION.diffImagesPerPairFilename);
         }
 
         return keys;
     }
 
-    private _getCardImageFilenamePrefix(cardImage: CardImage) {
+    private _getCardImageFilenamePrefix(cardImage: FileUpload) {
         return cardImage.filename.split(IMG_FILENAME_SEP)[0];
     }
 
@@ -225,11 +260,11 @@ export class GameService {
 
         let win = this.isGameFinished;
 
-        setTimeout(() => {
-            if (win && this.playSound) {
+        if (win && this.playSound) {
+            setTimeout(() => {
                 this.audioService.play(AudioEnum.WIN);
-            }
-        }, VALUES.winNotificationTimeout / 2);
+            }, VALUES.winNotificationTimeout / 2);
+        }
 
         return win;
     }

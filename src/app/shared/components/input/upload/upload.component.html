@@ -4,10 +4,10 @@
     </app-input-label>
 
     <div *ngIf="selectAllDir else regularInput" >
-        <input type="file" #uploadInput hidden (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" multiple webkitdirectory>
+        <input type="file" #uploadInput hidden (change)="onSelectFiles($event)" [accept]="accept" multiple webkitdirectory>
     </div>
     <ng-template #regularInput>
-        <input type="file" #uploadInput hidden (change)="onSelectFiles($event)" [accept]="ACCEPT_IMG" [multiple]="multiple">
+        <input type="file" #uploadInput hidden (change)="onSelectFiles($event)" [accept]="accept" [multiple]="multiple">
     </ng-template>
 
     <div class="d-flex-row">

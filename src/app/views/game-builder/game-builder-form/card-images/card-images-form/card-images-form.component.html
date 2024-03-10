@@ -14,10 +14,10 @@
             (onChange)="onChangeNumPairsForUrl($event)">
         </app-input-number>
         
-        <app-upload-image *ngSwitchCase="false" 
-            [labelTranslate]="TRANSLATION.input.cardImages.upload.pickDirPath" 
+        <app-upload *ngSwitchCase="false"
+            [isImage]="true" [labelTranslate]="TRANSLATION.input.cardImages.upload.pickDirPath" 
             [form]="form" controlName="cardImages" [selectAllDir]="true">
-        </app-upload-image>
+        </app-upload>
     </div>
 </div>
 

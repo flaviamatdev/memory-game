@@ -6,7 +6,7 @@ import { AbstractInputComponent } from '../../abstract-input.component';
 @Component({
     selector: 'app-select',
     templateUrl: './select.component.html',
-    styleUrls: ['./select.component.scss']
+    styleUrls: ['./select.component.scss', '../../abstract-input.component.scss']
 })
 export class SelectComponent extends AbstractInputComponent implements OnInit, OnChanges {
 

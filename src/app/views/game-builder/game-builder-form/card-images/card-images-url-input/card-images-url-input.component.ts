@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UrlPairConfig } from '../url-pair-config.model';
-import { CardImage } from 'src/app/shared/model/card-image.model';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
+import { UrlPairConfig } from '../url-pair-config.model';
 
 @Component({
     selector: 'app-card-images-url-input',
@@ -21,7 +21,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     private _formArray: FormArray;
     private _numCardImages: number;
-    private _cardImageMap: { [key: string]: CardImage } = {};
+    private _cardImageMap: { [key: string]: FileUpload } = {};
 
     constructor(private fb: FormBuilder) {}
 
@@ -83,7 +83,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     getUrl(pairIndex: number, imgIndex: number = 0): string {
         try {
-            return this._cardImageMap[this._buildCardImageKey(pairIndex, imgIndex)]?.base64;
+            return this._cardImageMap[this._buildCardImageKey(pairIndex, imgIndex)]?.src;
         } catch (error) {
             return null;
         }
@@ -95,11 +95,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
     onInsertUrl($url: string, pairIndex: number, imgIndex: number = 0) {
         let key = this._buildCardImageKey(pairIndex, imgIndex);
-        this._cardImageMap[key] = {
-            base64: $url,
-            filename: `pair${pairIndex+1}_img${imgIndex+1}`
-        };
-
+        this._cardImageMap[key] = new FileUpload($url,  `pair${pairIndex+1}_img${imgIndex+1}`);
         this._updateFormControl();
     }
 

@@ -4,8 +4,8 @@ import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
-import { CardImage } from 'src/app/shared/model/card-image.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 import { GameBuilderComponent } from '../game-builder/game-builder.component';
 
@@ -95,8 +95,8 @@ export class GameConfigFormComponent implements OnInit {
 
     private _setSubmitBtn() {
         this.submitBtnTranslation = (this._isDemo ? 
-            this.TRANSLATION.submitBtn.playDemo :
-            this.TRANSLATION.submitBtn.createGame
+            this.TRANSLATION.btn.submit.playDemo :
+            this.TRANSLATION.btn.submit.createGame
         );
     }
 
@@ -105,41 +105,62 @@ export class GameConfigFormComponent implements OnInit {
         this.form.get('backgroundImgSrc').setValue(null);
     }
 
+    download() {
+        if (this._isDemo) {
+            return;
+        }
+        if (this._isInvalidForm) {
+            return this.toastService.showInvalidFormError();
+        }
+        this.gameService.downloadGameConfig( this._buildGameConfig() );
+    }
+
     submit() {
-        this.form.markAllAsTouched();
-        if (this.form.invalid) {
+        if (this._isInvalidForm) {
             return this.toastService.showInvalidFormError();
         }
 
-        let data = {...this.form.value };
-
-        let gameConfig = new GameConfig();
-        gameConfig.title = data.title.toUpperCase();
-        gameConfig.singleImgPerPair = data.singleImgPerPair;
-        gameConfig.cardIdType = data.cardIdType;
-        gameConfig.backgroundImgSrc = data.backgroundImgSrc;
-        gameConfig.cardImages = data.cardImages ?? [];
-
+        let gameConfig = this._buildGameConfig();
         if (this._isDemo) {
             gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
-            this._setDemoCardImages(gameConfig, data.numPairs);
+            this._setDemoCardImages(gameConfig);
         }
         
         this.gameService.create(gameConfig);
     }
 
-    private _setDemoCardImages(gameConfig: GameConfig, numPairs: number) {
+    private get _isInvalidForm() {
+        this.form.markAllAsTouched();
+        return this.form.invalid;
+    }
+
+    private _buildGameConfig() {
+        let data = {...this.form.value };
+        let gameConfig = new GameConfig();
+        gameConfig.title = data.title.toUpperCase();
+        gameConfig.singleImgPerPair = data.singleImgPerPair;
+        gameConfig.cardIdType = data.cardIdType;
+        gameConfig.backgroundImgSrc = data.backgroundImgSrc;
+        gameConfig.cardImages = data.cardImages;
+        return gameConfig;
+    }
+
+    private _setDemoCardImages(gameConfig: GameConfig) {
+        gameConfig.cardImages = [];
+
         const dirPath = 'assets/images/demo-game-cards';
+
+        let numPairs: number = this.form.value.numPairs;
 
         for (let i = 1; i <= numPairs; i++) {
             let filename = `num${i}_draw.png`;
-            gameConfig.cardImages.push(new CardImage(`${dirPath}/draw/${filename}`, filename));
+            gameConfig.cardImages.push(new FileUpload(`${dirPath}/draw/${filename}`, filename));
         }
 
         if (!gameConfig.singleImgPerPair) {
             for (let i = 1; i <= numPairs; i++) {
                 let filename = `num${i}_word.png`;               
-                gameConfig.cardImages.push(new CardImage(`${dirPath}/words/${filename}`, filename));
+                gameConfig.cardImages.push(new FileUpload(`${dirPath}/words/${filename}`, filename));
             }
         }
     }

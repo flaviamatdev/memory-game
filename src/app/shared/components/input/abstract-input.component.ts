@@ -35,7 +35,7 @@ export class AbstractInputComponent {
     }
 
     get formControl() {
-        return this.form.controls[this.controlName];
+        return this.form?.controls[this.controlName];
     }
 
     get isRequired() {

@@ -16,6 +16,10 @@ body {
     font-family: Quicksand;
 }
 
+.mat-checkbox-layout {
+    white-space: normal !important;
+}
+
 .custom-toast-title {
     color: white !important;
     line-height: 24px !important;
@@ -40,14 +44,15 @@ body {
 .d-flex-row {
     display: flex;
     flex-direction: row;
-    gap: 1em;
-    align-items: center;
     flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
 }
 
 .d-flex-col {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
 
 .form-line {

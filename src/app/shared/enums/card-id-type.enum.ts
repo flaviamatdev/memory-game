@@ -4,6 +4,14 @@ export enum CardIdTypeEnum {
     ICONS    
 }
 
+export class CardIdTypeHelper {
+
+    static isValid(cardIdType: any): boolean {
+        return typeof cardIdType == 'number' && Object.values(CardIdTypeEnum).includes(cardIdType);
+    }
+    
+}
+
 export const CardIdTypeNameTranslations = {
     [CardIdTypeEnum.NUMBERS]: {
         pt: 'Números',

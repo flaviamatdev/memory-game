@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UploadImageComponent } from 'src/app/shared/components/input/image/upload-image/upload-image.component';
+import { UploadComponent } from 'src/app/shared/components/input/upload/upload.component';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
-import { CardImage } from 'src/app/shared/model/card-image.model';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../game-builder-values';
 
@@ -18,7 +18,7 @@ export class BackgroundImageFormComponent implements OnInit {
     @Input() form: FormGroup;
     @Input() controlName: string;
 
-    @ViewChild('upload') private _uploadChild: UploadImageComponent;
+    @ViewChild('upload') private _uploadChild: UploadComponent;
 
     myControlName: { [key: string]: string } = {};
     isUrl: boolean;
@@ -67,12 +67,12 @@ export class BackgroundImageFormComponent implements OnInit {
     }
 
 
-    private _onUpload(cardImages: CardImage[]) {
+    private _onUpload(cardImages: FileUpload[]) {
         if ( !(cardImages?.length) ) {
             this._setImage(null);
             return;
         }
-        this._setImage(cardImages[0].base64);
+        this._setImage(cardImages[0].src);
     }
 
     onInsertUrl($url: string) {
