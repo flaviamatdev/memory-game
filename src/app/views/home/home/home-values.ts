@@ -1,3 +1,4 @@
+import { NUM_ICONS } from "src/app/shared/constants/icons";
 import { CardIdTypeEnum, CardIdTypeNameTranslations } from "src/app/shared/enums/card-id-type.enum";
 
 const CARD_ID_PATH = 'assets/images/card-id/card_id_';
@@ -24,8 +25,8 @@ export const HOME_TRANSLATIONS = {
             text: {
                 title: CardIdTypeNameTranslations[CardIdTypeEnum.NUMBERS],
                 bottom: {
-                    pt: 'padrão',
-                    en: 'standard'
+                    pt: 'Padrão',
+                    en: 'Standard'
                 }
             }
         },
@@ -34,8 +35,8 @@ export const HOME_TRANSLATIONS = {
             text: {
                 title: CardIdTypeNameTranslations[CardIdTypeEnum.ROW_COLUMN],
                 bottom: {
-                    pt: 'explorar localização no plano',
-                    en: 'to explore location on the plane'
+                    pt: 'Explorar localização no plano',
+                    en: 'To explore location on the plane'
                 }
             }
         },
@@ -44,8 +45,8 @@ export const HOME_TRANSLATIONS = {
             text: {
                 title: CardIdTypeNameTranslations[CardIdTypeEnum.ICONS],
                 bottom: {
-                    pt: 'para crianças ainda não alfabetizadas',
-                    en: 'for children who are not yet literate'
+                    pt: `Para crianças ainda não alfabetizadas (máximo ${NUM_ICONS} cartas)`,
+                    en: `For children who are not yet literate (maximum ${NUM_ICONS} cards)`
                 }
             }
         }
