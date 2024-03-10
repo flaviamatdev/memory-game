@@ -14,7 +14,7 @@ import { FileUpload } from '../shared/model/file-upload.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
-import { ERROR_MSG_TRANSLATION } from './error-message.values';
+import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
 import { GameConfigFileService } from './game-config-file.service';
 import { ToastService } from './toast.service';
 

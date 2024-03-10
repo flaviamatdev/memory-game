@@ -1,5 +1,5 @@
-import { NUM_ICONS } from "../shared/constants/icons";
-import { CardIdTypeEnum, CardIdTypeNameTranslations } from "../shared/enums/card-id-type.enum";
+import { NUM_ICONS } from "./icons";
+import { CardIdTypeEnum, CardIdTypeNameTranslations } from "../enums/card-id-type.enum";
 
 const ICONS = CardIdTypeNameTranslations[CardIdTypeEnum.ICONS];
 

@@ -3,7 +3,7 @@ import { GameConfigError } from '../shared/error/game-config-error';
 import { FileUpload } from '../shared/model/file-upload.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { FileUtil } from '../shared/util/file.util';
-import { ERROR_MSG_TRANSLATION } from './error-message.values';
+import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
 
 const ERROR_TRANSLATION = ERROR_MSG_TRANSLATION.configFile;
 
