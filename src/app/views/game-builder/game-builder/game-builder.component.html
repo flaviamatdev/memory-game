@@ -3,10 +3,13 @@
 <div class="main-instructions mb-4">
     <mat-label>{{ 'TRANSLATION' | translate: TRANSLATION.instruction }}</mat-label>
 
-    <div *ngIf="!flag.isDemo" class="ms-5">
+    <div *ngIf="!flag.isDemo" class="upload-config-file">
         <mat-checkbox (change)="onChangeUploadConfigFile($event.checked)" color="primary">
-            {{ 'TRANSLATION' | translate: TRANSLATION.uploadConfigFile }}
+            {{ 'TRANSLATION' | translate: TRANSLATION.uploadConfigFile.checkboxLabel }}
         </mat-checkbox>
+        <span class="instruction">
+            {{ 'TRANSLATION' | translate: TRANSLATION.uploadConfigFile.instruction }}
+        </span>
     </div>
 </div>
 
