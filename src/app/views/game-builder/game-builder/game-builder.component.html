@@ -13,5 +13,5 @@
 <app-game-builder-form *ngIf="flag.showForm" [parent]="this"></app-game-builder-form>
 
 <div *ngIf="flag.uploadConfigFile">
-    <app-upload #upload accept="application/json" (onUpload)="onUploadConfigFile($event, upload)"></app-upload>
+    <app-upload #upload (onUpload)="onUploadConfigFile($event, upload)"></app-upload>
 </div>

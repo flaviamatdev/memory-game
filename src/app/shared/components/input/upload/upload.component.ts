@@ -15,13 +15,13 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     readonly TRANSLATION = UPLOAD_TRANSLATION;
 
     @Input() isImage: boolean = false;
-    @Input() accept: any;
     @Input() multiple: boolean = false;
     @Input() selectAllDir: boolean = false;
 
     @Output() onClearInput = new EventEmitter();
     @Output() onUpload = new EventEmitter();
 
+    accept: string[] = ['application/json'];
     btnTranslation: any;
     singleChosedFileName: string;
 
@@ -110,7 +110,9 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     }
 
     private _showOutAcceptErrorMsg() {
-        let accept = this.accept.join(', ');
+        let accept = this.accept
+            .map(mimetype => `.${mimetype.split('/')[1]}`)
+            .join(', ');
         let fileType = this.translationService.getTranslationObj(this.TRANSLATION.fileType[this._fileTypeTranslationParamKey]);
         let translation = (this.multiple ?
             this.TRANSLATION.multiple.acceptErrorMsg :
