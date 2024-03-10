@@ -248,11 +248,11 @@ export class GameService {
 
         let win = this.isGameFinished;
 
-        setTimeout(() => {
-            if (win && this.playSound) {
+        if (win && this.playSound) {
+            setTimeout(() => {
                 this.audioService.play(AudioEnum.WIN);
-            }
-        }, VALUES.winNotificationTimeout / 2);
+            }, VALUES.winNotificationTimeout / 2);
+        }
 
         return win;
     }
