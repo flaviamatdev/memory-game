@@ -14,10 +14,12 @@ import { FileUpload } from '../shared/model/file-upload.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
+import { ERROR_MSG_TRANSLATION } from './error-message.values';
 import { GameConfigFileService } from './game-config-file.service';
 import { ToastService } from './toast.service';
 
 const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
+const ERROR_TRANSLATION = ERROR_MSG_TRANSLATION;
 
 @Injectable({
     providedIn: 'root'
@@ -119,10 +121,16 @@ export class GameService {
 
     private _handleCreateError(error: any) {
         this._gameConfig = null;
+        
         if ( !(error instanceof GameConfigError) ) {
-            return this.toastService.error('Ops! Ocorreu um erro inesperado. Tente novamente.');
+            return this.toastService.error(
+                this.translationService.getTranslationObj(ERROR_TRANSLATION.unexpectedError)
+            );
         }
-        this.toastService.error(error.message);
+
+        this.toastService.error(
+            this.translationService.getTranslationObj(error.translation)
+        );
     }
 
     private _getCards(): Card[] {
@@ -182,7 +190,7 @@ export class GameService {
         if (keys.length !== filenames.length / 2 ||
             Object.values(occurrences).some(count => count != 2)
         ) {
-            throw new GameConfigError('Em caso de imagens diferentes por par, os nomes dos arquivos devem seguir o padrão informado');
+            throw new GameConfigError(ERROR_TRANSLATION.diffImagesPerPairFilename);
         }
 
         return keys;
