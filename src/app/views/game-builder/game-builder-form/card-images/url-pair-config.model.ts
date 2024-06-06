@@ -2,11 +2,11 @@ export class UrlPairConfig {
     
     constructor(
         public numPairs: number,
-        public singleImgPerPair: boolean,
+        public singleCardPerPair: boolean,
     ) {}
 
     get numCards(): number {
-        return this.numPairs * (this.singleImgPerPair ? 1 : 2);
+        return this.numPairs * (this.singleCardPerPair ? 1 : 2);
     }
     
 }

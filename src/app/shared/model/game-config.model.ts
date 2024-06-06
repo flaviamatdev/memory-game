@@ -6,12 +6,12 @@ export class GameConfig {
     title: string;
     cardIdType: CardIdTypeEnum;
     backgroundImgSrc?: string;
-    singleImgPerPair: boolean;
+    singleCardPerPair: boolean;
     cardImages: FileUpload[];
 
     get numPairs(): number {
         let numPairImages = this.cardImages.length;
-        if (!this.singleImgPerPair) {
+        if (!this.singleCardPerPair) {
             numPairImages /= 2;
         }
         return numPairImages;
@@ -27,7 +27,7 @@ export class GameConfig {
     private _hasAllRequiredValues(): boolean {
         return !!(this.title?.trim()) && ([
             this.cardIdType,
-            this.singleImgPerPair,
+            this.singleCardPerPair,
             this.cardImages,
         ]).every(value => value !== null && value !== undefined);
     }

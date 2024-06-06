@@ -79,25 +79,25 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     private _handleInputChange() {
-        let singleImgPerPair = this.form.get('singleImgPerPair').value as boolean;
+        let singleCardPerPair = this.form.get('singleCardPerPair').value as boolean;
         let cardImageSrcType = this.form.get('cardImageSrcType').value as ImageSourceTypeEnum;
         let numPairs = this.form.get('numPairs')?.value as number;
 
         let isUpload = (cardImageSrcType === ImageSourceTypeEnum.UPLOAD);
-        this.showFilePatternWarning = (isUpload && singleImgPerPair === false);
+        this.showFilePatternWarning = (isUpload && singleCardPerPair === false);
 
         if (isUpload || numPairs < this.MIN_NUM_PAIRS) {
             this._removeUrlInputs();
             return;
         }
 
-        let missingValue = ([ singleImgPerPair, cardImageSrcType, numPairs ]).some(value => value == null);
+        let missingValue = ([ singleCardPerPair, cardImageSrcType, numPairs ]).some(value => value == null);
         if (missingValue) {
             this._removeUrlInputs();
             return;
         }
 
-        this.urlPairConfig = new UrlPairConfig(numPairs, singleImgPerPair);
+        this.urlPairConfig = new UrlPairConfig(numPairs, singleCardPerPair);
         this.stateUrlInputs = STATE.show;
     }
 

@@ -140,7 +140,7 @@ export class GameService {
             throw new GameConfigError(ERROR_TRANSLATION.exceededMaxNumIcons);
         }
 
-        if (!this._gameConfig.singleImgPerPair) {
+        if (!this._gameConfig.singleCardPerPair) {
             return this._getCardsForDifferentImagesPerPair();
         }
         return this._getCardsForSameImagePerPair();

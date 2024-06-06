@@ -1,6 +1,10 @@
 <div class="form-line">
-    <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleImgPerPair }}" 
-        [form]="form" controlName="singleImgPerPair" (onChange)="onChangeSingleImgPerPair()">
+    <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleCardPerPair }}" 
+        [form]="form" controlName="singleCardPerPair" (onChange)="onChangeSingleImgPerPair()">
+    </app-select-yes-no>
+
+    <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.addCustomSoundsPerCard }}" 
+        [form]="form" controlName="addCustomSoundsPerCard" (onChange)="onChangeSingleImgPerPair()">
     </app-select-yes-no>
 
     <app-select-image-src-type [form]="form" controlName="cardImageSrcType" [multiple]="true"

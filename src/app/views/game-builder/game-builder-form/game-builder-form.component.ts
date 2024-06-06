@@ -54,7 +54,8 @@ export class GameConfigFormComponent implements OnInit {
             addBackgroundImg: new FormControl(false, Validators.required),
             backgroundImgSrc: new FormControl(null),
 
-            singleImgPerPair: new FormControl(null, Validators.required),
+            singleCardPerPair: new FormControl(null, Validators.required),
+            addCustomSoundsPerCard: new FormControl(null, Validators.required),
             cardImageSrcType: new FormControl(null, Validators.required),
             cardImages: new FormControl(null, Validators.required),
         });
@@ -138,7 +139,7 @@ export class GameConfigFormComponent implements OnInit {
         let data = {...this.form.value };
         let gameConfig = new GameConfig();
         gameConfig.title = data.title.toUpperCase();
-        gameConfig.singleImgPerPair = data.singleImgPerPair;
+        gameConfig.singleCardPerPair = data.singleCardPerPair;
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
         gameConfig.cardImages = data.cardImages;
@@ -157,7 +158,7 @@ export class GameConfigFormComponent implements OnInit {
             gameConfig.cardImages.push(new FileUpload(`${dirPath}/draw/${filename}`, filename));
         }
 
-        if (!gameConfig.singleImgPerPair) {
+        if (!gameConfig.singleCardPerPair) {
             for (let i = 1; i <= numPairs; i++) {
                 let filename = `num${i}_word.png`;               
                 gameConfig.cardImages.push(new FileUpload(`${dirPath}/words/${filename}`, filename));

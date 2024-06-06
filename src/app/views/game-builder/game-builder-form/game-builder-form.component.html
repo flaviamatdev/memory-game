@@ -7,8 +7,8 @@
             </app-select>
 
             <app-select-yes-no class="form-item" 
-                [labelTranslate]="TRANSLATION.input.singleImgPerPair" 
-                [form]="form" controlName="singleImgPerPair">
+                [labelTranslate]="TRANSLATION.input.singleCardPerPair" 
+                [form]="form" controlName="singleCardPerPair">
             </app-select-yes-no>
 
             <app-select class="form-item" 
@@ -53,7 +53,7 @@
     
         <mat-divider></mat-divider>
         <span class="subtitle color-primary">
-            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.cardImages }}
+            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.cards }}
         </span>
         <app-card-images-form [parent]="this"></app-card-images-form>
     </form>

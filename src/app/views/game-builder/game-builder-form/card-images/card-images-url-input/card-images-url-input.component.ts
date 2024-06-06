@@ -69,7 +69,7 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
             url: new FormControl(null, Validators.required)
         });
 
-        if (!this.urlPairConfig.singleImgPerPair) {
+        if (!this.urlPairConfig.singleCardPerPair) {
             subForm.addControl('url2', new FormControl(null, Validators.required))
         }
 

@@ -19,19 +19,19 @@ export const SRC_TYPE_TRANSLATION_VALUES = {
 
     multiple: {
         input: {
-            pt: 'Como deseja inserir as imagens?',
-            en: 'How do you want to insert the images?'
+            pt: 'Como deseja inserir as cartas (imagens e sons)?',
+            en: 'How do you want to insert the cards (images and sounds)?'
         },
         options: {
             url: {
-                pt: 'Link das imagens',
-                en: 'Image links'
+                pt: 'Links (URLs)',
+                en: 'Links (URLs)'
             },
             upload: {
                 pt: 'Enviar arquivos',
-                en: 'Upload image files'
+                en: 'Upload files'
             }
-        }        
+        }
     }
 
 }

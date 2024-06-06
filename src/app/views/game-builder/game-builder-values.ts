@@ -46,6 +46,11 @@ export const GAME_BUILDER_TRANSLATION = {
             en: 'Background image'
         },
 
+        cards: {
+            pt: 'Cartas',
+            en: 'Cards'
+        },
+
         cardImages: {
             pt: 'Imagens das Cartas',
             en: 'Card Images'
@@ -65,9 +70,14 @@ export const GAME_BUILDER_TRANSLATION = {
             en: 'Game title'
         },
 
-        singleImgPerPair: {
-            pt: 'Cada par possui imagens iguais?',
-            en: 'Does each pair have the same images?'
+        singleCardPerPair: {
+            pt: 'Cada par possui cartas iguais?',
+            en: 'Does each pair have the same card?'
+        },
+
+        addCustomSoundsPerCard: {
+            pt: 'Adicionar sons customizados ao abrir cada carta?',
+            en: '?' // TODO
         },
 
         numPairs: {
