@@ -43,6 +43,7 @@ export class CardImagesFormComponent implements OnInit {
     @Input() parent: GameConfigFormComponent;
 
     form: FormGroup;
+    input: any;
     stateUrlInputs = STATE.hide;
     urlPairConfig: UrlPairConfig;
     addUrls: boolean;
@@ -54,20 +55,27 @@ export class CardImagesFormComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.parent.form;
+        this.input = this.parent.FORM_INPUT.card;
     }
 
     onChangeCardImageSrcType($value: ImageSourceTypeEnum) {
         this.addUrls = ($value === ImageSourceTypeEnum.URL);
+        const numPairsInput = this.parent.FORM_INPUT.card.numPairs;
+
         if (this.addUrls) {
-            this.form.addControl('numPairs', new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
+            this.form.addControl(numPairsInput, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
         } else {
-            this.form.removeControl('numPairs');
+            this.form.removeControl(numPairsInput);
         }
 
         this._handleInputChange();
     }
 
     onChangeSingleImgPerPair() {
+        this._handleInputChange();
+    }
+
+    onChangeAddCustomSoundPerPair() {
         this._handleInputChange();
     }
 
@@ -79,9 +87,12 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     private _handleInputChange() {
-        let singleCardPerPair = this.form.get('singleCardPerPair').value as boolean;
-        let cardImageSrcType = this.form.get('cardImageSrcType').value as ImageSourceTypeEnum;
-        let numPairs = this.form.get('numPairs')?.value as number;
+        const INPUT = this.parent.FORM_INPUT.card;
+        let data = this.form.value;
+        let singleCardPerPair =      data[INPUT.singleCardPerPair] as boolean;
+        let addCustomSoundsPerCard = data[INPUT.addCustomSoundsPerCard] as boolean;
+        let cardImageSrcType =       data[INPUT.cardImageSrcType] as ImageSourceTypeEnum;
+        let numPairs =               data[INPUT.numPairs] as number;
 
         let isUpload = (cardImageSrcType === ImageSourceTypeEnum.UPLOAD);
         this.showFilePatternWarning = (isUpload && singleCardPerPair === false);
@@ -91,7 +102,7 @@ export class CardImagesFormComponent implements OnInit {
             return;
         }
 
-        let missingValue = ([ singleCardPerPair, cardImageSrcType, numPairs ]).some(value => value == null);
+        let missingValue = ([ singleCardPerPair, addCustomSoundsPerCard, cardImageSrcType, numPairs ]).some(value => value == null);
         if (missingValue) {
             this._removeUrlInputs();
             return;

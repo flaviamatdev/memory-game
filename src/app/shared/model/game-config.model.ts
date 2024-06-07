@@ -7,6 +7,7 @@ export class GameConfig {
     cardIdType: CardIdTypeEnum;
     backgroundImgSrc?: string;
     singleCardPerPair: boolean;
+    addCustomSoundsPerCard: boolean;
     cardImages: FileUpload[];
 
     get numPairs(): number {
@@ -28,6 +29,7 @@ export class GameConfig {
         return !!(this.title?.trim()) && ([
             this.cardIdType,
             this.singleCardPerPair,
+            this.addCustomSoundsPerCard,
             this.cardImages,
         ]).every(value => value !== null && value !== undefined);
     }

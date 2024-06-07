@@ -1,26 +1,26 @@
 <div class="form-line">
     <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.singleCardPerPair }}" 
-        [form]="form" controlName="singleCardPerPair" (onChange)="onChangeSingleImgPerPair()">
+        [form]="form" [controlName]="input.singleCardPerPair" (onChange)="onChangeSingleImgPerPair()">
     </app-select-yes-no>
 
     <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.input.addCustomSoundsPerCard }}" 
-        [form]="form" controlName="addCustomSoundsPerCard" (onChange)="onChangeSingleImgPerPair()">
+        [form]="form" [controlName]="input.addCustomSoundsPerCard" (onChange)="onChangeAddCustomSoundPerPair()">
     </app-select-yes-no>
 
-    <app-select-image-src-type [form]="form" controlName="cardImageSrcType" [multiple]="true"
+    <app-select-image-src-type [form]="form" [controlName]="input.cardImageSrcType" [multiple]="true"
         (onChange)="onChangeCardImageSrcType($event)">
     </app-select-image-src-type>
 
     <div [ngSwitch]="addUrls">
         <app-input-number *ngSwitchCase="true"
             [labelTranslate]="TRANSLATION.input.numPairs" 
-            [form]="form" controlName="numPairs" [min]="MIN_NUM_PAIRS"
+            [form]="form" [controlName]="input.numPairs" [min]="MIN_NUM_PAIRS"
             (onChange)="onChangeNumPairsForUrl($event)">
         </app-input-number>
         
         <app-upload *ngSwitchCase="false"
             [isImage]="true" [labelTranslate]="TRANSLATION.input.cardImages.upload.pickDirPath" 
-            [form]="form" controlName="cardImages" [selectAllDir]="true">
+            [form]="form" [controlName]="input.cardImages" [selectAllDir]="true">
         </app-upload>
     </div>
 </div>
@@ -38,7 +38,7 @@
 <div [@showContent]="stateUrlInputs">
     <div *ngIf="urlPairConfig" class="form-line">
         <div class="form-item mt-3">
-            <app-card-images-url-input [form]="form" controlName="cardImages" [urlPairConfig]="urlPairConfig">
+            <app-card-images-url-input [form]="form" [controlName]="input.cardImages" [urlPairConfig]="urlPairConfig">
             </app-card-images-url-input>
         </div>
     </div>

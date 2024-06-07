@@ -3,17 +3,17 @@
         <div class="form-line">
             <app-select class="form-item" 
                 label="{{ 'TRANSLATION' | translate: TRANSLATION.input.cardIdType }}" 
-                [form]="form" controlName="cardIdType" [optionsTranslate]="options.cardId">
+                [form]="form" [controlName]="FORM_INPUT.cardIdType" [optionsTranslate]="options.cardId">
             </app-select>
 
             <app-select-yes-no class="form-item" 
                 [labelTranslate]="TRANSLATION.input.singleCardPerPair" 
-                [form]="form" controlName="singleCardPerPair">
+                [form]="form" [controlName]="FORM_INPUT.card.singleCardPerPair">
             </app-select-yes-no>
 
             <app-select class="form-item" 
                 [labelTranslate]="TRANSLATION.input.numPairs" 
-                [form]="form" controlName="numPairs" [options]="options.numPairs">
+                [form]="form" [controlName]="FORM_INPUT.card.numPairs" [options]="options.numPairs">
             </app-select>
         </div>
     </form>
@@ -32,7 +32,7 @@
     
             <app-select class="input-card-id" 
                 [labelTranslate]="TRANSLATION.input.cardIdType" 
-                [form]="form" controlName="cardIdType" [optionsTranslate]="options.cardId">
+                [form]="form" [controlName]="FORM_INPUT.cardIdType" [optionsTranslate]="options.cardId">
             </app-select>
         </div>
     
@@ -43,11 +43,11 @@
     
         <div class="form-line">
             <app-select-yes-no [labelTranslate]="TRANSLATION.input.backgroundImg.add" 
-                [form]="form" controlName="addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
+                [form]="form" [controlName]="FORM_INPUT.addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
             </app-select-yes-no>
     
             <div *ngIf="flag.addBackgroundImg" class="form-item">
-                <app-background-image-form [form]="form" controlName="backgroundImgSrc"></app-background-image-form>
+                <app-background-image-form [form]="form" [controlName]="FORM_INPUT.backgroundImgSrc"></app-background-image-form>
             </div>
         </div>
     
