@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 import { UrlPairConfig } from '../url-pair-config.model';
@@ -11,7 +11,8 @@ import { UrlPairConfig } from '../url-pair-config.model';
 })
 export class CardImagesUrlInputComponent implements OnInit, OnChanges {
 
-    readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input.cardImages;
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input.cards;
+    private readonly _CARD_URLS_INPUT = 'cardUrls';
 
     @Input() form: FormGroup;
     @Input() controlName: string;
@@ -30,11 +31,12 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
     }
 
     ngOnDestroy() {
-        this.form.removeControl('cardUrls');
+        this.form.removeControl(this._CARD_URLS_INPUT);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.urlPairConfig && !changes.urlPairConfig.firstChange) {
+            this.indices = undefined;
             this._init();
         }
     }
@@ -43,39 +45,17 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
         this._cardImageMap = {};
         this._numCardImages = this.urlPairConfig.numCards;
         this._initFormArray();
-        this._setIndicesAndFillFormArray();
+        this.indices = [...Array(this.urlPairConfig.numPairs).keys()];
     }
 
     private _initFormArray() {
-        let formArrParent = this.fb.group({
-            urls: this.fb.array([])
-        });
-
-        this.form.addControl('cardUrls', formArrParent);
-        this._formArray = formArrParent.controls['urls'] as FormArray;
+        this._formArray = this.fb.array([]);
+        this.form.addControl(this._CARD_URLS_INPUT, this._formArray);
     }
 
-    private _setIndicesAndFillFormArray() {
-        let indices = [...Array(this.urlPairConfig.numPairs).keys()];
-        indices.forEach(i => {
-            this._formArray.push(this._buildSubFormArray());
-        });
-
-        this.indices = indices;
+    addSubForm(subForm: FormGroup) {
+        this._formArray.push(subForm);
     }
-
-    private _buildSubFormArray() {
-        let subForm = this.fb.group({
-            url: new FormControl(null, Validators.required)
-        });
-
-        if (!this.urlPairConfig.singleCardPerPair) {
-            subForm.addControl('url2', new FormControl(null, Validators.required))
-        }
-
-        return subForm;
-    }
-
 
     getSubForm(index: number) {
         return this._formArray?.controls[index] as FormGroup;

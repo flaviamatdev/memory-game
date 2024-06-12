@@ -1,0 +1,15 @@
+<div class="d-flex-row">
+    <app-input-text class="flex-8" [labelTranslate]="labelTranslate" [label]="label" [form]="form" [controlName]="controlName"></app-input-text>
+    
+    <div class="flex-4">
+        <div class="d-flex-row mt-2">
+            <button mat-icon-button mat-stroked-button color="primary" type="button" (click)="playPause()" [disabled]="!flag.hasValue">
+                <mat-icon>{{flag.isPlaying ? 'pause' : 'play_arrow'}}</mat-icon>
+            </button>
+    
+            <button mat-icon-button mat-stroked-button color="accent" type="button" (click)="delete()" [disabled]="!flag.hasValue">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>        
+    </div>
+</div>

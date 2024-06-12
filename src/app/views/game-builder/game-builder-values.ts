@@ -105,27 +105,48 @@ export const GAME_BUILDER_TRANSLATION = {
             }
         },
 
-        cardImages: {
+        cards: {
             pair: {
                 pt: 'Par nº ',
                 en: 'Pair #'
             },
-            url: {
-                pairImageLink: {
-                    pt: 'Link da Imagem do Par ',
-                    en: 'Image Link of Pair #'
-                },
-                diffImages: {
-                    pairImageLink1: {
-                        pt: 'Link da Imagem 1 do Par ',
-                        en: 'Image Link #1 of Pair #'
-                    },
-                    pairImageLink2: {
-                        pt: 'Link da Imagem 2 do Par ',
-                        en: 'Image Link #2 of Pair #'
-                    },
+            getCardPair: (ordinal: any) => {
+                return {
+                    pt: `Carta ${ordinal} do Par `,
+                    en: `Card #${ordinal} of Pair #`
                 }
             },
+
+            url: {
+                image: {
+                    pairLink: {
+                        pt: 'Link da Imagem do Par ',
+                        en: 'Image Link of Pair #'
+                    },
+
+                    getPairLink: (ordinal: any) => {
+                        return {
+                            pt: `Link da Imagem ${ordinal} do Par `,
+                            en: `Image Link #${ordinal} of Pair #`
+                        }
+                    },
+                },
+
+                audio: {
+                    pairLink: {
+                        pt: 'Link do Áudio do Par ',
+                        en: 'Audio Link of Pair #'
+                    },
+
+                    getPairLink: (ordinal: any) => {
+                        return {
+                            pt: `Link do Áudio ${ordinal} do Par `,
+                            en: `Audio Link #${ordinal} of Pair #`
+                        }
+                    },
+                },
+            },
+
             upload: {
                 pickDirPath: {
                     pt: 'Selecione a pasta que contém as imagens das cartas',

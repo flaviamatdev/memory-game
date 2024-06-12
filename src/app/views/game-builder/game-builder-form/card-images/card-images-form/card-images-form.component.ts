@@ -90,7 +90,7 @@ export class CardImagesFormComponent implements OnInit {
         const INPUT = this.parent.FORM_INPUT.card;
         let data = this.form.value;
         let singleCardPerPair =      data[INPUT.singleCardPerPair] as boolean;
-        let addCustomSoundsPerCard = data[INPUT.addCustomSoundsPerCard] as boolean;
+        let addCustomAudioPerPair = data[INPUT.addCustomSoundsPerCard] as boolean;
         let cardImageSrcType =       data[INPUT.cardImageSrcType] as ImageSourceTypeEnum;
         let numPairs =               data[INPUT.numPairs] as number;
 
@@ -102,13 +102,13 @@ export class CardImagesFormComponent implements OnInit {
             return;
         }
 
-        let missingValue = ([ singleCardPerPair, addCustomSoundsPerCard, cardImageSrcType, numPairs ]).some(value => value == null);
+        let missingValue = ([ singleCardPerPair, addCustomAudioPerPair, cardImageSrcType, numPairs ]).some(value => value == null);
         if (missingValue) {
             this._removeUrlInputs();
             return;
         }
 
-        this.urlPairConfig = new UrlPairConfig(numPairs, singleCardPerPair);
+        this.urlPairConfig = new UrlPairConfig(numPairs, singleCardPerPair, addCustomAudioPerPair);
         this.stateUrlInputs = STATE.show;
     }
 

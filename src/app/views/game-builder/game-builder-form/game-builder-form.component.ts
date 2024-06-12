@@ -69,7 +69,7 @@ export class GameConfigFormComponent implements OnInit {
             [FORM_INPUT.backgroundImgSrc]: new FormControl(null),
 
             [FORM_INPUT.card.singleCardPerPair]: new FormControl(null, Validators.required),
-            [FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(null, Validators.required),
+            [FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(true, Validators.required),  // TODO value null
             [FORM_INPUT.card.cardImageSrcType]: new FormControl(null, Validators.required),
             [FORM_INPUT.card.cardImages]: new FormControl(null, Validators.required),
         });
@@ -132,9 +132,12 @@ export class GameConfigFormComponent implements OnInit {
     }
 
     submit() {
+        console.log(this.form.value);
         if (this._isInvalidForm) {
+            console.log(Object.entries(this.form.controls).filter(entry => entry[1].invalid));//.
             return this.toastService.showInvalidFormError();
         }
+        return;
 
         let gameConfig = this._buildGameConfig();
         if (this._isDemo) {

@@ -3,6 +3,7 @@ export class UrlPairConfig {
     constructor(
         public numPairs: number,
         public singleCardPerPair: boolean,
+        public addCustomAudioPerPair: boolean,
     ) {}
 
     get numCards(): number {

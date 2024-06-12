@@ -11,6 +11,8 @@ import { SelectImageSrcTypeComponent } from './select/select-image-src-type/sele
 import { SelectYesNoComponent } from './select/select-yes-no/select-yes-no.component';
 import { SelectComponent } from './select/select/select.component';
 import { UploadComponent } from './upload/upload.component';
+import { InputAudioUrlComponent } from './audio/input-audio-url/input-audio-url.component';
+import { InputImageUrlComponent } from './image/input-image-url/input-image-url.component';
 
 @NgModule({
     imports: [
@@ -29,6 +31,8 @@ import { UploadComponent } from './upload/upload.component';
         SelectYesNoComponent,
         ImagePreviewComponent,
         UploadComponent,
+        InputAudioUrlComponent,
+        InputImageUrlComponent,
     ],
     exports: [
         InputNumberComponent,
@@ -38,6 +42,8 @@ import { UploadComponent } from './upload/upload.component';
         SelectYesNoComponent,
         ImagePreviewComponent,
         UploadComponent,
+        InputAudioUrlComponent,
+        InputImageUrlComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

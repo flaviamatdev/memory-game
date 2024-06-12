@@ -19,7 +19,7 @@
         </app-input-number>
         
         <app-upload *ngSwitchCase="false"
-            [isImage]="true" [labelTranslate]="TRANSLATION.input.cardImages.upload.pickDirPath" 
+            [isImage]="true" [labelTranslate]="TRANSLATION.input.cards.upload.pickDirPath" 
             [form]="form" [controlName]="input.cardImages" [selectAllDir]="true">
         </app-upload>
     </div>
@@ -28,9 +28,9 @@
 <div *ngIf="showFilePatternWarning" class="file-warning">
     <mat-icon>warning</mat-icon>
     <span>
-        {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.diffImagesPerPair.warning }}
+        {{ 'TRANSLATION' | translate: TRANSLATION.input.cards.upload.diffImagesPerPair.warning }}
         <a class="example-link" (click)="openExample()">
-            {{ 'TRANSLATION' | translate: TRANSLATION.input.cardImages.upload.diffImagesPerPair.warningLink }}
+            {{ 'TRANSLATION' | translate: TRANSLATION.input.cards.upload.diffImagesPerPair.warningLink }}
         </a>.
     </span>
 </div>

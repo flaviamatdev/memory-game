@@ -48,7 +48,7 @@ export class AbstractInputComponent {
 
     hasError(errorKey: string) {
         let formControl = this.formControl;
-        return !this.isRequired && (formControl.invalid || formControl.hasError(errorKey));
+        return !this.isRequired && (formControl?.invalid || formControl?.hasError(errorKey));
     }
 
     get inputClass() {

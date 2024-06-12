@@ -11,6 +11,7 @@ import { CardImagesFormComponent } from './game-builder-form/card-images/card-im
 import { CardImagesUrlInputComponent } from './game-builder-form/card-images/card-images-url-input/card-images-url-input.component';
 import { GameConfigFormComponent } from './game-builder-form/game-builder-form.component';
 import { GameBuilderComponent } from './game-builder/game-builder.component';
+import { CardUrlsComponent } from './game-builder-form/card-images/card-urls/card-urls.component';
 
 const routes: Routes = [
     {
@@ -32,6 +33,7 @@ const routes: Routes = [
         CardImagesFormComponent,
         CardImagesUrlInputComponent,
         ImageFilenameExampleDialogComponent,
+        CardUrlsComponent,
     ],
     imports: [
         CommonModule,

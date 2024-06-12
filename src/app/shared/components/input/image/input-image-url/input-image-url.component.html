@@ -1,0 +1,7 @@
+<div class="d-flex-row">
+    <app-input-text  class="flex-8" 
+        [label]="label" [form]="form" [controlName]="controlName">
+    </app-input-text>
+
+    <app-image-preview class="flex-4" [src]="formControl?.value" (onDelete)="deleteUrl()"></app-image-preview>
+</div>
