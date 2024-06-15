@@ -16,8 +16,11 @@ const FORM_INPUT = {
     card: {
         singleCardPerPair: 'singleCardPerPair',
         addCustomSoundsPerCard: 'addCustomSoundsPerCard',
-        cardImageSrcType: 'cardImageSrcType',
+        cardSrcType: 'cardSrcType',
+        // for srcType upload
         cardImages: 'cardImages',
+
+        // for srcType urls
         numPairs: 'numPairs',
     }
 }
@@ -70,7 +73,7 @@ export class GameBuilderFormComponent implements OnInit {
 
             [FORM_INPUT.card.singleCardPerPair]: new FormControl(null, Validators.required),
             [FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(true, Validators.required),  // TODO value null
-            [FORM_INPUT.card.cardImageSrcType]: new FormControl(null, Validators.required),
+            [FORM_INPUT.card.cardSrcType]: new FormControl(null, Validators.required),
             [FORM_INPUT.card.cardImages]: new FormControl(null, Validators.required),
         });
 
@@ -79,7 +82,7 @@ export class GameBuilderFormComponent implements OnInit {
             this.form.removeControl(FORM_INPUT.addBackgroundImg);
             this.form.removeControl(FORM_INPUT.backgroundImgSrc);
             this.form.removeControl(FORM_INPUT.card.addCustomSoundsPerCard);
-            this.form.removeControl(FORM_INPUT.card.cardImageSrcType);
+            this.form.removeControl(FORM_INPUT.card.cardSrcType);
             this.form.removeControl(FORM_INPUT.card.cardImages);
         }
     }
