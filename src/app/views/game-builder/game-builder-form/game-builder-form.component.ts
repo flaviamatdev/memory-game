@@ -19,6 +19,7 @@ const FORM_INPUT = {
         cardSrcType: 'cardSrcType',
         // for srcType upload
         cardImages: 'cardImages',
+        cardUploadAudios: 'cardUploadAudios',
 
         // for srcType urls
         numPairs: 'numPairs',
@@ -75,6 +76,7 @@ export class GameBuilderFormComponent implements OnInit {
             [FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(true, Validators.required),  // TODO value null
             [FORM_INPUT.card.cardSrcType]: new FormControl(null, Validators.required),
             [FORM_INPUT.card.cardImages]: new FormControl(null, Validators.required),
+            [FORM_INPUT.card.cardUploadAudios]: new FormControl(null),
         });
 
         if (this._isDemo) {

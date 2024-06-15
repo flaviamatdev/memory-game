@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { FileUploadTypeEnum } from 'src/app/shared/enums/file-upload-type.enum';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 import { GameBuilderFormComponent } from '../../game-builder-form.component';
 import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
@@ -36,6 +37,7 @@ const STATE = {
 })
 export class CardImagesFormComponent implements OnInit {
 
+    readonly UploadFileType = FileUploadTypeEnum;
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
     readonly FILENAME_SEP = VALUES.upload.fileNameSeparator;
     readonly MIN_NUM_PAIRS = 2;

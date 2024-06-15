@@ -1,4 +1,5 @@
 import { CardIdTypeEnum, CardIdTypeHelper } from "../enums/card-id-type.enum";
+import { Card } from "./card";
 import { FileUpload } from "./file-upload.model";
 
 export class GameConfig {
@@ -8,7 +9,9 @@ export class GameConfig {
     backgroundImgSrc?: string;
     singleCardPerPair: boolean;
     addCustomSoundsPerCard: boolean;
+
     cardImages: FileUpload[];
+    cards: Card[];
 
     get numPairs(): number {
         let numPairImages = this.cardImages.length;
@@ -35,7 +38,7 @@ export class GameConfig {
     }
 
     private _isValidBackgroundImgSrc(): boolean {
-        return !this.backgroundImgSrc || FileUpload.isValidSrc(this.backgroundImgSrc);
+        return !this.backgroundImgSrc || FileUpload.isValidImgSrc(this.backgroundImgSrc);
     }
 
     private _isValidCardImages(): boolean {

@@ -2,15 +2,21 @@ const IMAGE_BASE_64_REGEX = new RegExp('data\:image\/(png|jpeg)\;base64,([^\"]+)
 
 export class FileUpload {
 
-    static readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
-
     constructor(
         public src: string, /* base64 or url */
         public filename: string
     ) { }
 
     isValid(): boolean {
+        return FileUpload.isValidImgSrc(this.src) && !!(this.filename?.trim());
+    }
+
+    isValidAudio(): boolean {
         return FileUpload.isValidSrc(this.src) && !!(this.filename?.trim());
+    }
+
+    static isValidImgSrc(src: any) {
+        return typeof src == 'string' && (this._isValidUrl(src) || IMAGE_BASE_64_REGEX.test(src));
     }
 
     static isValidSrc(src: any) {

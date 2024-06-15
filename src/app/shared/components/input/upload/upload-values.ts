@@ -1,18 +1,9 @@
+import { FileUploadTypeEnum } from "../../../enums/file-upload-type.enum";
+
 export const UPLOAD_TRANSLATION = {
     noFileChosen: {
         pt: 'Nenhum arquivo escolhido',
         en: 'No file chosen'
-    },
-
-    fileType: {
-        regular: {
-            pt: 'arquivo',
-            en: 'file'
-        },
-        image: {
-            pt: 'imagem',
-            en: 'image'
-        }        
     },
 
     nonMultiple: {
@@ -21,8 +12,8 @@ export const UPLOAD_TRANSLATION = {
             en: 'Choose file'
         },
         acceptErrorMsg: {
-            pt: 'O arquivo selecionado está fora dos formatos de {{ fileType }} aceitos: {{ accept }}. Tente novamente!',
-            en: 'The selected file is outside the supported {{ fileType }} formats: {{ accept }}. Try again!'
+            pt: 'O arquivo selecionado não é {{ fileType }}. Tente novamente!',
+            en: 'The selected file is not {{ fileType }}. Try again!'
         }
     },
 
@@ -32,13 +23,28 @@ export const UPLOAD_TRANSLATION = {
             en: 'Choose files'
         },
         acceptErrorMsg: {
-            pt: 'Pelo menos 1 arquivo da pasta selecionada está fora dos formatos de {{ fileType }} aceitos: {{ accept }}. Tente novamente!',
-            en: 'At least 1 file in the selected folder is outside the accepted {{ fileType }} formats: {{ accept }}. Try again!'
+            pt: 'Pelo menos 1 arquivo da pasta selecionada não é {{ fileType }}. Tente novamente!',
+            en: 'At least 1 file in the selected folder is not {{ fileType }} type. Try again!'
         },
         chosenFilesMsg: {
             pt: 'arquivo(s)',
             en: 'file(s)'
         }
-    }
+    },
+
+    fileType: {
+        [FileUploadTypeEnum.IMAGE]: {
+            pt: 'uma imagem',
+            en: 'an image'
+        },
+        [FileUploadTypeEnum.AUDIO]: {
+            pt: 'um áudio',
+            en: 'an audio'
+        },
+        [FileUploadTypeEnum.JSON]: {
+            pt: 'válido',
+            en: 'valid'
+        },
+    },
     
 }
