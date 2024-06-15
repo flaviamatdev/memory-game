@@ -5,7 +5,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
-import { GameConfigFormComponent } from '../../game-builder-form.component';
+import { GameBuilderFormComponent } from '../../game-builder-form.component';
 import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 import { UrlPairConfig } from '../url-pair-config.model';
 
@@ -40,7 +40,7 @@ export class CardImagesFormComponent implements OnInit {
     readonly FILENAME_SEP = VALUES.upload.fileNameSeparator;
     readonly MIN_NUM_PAIRS = 2;
 
-    @Input() parent: GameConfigFormComponent;
+    @Input() parent: GameBuilderFormComponent;
 
     form: FormGroup;
     input: any;

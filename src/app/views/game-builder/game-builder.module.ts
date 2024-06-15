@@ -9,7 +9,7 @@ import { BackgroundImageFormComponent } from './game-builder-form/background-ima
 import { ImageFilenameExampleDialogComponent } from './game-builder-form/card-images/card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 import { CardImagesFormComponent } from './game-builder-form/card-images/card-images-form/card-images-form.component';
 import { CardImagesUrlInputComponent } from './game-builder-form/card-images/card-images-url-input/card-images-url-input.component';
-import { GameConfigFormComponent } from './game-builder-form/game-builder-form.component';
+import { GameBuilderFormComponent } from './game-builder-form/game-builder-form.component';
 import { GameBuilderComponent } from './game-builder/game-builder.component';
 import { CardUrlsComponent } from './game-builder-form/card-images/card-urls/card-urls.component';
 
@@ -28,7 +28,7 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         GameBuilderComponent,
-        GameConfigFormComponent,
+        GameBuilderFormComponent,
         BackgroundImageFormComponent,
         CardImagesFormComponent,
         CardImagesUrlInputComponent,

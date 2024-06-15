@@ -27,7 +27,7 @@ const FORM_INPUT = {
     templateUrl: './game-builder-form.component.html',
     styleUrls: ['./game-builder-form.component.scss']
 })
-export class GameConfigFormComponent implements OnInit {
+export class GameBuilderFormComponent implements OnInit {
 
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
     readonly FORM_INPUT = FORM_INPUT;
