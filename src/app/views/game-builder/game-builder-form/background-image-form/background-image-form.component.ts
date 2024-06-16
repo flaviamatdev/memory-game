@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UploadComponent } from 'src/app/shared/components/input/upload/upload.component';
-import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { CardSourceTypeEnum } from 'src/app/shared/enums/card-src-type.enum';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../game-builder-values';
@@ -43,8 +43,8 @@ export class BackgroundImageFormComponent implements OnInit {
         Object.values(this.myControlName).forEach(controlName => this.form.removeControl(controlName));
     }
 
-    onChooseInputType($srcType: ImageSourceTypeEnum) {
-        this.isUrl = ($srcType == ImageSourceTypeEnum.URL);
+    onChooseInputType($srcType: CardSourceTypeEnum) {
+        this.isUrl = ($srcType == CardSourceTypeEnum.URL);
         this.imgPreview = null;
         this.form.get(this.controlName).setValue(null);
 

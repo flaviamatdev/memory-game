@@ -4,7 +4,7 @@ import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
-import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { CardSourceTypeEnum } from 'src/app/shared/enums/card-src-type.enum';
 import { Card } from 'src/app/shared/model/card';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
@@ -152,8 +152,8 @@ export class GameBuilderFormComponent implements OnInit {
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
 
-        let srcType = data[this.FORM_INPUT.card.cardSrcType] as ImageSourceTypeEnum;
-        gameConfig.cards = (srcType == ImageSourceTypeEnum.UPLOAD ?
+        let srcType = data[this.FORM_INPUT.card.cardSrcType] as CardSourceTypeEnum;
+        gameConfig.cards = (srcType == CardSourceTypeEnum.UPLOAD ?
             this._getCardsFromUploads(data) :
             this._getCardsFromUrls(data)
         );

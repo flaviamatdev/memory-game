@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectComponent } from '../select/select.component';
-import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { CardSourceTypeEnum } from 'src/app/shared/enums/card-src-type.enum';
 import { SRC_TYPE_TRANSLATION_VALUES } from './select-image-src-type-values';
 
 @Component({
@@ -22,11 +22,11 @@ export class SelectImageSrcTypeComponent extends SelectComponent implements OnIn
         
         this.options = [
             { 
-                id: ImageSourceTypeEnum.UPLOAD, 
+                id: CardSourceTypeEnum.UPLOAD, 
                 label: translation.options.upload
             },
             { 
-                id: ImageSourceTypeEnum.URL, 
+                id: CardSourceTypeEnum.URL, 
                 label: translation.options.url
             },
         ];
