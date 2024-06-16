@@ -4,7 +4,7 @@
     </app-select-yes-no>
 
     <app-select-yes-no label="{{ 'TRANSLATION' | translate: TRANSLATION.addCustomSoundsPerCard }}" 
-        [form]="form" [controlName]="FORM_INPUT.addCustomSoundsPerCard" (onChange)="receivePairConfigChange()">
+        [form]="form" [controlName]="FORM_INPUT.addCustomSoundsPerCard" (onChange)="changeAddCustomAudios($event)">
     </app-select-yes-no>
 
     <app-select-media-src-type [form]="form" [controlName]="FORM_INPUT.cardSrcType" [multiple]="true"
@@ -21,7 +21,7 @@
                 (onUpload)="receiveUploads(FORM_INPUT.upload.audios)">
             </app-upload>
 
-            <app-upload
+            <app-upload *ngIf="flag.showAudioUpload"
                 [fileType]="UploadFileType.AUDIO" [labelTranslate]="TRANSLATION.cards.upload.pickDirPath" 
                 [form]="form" [controlName]="FORM_INPUT.upload.audios" [selectAllDir]="true"
                 (onUpload)="receiveUploads(FORM_INPUT.upload.images)">

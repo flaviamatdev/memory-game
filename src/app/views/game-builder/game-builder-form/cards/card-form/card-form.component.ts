@@ -89,6 +89,17 @@ export class CardFormComponent implements OnInit {
         }
     }
 
+    changeAddCustomAudios($addCustomAudios: boolean) {
+        this.flag.showAudioUpload = (this.flag.isUpload && $addCustomAudios);
+        if (this.flag.showAudioUpload) {
+            this._addUploadAudioControl();
+        } else if (this.flag.isUpload) {
+            this.form.removeControl(this.FORM_INPUT.upload.audios);
+        }
+
+        this.receivePairConfigChange();
+    }
+
     onChangeNumPairsForUrl($numPairs: number) {
         if ($numPairs < this.MIN_NUM_PAIRS) {
             return;
@@ -122,20 +133,24 @@ export class CardFormComponent implements OnInit {
         this.flag.isUpload = ($value === MediaSourceTypeEnum.UPLOAD);
         this.flag.showAudioUpload = (this.flag.isUpload && this._addCustomSoundsPerCard);
 
-        const numPairsInput = this.FORM_INPUT.numPairs;
-        const cardUploadInput = this.FORM_INPUT.upload;
-
         if (this.flag.isUpload) {
-            this.form.addControl(cardUploadInput.images, new FormControl(null, Validators.required));
-            this.form.addControl(cardUploadInput.audios, new FormControl(null, Validators.required));
-            this.form.removeControl(numPairsInput);
+            this.form.addControl(this.FORM_INPUT.upload.images, new FormControl(null, Validators.required));
+            if (this.flag.showAudioUpload) {
+                this._addUploadAudioControl();
+            }           
+            this.form.removeControl(this.FORM_INPUT.numPairs);
             this._removeUrlInputs();
         } else {
-            this.form.removeControl(cardUploadInput.images);
-            this.form.removeControl(cardUploadInput.audios);
-            this.form.addControl(numPairsInput, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
+            this.form.removeControl(this.FORM_INPUT.upload.images);
+            this.form.removeControl(this.FORM_INPUT.upload.audios);
+            this.form.addControl(this.FORM_INPUT.numPairs, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
         }
     }
+
+    private _addUploadAudioControl() {
+        this.form.addControl(this.FORM_INPUT.upload.audios, new FormControl(null, Validators.required));
+    }
+    
 
     receiveUploads(siblingControlName: string) {
         let siblingFileUploadLen = (this.form.get(siblingControlName)?.value ?? []).length;
