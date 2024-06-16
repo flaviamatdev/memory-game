@@ -97,7 +97,7 @@ export class GameComponent implements OnInit {
         if (!this.gameService.isGameFinished) {
             return this.dialogService.openLiveGameConfirmationDialog(
                 callback, 
-                this.translationService.getTranslationObj(this.TRANSLATION.startNewGameConfirmation)
+                this.translationService.getTranslation(this.TRANSLATION.startNewGameConfirmation)
             );
         }
         callback();
@@ -126,9 +126,9 @@ export class GameComponent implements OnInit {
             header: {
                 icon: 'mood',
                 iconColor: 'limegreen',
-                title: this.translationService.getTranslationObj(this.TRANSLATION.finishGame.congratulations)
+                title: this.translationService.getTranslation(this.TRANSLATION.finishGame.congratulations)
             },
-            bodyText: this.translationService.getTranslationObj(this.TRANSLATION.finishGame.playAgain),
+            bodyText: this.translationService.getTranslation(this.TRANSLATION.finishGame.playAgain),
             okCallback: () => this._startNewGame()
         });
     }

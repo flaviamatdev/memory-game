@@ -120,8 +120,8 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
             this.TRANSLATION.multiple.acceptErrorMsg :
             this.TRANSLATION.nonMultiple.acceptErrorMsg
         );
-        let fileTypeTranslation = this.translationService.getTranslationObj(this.TRANSLATION.fileType[this.fileType]);
-        let msg = this.translationService.getTranslationObj(translation, { 
+        let fileTypeTranslation = this.translationService.getTranslation(this.TRANSLATION.fileType[this.fileType]);
+        let msg = this.translationService.getTranslation(translation, { 
             fileType: fileTypeTranslation,
         });
         this.toastService.error(msg, 7000);

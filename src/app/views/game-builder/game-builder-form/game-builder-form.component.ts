@@ -201,7 +201,7 @@ export class GameBuilderFormComponent implements OnInit {
         let data = this.form.value;
 
         let gameConfig = new GameConfig();
-        gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
+        gameConfig.title = this.translationService.getTranslation(this.TRANSLATION.gameTitle.demo);
         gameConfig.singleCardPerPair = data[FORM_INPUT.card.singleCardPerPair] as boolean;
         gameConfig.addCustomSoundsPerCard = false;
         gameConfig.cards = [];

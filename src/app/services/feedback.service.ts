@@ -38,7 +38,7 @@ export class FeedbackService {
 
     toastErrorTranslation(translation: ITranslation) {
         this.toastService.error(
-            this.translationService.getTranslationObj(translation)
+            this.translationService.getTranslation(translation)
         );
     }
 }
