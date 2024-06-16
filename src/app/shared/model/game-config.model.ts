@@ -37,11 +37,11 @@ export class GameConfig {
     }
 
     private _isValidBackgroundImgSrc(): boolean {
-        return !this.backgroundImgSrc || FileUpload.isValidImgSrc(this.backgroundImgSrc);
+        return !this.backgroundImgSrc || FileUpload.isValidImageSrc(this.backgroundImgSrc);
     }
 
     private _isValidCards(): boolean {
-        return this.cards.length > 0 && this.cards.every(card => card.hasValidFiles);
+        return this.cards.length > 0 && this.cards.every(card => Card.hasValidFiles(card));
     }
 
 }

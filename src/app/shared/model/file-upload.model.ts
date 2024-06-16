@@ -8,30 +8,26 @@ export class FileUpload {
         public filename: string
     ) { }
 
-    isValid(): boolean {
-        return FileUpload.isValidImgSrc(this.src) && !!(this.filename?.trim());
-    }
-
-    isValidAudio(): boolean {
-        return FileUpload.isValidAudioSrc(this.src) && !!(this.filename?.trim());
-    }
-
     hasSameName(fileUpload: FileUpload): boolean {
         let name = this.filename.split('.')[0];
         let name2 = fileUpload.filename.split('.')[0];
         return name === name2;
     }
 
-    static isValidImgSrc(src: any) {
+    static isValidAudio(fileUpload: FileUpload) {
+        return this._isValidSrc(fileUpload.src, AUDIO_BASE_64_REGEX) && !!(fileUpload.filename?.trim());
+    }
+
+    static isValidImage(fileUpload: FileUpload) {
+        return this.isValidImageSrc(fileUpload.src) && !!(fileUpload.filename?.trim());
+    }
+
+    static isValidImageSrc(src: string) {
         return this._isValidSrc(src, IMAGE_BASE_64_REGEX);
     }
 
-    static isValidAudioSrc(src: any) {
-        return this._isValidSrc(src, AUDIO_BASE_64_REGEX);
-    }
-
-    private static _isValidSrc(src: any, base64Regex: RegExp) {
-        return typeof src == 'string' && (this._isValidUrl(src) || base64Regex.test(src));
+    private static _isValidSrc(src: string, base64Regex: RegExp) {
+        return this._isValidUrl(src) || base64Regex.test(src);
     }
 
     private static _isValidUrl(url: string) {

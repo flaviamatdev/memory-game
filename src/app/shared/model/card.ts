@@ -10,8 +10,8 @@ export class Card {
         public audio?: FileUpload
     ) {}
 
-    get hasValidFiles() {
-        return this.image.isValid() && (!this.audio || this.audio.isValidAudio());
+    static hasValidFiles(card: Card) {
+        return FileUpload.isValidImage(card.image) && (!card.audio || FileUpload.isValidAudio(card.audio));
     }
 
 }
