@@ -11,7 +11,7 @@ import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 import { GAME_BUILDER_FORM_INPUT } from '../../game-build-form-input.values';
 import { GameBuilderFormComponent } from '../../game-builder-form.component';
-import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
+import { CardImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 import { UrlPairConfig } from '../url-pair-config.model';
 
 const ANIMATION_TIMEOUT = 500;
@@ -140,7 +140,7 @@ export class CardFormComponent implements OnInit {
     }
 
     openExample() {
-        this.feedbackService.dialog.openCustomDialog(ImageFilenameExampleDialogComponent, 80);
+        this.feedbackService.dialog.openCustomDialog(CardImageFilenameExampleDialogComponent, 80);
     }
 
     receiveUploads(siblingControlName: string) {

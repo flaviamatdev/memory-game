@@ -7,7 +7,7 @@ import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
     templateUrl: './card-image-filename-example-dialog.component.html',
     styleUrls: ['./card-image-filename-example-dialog.component.scss']
 })
-export class ImageFilenameExampleDialogComponent {
+export class CardImageFilenameExampleDialogComponent {
 
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION.diffImagesPerPairDialog;
     readonly SEP = VALUES.upload.fileNameSeparator;
