@@ -52,8 +52,7 @@ export class CardImagesFormComponent implements OnInit {
     input: any;
     stateUrlInputs = STATE.hide;
     urlPairConfig: UrlPairConfig;
-    addUrls: boolean;
-    showFilePatternWarning: boolean = false;
+    flag: { [key: string]: boolean };
     invalidUploadMsg: ITranslation;
 
     constructor(
@@ -64,15 +63,24 @@ export class CardImagesFormComponent implements OnInit {
     ngOnInit(): void {
         this.form = this.parent.form;
         this.input = this.parent.FORM_INPUT.card;
+        this._initFlags();
+    }
+
+    private _initFlags() {
+        this.flag = {
+            addUrls: null,
+            showFilePatternWarning: false,
+            showAudioUpload: false,
+        }
     }
 
     onChangeCardSrcType($value: ImageSourceTypeEnum) {
-        this.addUrls = ($value === ImageSourceTypeEnum.URL);
+        this.flag.addUrls = ($value === ImageSourceTypeEnum.URL);
 
         const numPairsInput = this.input.numPairs;
         const cardUploadInput = this.input.upload;
 
-        if (this.addUrls) {
+        if (this.flag.addUrls) {
             this.form.addControl(numPairsInput, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
             this.form.removeControl(cardUploadInput.images);
             this.form.removeControl(cardUploadInput.audios);
@@ -109,7 +117,7 @@ export class CardImagesFormComponent implements OnInit {
         let numPairs =               data[INPUT.numPairs] as number;
 
         let isUpload = (cardSrcType === ImageSourceTypeEnum.UPLOAD);
-        this.showFilePatternWarning = (isUpload && singleCardPerPair === false);
+        this.flag.showFilePatternWarning = (isUpload && singleCardPerPair === false);
 
         if (isUpload || numPairs < this.MIN_NUM_PAIRS) {
             this._removeUrlInputs();

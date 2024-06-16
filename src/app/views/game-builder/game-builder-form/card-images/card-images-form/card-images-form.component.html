@@ -12,7 +12,7 @@
     </app-select-image-src-type>
 </div>
 
-<div [ngSwitch]="addUrls" class="form-line mt-3 mb-3">
+<div [ngSwitch]="flag.addUrls" class="form-line mt-3 mb-3">
     <app-input-number *ngSwitchCase="true"
         [labelTranslate]="TRANSLATION.input.numPairs" 
         [form]="form" [controlName]="input.numPairs" [min]="MIN_NUM_PAIRS"
@@ -38,7 +38,7 @@
             <strong>{{ 'TRANSLATION' | translate: invalidUploadMsg }}</strong>
         </div>
 
-        <div *ngIf="showFilePatternWarning" class="file-warning">
+        <div *ngIf="flag.showFilePatternWarning" class="file-warning">
             <mat-icon>warning</mat-icon>
             <span>
                 {{ 'TRANSLATION' | translate: TRANSLATION.input.cards.upload.diffImagesPerPair.warning }}
