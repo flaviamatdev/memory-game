@@ -92,7 +92,8 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
             return;
         }
 
-        files.forEach(file => this._readFile(file));
+        files.sort((a,b) => a.name.localeCompare(b.name))
+            .forEach(file => this._readFile(file));
     }
 
     private _extractFiles(fileList: FileList) {
