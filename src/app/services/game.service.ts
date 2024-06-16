@@ -316,7 +316,7 @@ export class GameService {
     }
 
     buildCardsFromValidUploads(images: FileUpload[], audios?: FileUpload[]): Card[] {
-        if (!(audios.length)) {
+        if (!(audios?.length)) {
             return images.map(image => new Card(null, image, null));
         }
         
