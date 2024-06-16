@@ -22,4 +22,14 @@ export class FormUtil {
         control.updateValueAndValidity();
     }
 
+    static setFormControlAsInvalid(control: AbstractControl) {
+        control?.setErrors({'invalid': true});
+        control?.markAsTouched();
+    }
+
+    static setFormControlAsValid(control: AbstractControl, required: boolean) {
+        control?.setErrors(required ? {'required': true} : null);
+        control?.markAsTouched();
+    }
+
 }

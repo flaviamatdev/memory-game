@@ -1,4 +1,5 @@
 const IMAGE_BASE_64_REGEX = new RegExp('data\:image\/(png|jpeg)\;base64,([^\"]+)');
+const AUDIO_BASE_64_REGEX = new RegExp('data\:audio\/(.+)\;base64,([^\"]+)');
 
 export class FileUpload {
 
@@ -12,15 +13,25 @@ export class FileUpload {
     }
 
     isValidAudio(): boolean {
-        return FileUpload.isValidSrc(this.src) && !!(this.filename?.trim());
+        return FileUpload.isValidAudioSrc(this.src) && !!(this.filename?.trim());
+    }
+
+    hasSameName(fileUpload: FileUpload): boolean {
+        let name = this.filename.split('.')[0];
+        let name2 = fileUpload.filename.split('.')[0];
+        return name === name2;
     }
 
     static isValidImgSrc(src: any) {
-        return typeof src == 'string' && (this._isValidUrl(src) || IMAGE_BASE_64_REGEX.test(src));
+        return this._isValidSrc(src, IMAGE_BASE_64_REGEX);
     }
 
-    static isValidSrc(src: any) {
-        return typeof src == 'string' && (this._isValidUrl(src) || IMAGE_BASE_64_REGEX.test(src));
+    static isValidAudioSrc(src: any) {
+        return this._isValidSrc(src, AUDIO_BASE_64_REGEX);
+    }
+
+    private static _isValidSrc(src: any, base64Regex: RegExp) {
+        return typeof src == 'string' && (this._isValidUrl(src) || base64Regex.test(src));
     }
 
     private static _isValidUrl(url: string) {

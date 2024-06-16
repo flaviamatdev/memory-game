@@ -4,15 +4,12 @@
     gap: 0.5rem;
 }
 
-.num-pairs {
+.upload-inputs {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
-    align-items: flex-start;
-
-    button {
-        margin-top: 1.5rem;
-    }
+    flex-wrap: wrap;
+    column-gap: 4rem;
+    row-gap: 2rem;
 }
 
 .file-warning {
@@ -24,6 +21,17 @@
     padding: 4px;
     border-radius: 2px;
     max-width: max-content;
+}
+
+.num-pairs {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: flex-start;
+
+    button {
+        margin-top: 1.5rem;
+    }
 }
 
 .example-link {

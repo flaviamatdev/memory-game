@@ -2,9 +2,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
+import { GameService } from 'src/app/services/game.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
-import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 import { FileUploadTypeEnum } from 'src/app/shared/enums/file-upload-type.enum';
+import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { ITranslation } from 'src/app/shared/model/translation.model';
+import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 import { GameBuilderFormComponent } from '../../game-builder-form.component';
 import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
@@ -50,9 +53,11 @@ export class CardImagesFormComponent implements OnInit {
     urlPairConfig: UrlPairConfig;
     addUrls: boolean;
     showFilePatternWarning: boolean = false;
+    invalidUploadMsg: ITranslation;
 
     constructor(
         private dialogService: DialogService,
+        private gameService: GameService
     ) {}
 
     ngOnInit(): void {
@@ -60,14 +65,20 @@ export class CardImagesFormComponent implements OnInit {
         this.input = this.parent.FORM_INPUT.card;
     }
 
-    onChangeCardImageSrcType($value: ImageSourceTypeEnum) {
+    onChangeCardSrcType($value: ImageSourceTypeEnum) {
         this.addUrls = ($value === ImageSourceTypeEnum.URL);
-        const numPairsInput = this.parent.FORM_INPUT.card.numPairs;
+
+        const numPairsInput = this.input.numPairs;
+        const cardUploadInput = this.input.upload;
 
         if (this.addUrls) {
             this.form.addControl(numPairsInput, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
+            this.form.removeControl(cardUploadInput.images);
+            this.form.removeControl(cardUploadInput.audios);
         } else {
             this.form.removeControl(numPairsInput);
+            this.form.addControl(cardUploadInput.images, new FormControl(null, Validators.required));
+            this.form.addControl(cardUploadInput.audios, new FormControl(null, Validators.required));
         }
 
         this._handleInputChange();
@@ -89,7 +100,7 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     private _handleInputChange() {
-        const INPUT = this.parent.FORM_INPUT.card;
+        const INPUT = this.input;
         let data = this.form.value;
         let singleCardPerPair =      data[INPUT.singleCardPerPair] as boolean;
         let addCustomAudioPerPair =  data[INPUT.addCustomSoundsPerCard] as boolean;
@@ -118,11 +129,32 @@ export class CardImagesFormComponent implements OnInit {
         this.stateUrlInputs = STATE.hide;
         setTimeout(() => {
             this.urlPairConfig = null;
-        }, ANIMATION_TIMEOUT);        
+        }, ANIMATION_TIMEOUT);
     }
 
     openExample() {
         this.dialogService.openCustomDialog(ImageFilenameExampleDialogComponent, 80);
+    }
+
+    receiveUploads(siblingControlName: string) {
+        let siblingFileUploadLen = (this.form.get(siblingControlName)?.value ?? []).length;
+        if (!siblingFileUploadLen) {
+            return;
+        }
+
+        const cardUploadInput = this.input.upload;
+        let imageControl = this.form.get(cardUploadInput.images);
+        let audioControl = this.form.get(cardUploadInput.audios);
+
+        this.invalidUploadMsg = this.gameService.validateCardUploads(imageControl.value, audioControl.value);
+        if (this.invalidUploadMsg) {
+            FormUtil.setFormControlAsInvalid(imageControl);
+            FormUtil.setFormControlAsInvalid(audioControl);
+            return;
+        }
+
+        FormUtil.setFormControlAsValid(imageControl, false);
+        FormUtil.setFormControlAsValid(audioControl, false);
     }
 
 }

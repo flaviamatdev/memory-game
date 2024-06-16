@@ -4,8 +4,10 @@ import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
-import { GameConfig } from 'src/app/shared/model/game-config.model';
+import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
+import { Card } from 'src/app/shared/model/card';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
+import { GameConfig } from 'src/app/shared/model/game-config.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 import { GameBuilderComponent } from '../game-builder/game-builder.component';
 
@@ -17,12 +19,14 @@ const FORM_INPUT = {
         singleCardPerPair: 'singleCardPerPair',
         addCustomSoundsPerCard: 'addCustomSoundsPerCard',
         cardSrcType: 'cardSrcType',
-        // for srcType upload
-        cardImages: 'cardImages',
-        cardUploadAudios: 'cardUploadAudios',
-
-        // for srcType urls
+        // for srcType UPLOAD
+        upload: {
+            images: 'cardUploadImages',
+            audios: 'cardUploadAudios'
+        },
+        // for srcType URL        
         numPairs: 'numPairs',
+        urls: 'cardUrls',
     }
 }
 
@@ -75,8 +79,6 @@ export class GameBuilderFormComponent implements OnInit {
             [FORM_INPUT.card.singleCardPerPair]: new FormControl(null, Validators.required),
             [FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(true, Validators.required),  // TODO value null
             [FORM_INPUT.card.cardSrcType]: new FormControl(null, Validators.required),
-            [FORM_INPUT.card.cardImages]: new FormControl(null, Validators.required),
-            [FORM_INPUT.card.cardUploadAudios]: new FormControl(null),
         });
 
         if (this._isDemo) {
@@ -85,7 +87,6 @@ export class GameBuilderFormComponent implements OnInit {
             this.form.removeControl(FORM_INPUT.backgroundImgSrc);
             this.form.removeControl(FORM_INPUT.card.addCustomSoundsPerCard);
             this.form.removeControl(FORM_INPUT.card.cardSrcType);
-            this.form.removeControl(FORM_INPUT.card.cardImages);
         }
     }
 
@@ -137,19 +138,21 @@ export class GameBuilderFormComponent implements OnInit {
     }
 
     submit() {
-        console.log(this.form.value);
+        console.log(this.form.value);//.
         if (this._isInvalidForm) {
             console.log(Object.entries(this.form.controls).filter(entry => entry[1].invalid));//.
             return this.toastService.showInvalidFormError();
         }
-        return;
 
-        let gameConfig = this._buildGameConfig();
         if (this._isDemo) {
-            gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
-            this._setDemoCardImages(gameConfig);
+            this.gameService.create(this._buildGameConfigForDemo());
+            return;
         }
-        
+
+        let gameConfig = this._buildGameConfig();        
+        console.log(gameConfig)//.
+        return;//.
+
         this.gameService.create(gameConfig);
     }
 
@@ -166,11 +169,37 @@ export class GameBuilderFormComponent implements OnInit {
         gameConfig.addCustomSoundsPerCard = data.addCustomSoundsPerCard;
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
-        gameConfig.cardImages = data.cardImages;
+
+        let srcType = data[FORM_INPUT.card.cardSrcType] as ImageSourceTypeEnum;
+        gameConfig.cards = (srcType == ImageSourceTypeEnum.UPLOAD ?
+            this._getCardsFromUploads(data) :
+            this._getCardsFromUrls(data)
+        );
+
         return gameConfig;
     }
 
-    private _setDemoCardImages(gameConfig: GameConfig) {
+    private _getCardsFromUploads(formValue: any) {
+        let images = formValue[FORM_INPUT.card.upload.images] as FileUpload[];
+        let audios = formValue[FORM_INPUT.card.upload.audios] as FileUpload[];
+        return this.gameService.buildCardsFromUploads(images, audios);
+    }
+
+    private _getCardsFromUrls(formValue: any) {
+        let cardUrls = formValue[FORM_INPUT.card.urls] as any[];
+        let index=1;
+        return cardUrls.map(obj => {
+            let image = new FileUpload(obj.img, `imageUrl${index}`);
+            let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}`) : null;
+            index++;
+            return new Card(null, image, audio);
+        });
+    }
+
+
+    private _buildGameConfigForDemo() {
+        let gameConfig = new GameConfig();
+        gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
         gameConfig.cardImages = [];
 
         const dirPath = 'assets/images/demo-game-cards';
@@ -188,6 +217,8 @@ export class GameBuilderFormComponent implements OnInit {
                 gameConfig.cardImages.push(new FileUpload(`${dirPath}/words/${filename}`, filename));
             }
         }
+
+        return gameConfig;
     }
 
 }

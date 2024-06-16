@@ -4,6 +4,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
 import { TranslationService } from '../shared/components/translation/translation.service';
+import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
 import { VALUES } from '../shared/constants/global.values';
 import { ICONS, NUM_ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
@@ -12,9 +13,9 @@ import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { FileUpload } from '../shared/model/file-upload.model';
 import { GameConfig } from '../shared/model/game-config.model';
+import { ITranslation } from '../shared/model/translation.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
-import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
 import { GameConfigFileService } from './game-config-file.service';
 import { ToastService } from './toast.service';
 
@@ -123,13 +124,15 @@ export class GameService {
         this._gameConfig = null;
         
         if ( !(error instanceof GameConfigError) ) {
-            return this.toastService.error(
-                this.translationService.getTranslationObj(ERROR_TRANSLATION.unexpectedError)
-            );
+            return this._toastErrorTranslation(ERROR_TRANSLATION.unexpectedError);
         }
 
+        this._toastErrorTranslation(error.translation);
+    }
+
+    private _toastErrorTranslation(translationObj: any) {
         this.toastService.error(
-            this.translationService.getTranslationObj(error.translation)
+            this.translationService.getTranslationObj(translationObj)
         );
     }
 
@@ -295,6 +298,63 @@ export class GameService {
 
     swapPlaySound() {
         this._playSound = !this._playSound;
+    }
+
+    /* Game Config Building */
+
+    validateCardUploads(images: FileUpload[], audios: FileUpload[]): ITranslation { 
+        if (images.length !== audios.length) {
+            let translation = {
+                pt: 'A quantidade de arquivos de Imagem e Áudio não são iguais',
+                en: 'The number of Image and Audio files are not the same'
+            }
+            this._toastErrorTranslation(translation);
+            return translation;
+        }
+
+        let numMismatch = images.filter(image => !audios.some(audio => audio.hasSameName(image)));
+        if (numMismatch.length) {
+            console.log(numMismatch.map(x => x.filename));//.
+            let translation = {
+                pt: `Existe(m) ${numMismatch} arquivo(s) de imagem sem arquivo de audio com mesmo nome.`,
+                en: `There are ${numMismatch} image files without an audio file with the same name.`
+            }
+            this._toastErrorTranslation(translation);
+            return translation;
+        }
+
+        return null;
+    }
+
+    buildCardsFromUploads(images: FileUpload[], audios?: FileUpload[]): Card[] {
+        if (!(audios.length)) {
+            return images.map(image => new Card(null, image));
+        }
+
+        let n = images.length;
+        if (n !== audios.length) {
+            throw new GameConfigError({
+                pt: 'A quantidade de arquivos de Imagem e Áudio não são iguais',
+                en: 'The number of Image and Audio files are not the same'
+            });
+        }
+
+        let cards: Card[] = [];
+
+        for (let i = 0; i < n; i++) {
+            let image = images[i];
+            let audio = audios.find(x => x.hasSameName(image));
+            if (!audio) { // should not happen => need handle this case?
+                throw new GameConfigError({
+                    pt: `Existe arquivo de imagem sem arquivo de audio com mesmo nome.`,
+                    en: `There are image file without an audio file with the same name.`
+                });
+            }
+
+            cards.push(new Card(null, image, audio));
+        }
+
+        return cards;
     }
 
 }
