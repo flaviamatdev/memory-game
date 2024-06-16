@@ -10,6 +10,7 @@ import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
 import { ITranslation } from 'src/app/shared/components/translation/translation.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
+import { GAME_BUILDER_FORM_INPUT } from '../../game-build-form-input.values';
 import { GameBuilderFormComponent } from '../../game-builder-form.component';
 import { ImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 import { UrlPairConfig } from '../url-pair-config.model';
@@ -42,14 +43,14 @@ const STATE = {
 export class CardImagesFormComponent implements OnInit {
 
     readonly UploadFileType = FileUploadTypeEnum;
-    readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
+    readonly FORM_INPUT = GAME_BUILDER_FORM_INPUT.card;
+    readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input;
     readonly FILENAME_SEP = VALUES.upload.fileNameSeparator;
     readonly MIN_NUM_PAIRS = 2;
 
     @Input() parent: GameBuilderFormComponent;
 
     form: FormGroup;
-    input: any;
     stateUrlInputs = STATE.hide;
     urlPairConfig: UrlPairConfig;
     flag: { [key: string]: boolean };
@@ -62,7 +63,6 @@ export class CardImagesFormComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.parent.form;
-        this.input = this.parent.FORM_INPUT.card;
         this._initFlags();
     }
 
@@ -77,8 +77,8 @@ export class CardImagesFormComponent implements OnInit {
     onChangeCardSrcType($value: ImageSourceTypeEnum) {
         this.flag.addUrls = ($value === ImageSourceTypeEnum.URL);
 
-        const numPairsInput = this.input.numPairs;
-        const cardUploadInput = this.input.upload;
+        const numPairsInput = this.FORM_INPUT.numPairs;
+        const cardUploadInput = this.FORM_INPUT.upload;
 
         if (this.flag.addUrls) {
             this.form.addControl(numPairsInput, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
@@ -109,12 +109,11 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     private _handleInputChange() {
-        const INPUT = this.input;
         let data = this.form.value;
-        let singleCardPerPair =      data[INPUT.singleCardPerPair] as boolean;
-        let addCustomAudioPerPair =  data[INPUT.addCustomSoundsPerCard] as boolean;
-        let cardSrcType =            data[INPUT.cardSrcType] as ImageSourceTypeEnum;
-        let numPairs =               data[INPUT.numPairs] as number;
+        let singleCardPerPair =      data[this.FORM_INPUT.singleCardPerPair] as boolean;
+        let addCustomAudioPerPair =  data[this.FORM_INPUT.addCustomSoundsPerCard] as boolean;
+        let cardSrcType =            data[this.FORM_INPUT.cardSrcType] as ImageSourceTypeEnum;
+        let numPairs =               data[this.FORM_INPUT.numPairs] as number;
 
         let isUpload = (cardSrcType === ImageSourceTypeEnum.UPLOAD);
         this.flag.showFilePatternWarning = (isUpload && singleCardPerPair === false);
@@ -151,7 +150,7 @@ export class CardImagesFormComponent implements OnInit {
             return;
         }
 
-        const cardUploadInput = this.input.upload;
+        const cardUploadInput = this.FORM_INPUT.upload;
         let imageControl = this.form.get(cardUploadInput.images);
         let audioControl = this.form.get(cardUploadInput.audios);
 

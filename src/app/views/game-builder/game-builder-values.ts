@@ -76,8 +76,8 @@ export const GAME_BUILDER_TRANSLATION = {
         },
 
         addCustomSoundsPerCard: {
-            pt: 'Adicionar sons customizados ao abrir cada carta?',
-            en: '?' // TODO
+            pt: 'Adicionar sons customizados ao abrir cada carta',
+            en: 'Add custom sounds when opening each card'
         },
 
         numPairs: {

@@ -10,25 +10,7 @@ import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GameConfig } from 'src/app/shared/model/game-config.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 import { GameBuilderComponent } from '../game-builder/game-builder.component';
-
-const FORM_INPUT = {
-    cardIdType: 'cardIdType',
-    addBackgroundImg: 'addBackgroundImg',
-    backgroundImgSrc: 'backgroundImgSrc',
-    card: {
-        singleCardPerPair: 'singleCardPerPair',
-        addCustomSoundsPerCard: 'addCustomSoundsPerCard',
-        cardSrcType: 'cardSrcType',
-        // for srcType UPLOAD
-        upload: {
-            images: 'cardUploadImages',
-            audios: 'cardUploadAudios'
-        },
-        // for srcType URL        
-        numPairs: 'numPairs',
-        urls: 'cardUrls',
-    }
-}
+import { GAME_BUILDER_FORM_INPUT } from './game-build-form-input.values';
 
 @Component({
     selector: 'app-game-builder-form',
@@ -38,7 +20,7 @@ const FORM_INPUT = {
 export class GameBuilderFormComponent implements OnInit {
 
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
-    readonly FORM_INPUT = FORM_INPUT;
+    readonly FORM_INPUT = GAME_BUILDER_FORM_INPUT;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     @Input() parent: GameBuilderComponent;
@@ -71,22 +53,22 @@ export class GameBuilderFormComponent implements OnInit {
     private _initForm() {
         this.form = this.fb.group({
             title: new FormControl('Memory Game', Validators.required),
-            [FORM_INPUT.cardIdType]: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
+            [this.FORM_INPUT.cardIdType]: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
 
-            [FORM_INPUT.addBackgroundImg]: new FormControl(false, Validators.required),
-            [FORM_INPUT.backgroundImgSrc]: new FormControl(null),
+            [this.FORM_INPUT.addBackgroundImg]: new FormControl(false, Validators.required),
+            [this.FORM_INPUT.backgroundImgSrc]: new FormControl(null),
 
-            [FORM_INPUT.card.singleCardPerPair]: new FormControl(null, Validators.required),
-            [FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(true, Validators.required),  // TODO value null
-            [FORM_INPUT.card.cardSrcType]: new FormControl(null, Validators.required),
+            [this.FORM_INPUT.card.singleCardPerPair]: new FormControl(null, Validators.required),
+            [this.FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(true, Validators.required),  // TODO value null
+            [this.FORM_INPUT.card.cardSrcType]: new FormControl(null, Validators.required),
         });
 
         if (this._isDemo) {
-            this.form.addControl(FORM_INPUT.card.numPairs, new FormControl(null, Validators.required));
-            this.form.removeControl(FORM_INPUT.addBackgroundImg);
-            this.form.removeControl(FORM_INPUT.backgroundImgSrc);
-            this.form.removeControl(FORM_INPUT.card.addCustomSoundsPerCard);
-            this.form.removeControl(FORM_INPUT.card.cardSrcType);
+            this.form.addControl(this.FORM_INPUT.card.numPairs, new FormControl(null, Validators.required));
+            this.form.removeControl(this.FORM_INPUT.addBackgroundImg);
+            this.form.removeControl(this.FORM_INPUT.backgroundImgSrc);
+            this.form.removeControl(this.FORM_INPUT.card.addCustomSoundsPerCard);
+            this.form.removeControl(this.FORM_INPUT.card.cardSrcType);
         }
     }
 
@@ -124,7 +106,7 @@ export class GameBuilderFormComponent implements OnInit {
 
     onChangeAddBackgroundImg($value: boolean) {
         this.flag.addBackgroundImg = $value;
-        this.form.get(FORM_INPUT.backgroundImgSrc).setValue(null);
+        this.form.get(this.FORM_INPUT.backgroundImgSrc).setValue(null);
     }
 
     download() {
@@ -170,7 +152,7 @@ export class GameBuilderFormComponent implements OnInit {
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
 
-        let srcType = data[FORM_INPUT.card.cardSrcType] as ImageSourceTypeEnum;
+        let srcType = data[this.FORM_INPUT.card.cardSrcType] as ImageSourceTypeEnum;
         gameConfig.cards = (srcType == ImageSourceTypeEnum.UPLOAD ?
             this._getCardsFromUploads(data) :
             this._getCardsFromUrls(data)
@@ -180,13 +162,13 @@ export class GameBuilderFormComponent implements OnInit {
     }
 
     private _getCardsFromUploads(formValue: any) {
-        let images = formValue[FORM_INPUT.card.upload.images] as FileUpload[];
-        let audios = formValue[FORM_INPUT.card.upload.audios] as FileUpload[];
+        let images = formValue[this.FORM_INPUT.card.upload.images] as FileUpload[];
+        let audios = formValue[this.FORM_INPUT.card.upload.audios] as FileUpload[];
         return this.gameService.buildCardsFromValidUploads(images, audios);
     }
 
     private _getCardsFromUrls(formValue: any) {
-        let cardUrls = formValue[FORM_INPUT.card.urls] as any[];
+        let cardUrls = formValue[this.FORM_INPUT.card.urls] as any[];
         let index=1;
         return cardUrls.map((obj) => {
             let image = new FileUpload(obj.image, `imageUrl${index}`);
@@ -202,7 +184,7 @@ export class GameBuilderFormComponent implements OnInit {
 
         let gameConfig = new GameConfig();
         gameConfig.title = this.translationService.getTranslation(this.TRANSLATION.gameTitle.demo);
-        gameConfig.singleCardPerPair = data[FORM_INPUT.card.singleCardPerPair] as boolean;
+        gameConfig.singleCardPerPair = data[this.FORM_INPUT.card.singleCardPerPair] as boolean;
         gameConfig.addCustomSoundsPerCard = false;
         gameConfig.cards = [];
 
