@@ -68,38 +68,14 @@ export class AbstractInputComponent {
     }
 
     protected _setAsInvalid() {
-        this._setFormControlAsInvalid(this.formControl);
-    }
-
-    protected _setFormControlAsInvalid(control: AbstractControl) {
+        let control = this.formControl;
         control.setErrors({'invalid': true});
         control.markAsTouched();
     }
 
     protected _setAsValidByOriginalRequired() {
-        if (!this._originalRequired) {
-            this._setAsValid();
-            return;
-        }
-
-        this._setAsRequired();
-    }
-
-    protected _setAsValid() {
-        this._setFormControlAsValid(this.formControl);
-    }
-
-    protected _setFormControlAsValid(control: AbstractControl) {
-        control.setErrors(null);
-        control.markAsTouched();
-    }
-
-    protected _setAsRequired(){
-        this._setFormControlAsRequired(this.formControl);
-    }
-
-    protected _setFormControlAsRequired(control: AbstractControl){
-        control.setErrors({'required': true});
+        let control = this.formControl;
+        control.setErrors(this._originalRequired ? {'required': true} : null);
         control.markAsTouched();
     }
 
