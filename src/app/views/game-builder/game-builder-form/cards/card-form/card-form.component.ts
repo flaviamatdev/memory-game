@@ -67,68 +67,46 @@ export class CardFormComponent implements OnInit {
 
     private _initFlags() {
         this.flag = {
-            addUrls: null,
+            isUpload: null,
             showFilePatternWarning: false,
             showAudioUpload: false,
         }
     }
 
-    onChangeCardSrcType($value: ImageSourceTypeEnum) {
-        this.flag.addUrls = ($value === ImageSourceTypeEnum.URL);
+    private get _addCustomSoundsPerCard() {
+        return this.form.get(this.FORM_INPUT.addCustomSoundsPerCard).value as boolean;
+    }
 
-        const numPairsInput = this.FORM_INPUT.numPairs;
-        const cardUploadInput = this.FORM_INPUT.upload;
+    private get _singleCardPerPair() {
+        return this.form.get(this.FORM_INPUT.singleCardPerPair).value as boolean;
+    }
 
-        if (this.flag.addUrls) {
-            this.form.addControl(numPairsInput, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
-            this.form.removeControl(cardUploadInput.images);
-            this.form.removeControl(cardUploadInput.audios);
-        } else {
-            this.form.removeControl(numPairsInput);
-            this.form.addControl(cardUploadInput.images, new FormControl(null, Validators.required));
-            this.form.addControl(cardUploadInput.audios, new FormControl(null, Validators.required));
+    get showFilePatternWarning(): boolean {
+        try {
+            return this.flag.isUpload && this._singleCardPerPair === false;
+        } catch (error) {
+            return false;
         }
-
-        this._handleInputChange();
-    }
-
-    onChangeSingleImgPerPair() {
-        this._handleInputChange();
-    }
-
-    onChangeAddCustomSoundPerPair() {
-        this._handleInputChange();
     }
 
     onChangeNumPairsForUrl($numPairs: number) {
         if ($numPairs < this.MIN_NUM_PAIRS) {
             return;
         }
-        this._handleInputChange();
+        this.receivePairConfigChange();
     }
 
-    private _handleInputChange() {
-        let data = this.form.value;
-        let singleCardPerPair =      data[this.FORM_INPUT.singleCardPerPair] as boolean;
-        let addCustomAudioPerPair =  data[this.FORM_INPUT.addCustomSoundsPerCard] as boolean;
-        let cardSrcType =            data[this.FORM_INPUT.cardSrcType] as ImageSourceTypeEnum;
-        let numPairs =               data[this.FORM_INPUT.numPairs] as number;
+    receivePairConfigChange(numPairs?: number) {
+        let singleCardPerPair = this._singleCardPerPair;
+        let addCustomAudioPerPair = this._addCustomSoundsPerCard;
+        numPairs = numPairs ?? (this.form.get(this.FORM_INPUT.numPairs)?.value as number);
 
-        let isUpload = (cardSrcType === ImageSourceTypeEnum.UPLOAD);
-        this.flag.showFilePatternWarning = (isUpload && singleCardPerPair === false);
-
-        if (isUpload || numPairs < this.MIN_NUM_PAIRS) {
+        if (this.flag.isUpload || ([ singleCardPerPair, addCustomAudioPerPair, numPairs ]).some(value => value == null)) {
             this._removeUrlInputs();
             return;
         }
 
-        let missingValue = ([ singleCardPerPair, addCustomAudioPerPair, cardSrcType, numPairs ]).some(value => value == null);
-        if (missingValue) {
-            this._removeUrlInputs();
-            return;
-        }
-
-        this.urlPairConfig = new UrlPairConfig(numPairs, singleCardPerPair, addCustomAudioPerPair);
+        this.urlPairConfig = new UrlPairConfig(singleCardPerPair, addCustomAudioPerPair, numPairs);
         this.stateUrlInputs = STATE.show;
     }
 
@@ -138,9 +116,25 @@ export class CardFormComponent implements OnInit {
             this.urlPairConfig = null;
         }, ANIMATION_TIMEOUT);
     }
+    
 
-    openExample() {
-        this.feedbackService.dialog.openCustomDialog(CardImageFilenameExampleDialogComponent, 80);
+    onChangeCardSrcType($value: ImageSourceTypeEnum) {
+        this.flag.isUpload = ($value === ImageSourceTypeEnum.UPLOAD);
+        this.flag.showAudioUpload = (this.flag.isUpload && this._addCustomSoundsPerCard);
+
+        const numPairsInput = this.FORM_INPUT.numPairs;
+        const cardUploadInput = this.FORM_INPUT.upload;
+
+        if (this.flag.isUpload) {
+            this.form.addControl(cardUploadInput.images, new FormControl(null, Validators.required));
+            this.form.addControl(cardUploadInput.audios, new FormControl(null, Validators.required));
+            this.form.removeControl(numPairsInput);
+            this._removeUrlInputs();
+        } else {
+            this.form.removeControl(cardUploadInput.images);
+            this.form.removeControl(cardUploadInput.audios);
+            this.form.addControl(numPairsInput, new FormControl(null, [Validators.required, Validators.min(this.MIN_NUM_PAIRS)]));
+        }
     }
 
     receiveUploads(siblingControlName: string) {
@@ -164,6 +158,10 @@ export class CardFormComponent implements OnInit {
             FormUtil.setFormControlAsInvalid(imageControl);
             FormUtil.setFormControlAsInvalid(audioControl);
         }
+    }
+
+    openExample() {
+        this.feedbackService.dialog.openCustomDialog(CardImageFilenameExampleDialogComponent, 80);
     }
 
 }

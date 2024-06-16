@@ -1,9 +1,9 @@
 export class UrlPairConfig {
     
     constructor(
-        public numPairs: number,
         public singleCardPerPair: boolean,
         public addCustomAudioPerPair: boolean,
+        public numPairs: number,
     ) {}
 
     get numCards(): number {

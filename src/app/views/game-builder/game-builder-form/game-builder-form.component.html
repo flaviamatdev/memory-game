@@ -37,10 +37,7 @@
         </div>
     
         <mat-divider></mat-divider>
-        <span class="subtitle color-primary">
-            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.backgroundImg }}
-        </span>
-    
+        <span class="subtitle color-primary">{{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.backgroundImg }}</span>
         <div class="form-line">
             <app-select-yes-no [labelTranslate]="TRANSLATION.input.backgroundImg.add" 
                 [form]="form" [controlName]="FORM_INPUT.addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
@@ -52,9 +49,7 @@
         </div>
     
         <mat-divider></mat-divider>
-        <span class="subtitle color-primary">
-            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.cards }}
-        </span>
+        <span class="subtitle color-primary">{{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.cards }}</span>
         <app-card-form [parent]="this"></app-card-form>
     </form>
 </ng-template>
