@@ -120,9 +120,7 @@ export class GameBuilderFormComponent implements OnInit {
     }
 
     submit() {
-        console.log(this.form.value);//.
         if (this._isInvalidForm) {
-            console.log(Object.entries(this.form.controls).filter(entry => entry[1].invalid));//.
             return this.toastService.showInvalidFormError();
         }
 
@@ -131,11 +129,7 @@ export class GameBuilderFormComponent implements OnInit {
             return;
         }
 
-        let gameConfig = this._buildGameConfig();        
-        console.log(gameConfig)//.
-        // return;//.
-
-        this.gameService.create(gameConfig);
+        this.gameService.create(this._buildGameConfig());
     }
 
     private get _isInvalidForm() {

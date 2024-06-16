@@ -308,7 +308,6 @@ export class GameService {
 
         let numMismatch = images.filter(image => !audios.some(audio => audio.hasSameName(image)));
         if (numMismatch.length) {
-            console.log(numMismatch.map(x => x.filename));//.
             throw new GameConfigError({
                 pt: `Existe(m) ${numMismatch} arquivo(s) de imagem sem arquivo de audio com mesmo nome.`,
                 en: `There are ${numMismatch} image files without an audio file with the same name.`
