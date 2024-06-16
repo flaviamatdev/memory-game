@@ -53,8 +53,8 @@
 <div [@showContent]="stateUrlInputs">
     <div *ngIf="urlPairConfig" class="form-line">
         <div class="form-item mt-3">
-            <app-card-images-url-input [form]="form" [controlName]="FORM_INPUT.urls" [urlPairConfig]="urlPairConfig">
-            </app-card-images-url-input>
+            <app-card-urls [form]="form" [controlName]="FORM_INPUT.urls" [urlPairConfig]="urlPairConfig">
+            </app-card-urls>
         </div>
     </div>
 </div>

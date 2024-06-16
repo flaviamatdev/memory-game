@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
-import { CardImagesUrlInputComponent } from '../card-images-url-input/card-images-url-input.component';
 import { UrlPairConfig } from '../url-pair-config.model';
 
 @Component({
@@ -9,80 +9,97 @@ import { UrlPairConfig } from '../url-pair-config.model';
     templateUrl: './card-urls.component.html',
     styleUrls: ['./card-urls.component.scss']
 })
-export class CardUrlsComponent implements OnInit, OnChanges {
+export class CardUrlsInputComponent implements OnInit, OnChanges {
 
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input.cards;
+    private readonly _CARD_URLS_INPUT = 'cardUrls';
 
-    @Input() parent: CardImagesUrlInputComponent;
-    @Input() index: number;
+    @Input() form: FormGroup;
+    @Input() controlName: string;
     @Input() urlPairConfig: UrlPairConfig;
 
-    form: FormGroup;
-    pairOrdinal: number;
+    indices: number[];
 
-    constructor(private fb: FormBuilder) { }
-    
+    private _formArray: FormArray;
+    private _numCardImages: number;
+    private _cardImageMap: { [key: string]: FileUpload } = {};
+
+    constructor(private fb: FormBuilder) {}
 
     ngOnInit(): void {
-        this.pairOrdinal = this.index + 1;
-        this._initForm();        
+        this._init();
     }
 
-    private _initForm() {
-        this.form = this.fb.group({
-            image: new FormControl(null, Validators.required),
-        });
-
-        this._resetControls();
-        this.parent.addSubForm(this.form);
+    ngOnDestroy() {
+        this.form.removeControl(this._CARD_URLS_INPUT);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.urlPairConfig && !changes.urlPairConfig.firstChange) {
-            this._resetControls();
+            this.indices = undefined;
+            this._init();
         }
     }
 
-    private _resetControls() {
-        if (this.urlPairConfig.addCustomAudioPerPair) {
-            this._addAudioControl();
-        } else {
-            this.form.removeControl('audio');
+    private _init() {
+        this._cardImageMap = {};
+        this._numCardImages = this.urlPairConfig.numCards;
+        this._initFormArray();
+        this.indices = [...Array(this.urlPairConfig.numPairs).keys()];
+    }
+
+    private _initFormArray() {
+        this._formArray = this.fb.array([]);
+        this.form.addControl(this._CARD_URLS_INPUT, this._formArray);
+    }
+
+    addSubForm(subForm: FormGroup) {
+        this._formArray.push(subForm);
+    }
+
+    getSubForm(index: number) {
+        return this._formArray?.controls[index] as FormGroup;
+    }
+
+    getUrl(pairIndex: number, imageIndex: number = 0): string {
+        try {
+            return this._cardImageMap[this._buildCardImageKey(pairIndex, imageIndex)]?.src;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    private _buildCardImageKey(pairIndex: number, imageIndex: number): string {
+        return `${pairIndex}${imageIndex}`;
+    }
+
+    onInsertUrl($url: string, pairIndex: number, imageIndex: number = 0) {
+        let key = this._buildCardImageKey(pairIndex, imageIndex);
+        this._cardImageMap[key] = new FileUpload($url, `pair${pairIndex+1}_image${imageIndex+1}`);
+        this._updateFormControl();
+    }
+
+    deleteUrl(pairIndex: number, imageIndex: number = 0) {
+        let sumControlName = 'url';
+        if (imageIndex == 1) {
+            sumControlName = 'url2';
+        }
+        this.getSubForm(pairIndex).get(sumControlName).reset();
+
+        let cardImageKey = this._buildCardImageKey(pairIndex, imageIndex);
+        delete this._cardImageMap[cardImageKey];
+
+        this._updateFormControl();
+    }
+
+    private _updateFormControl() {
+        let cardImages = Object.values(this._cardImageMap);
+        if (cardImages.length === this._numCardImages) {
+            this.form.get(this.controlName).setValue(cardImages);
+            return;
         }
 
-        if (this.urlPairConfig.singleCardPerPair) {
-            this.form.removeControl('image2');
-            this.form.removeControl('audio2');
-        } else {
-            this.form.addControl('image2', new FormControl(null, Validators.required));
-            if (this.urlPairConfig.addCustomAudioPerPair) {
-                this.form.addControl('audio2', new FormControl(null, Validators.required));
-            }
-        }
-    }
-
-    private _addAudioControl() {
-        this.form.addControl('audio', new FormControl(null, Validators.required));
-    }
-
-    get firstPairImageLabelTranslation() {
-        return this.urlPairConfig?.singleCardPerPair ? 
-            this.TRANSLATION.url.image.pairLink :
-            this.TRANSLATION.url.image.getPairLink(1)
-    }
-
-    get firstPairAudioLabelTranslation() {
-        return this.urlPairConfig?.singleCardPerPair ? 
-            this.TRANSLATION.url.audio.pairLink :
-            this.TRANSLATION.url.audio.getPairLink(1)
-    }
-
-    onInsertUrl($url: string) {
-        this.parent.onInsertUrl($url, this.index);
-    }
-
-    deleteImgUrl() {
-        this.parent.deleteUrl(this.index);
+        this.form.get(this.controlName).setValue(null);
     }
 
 }
