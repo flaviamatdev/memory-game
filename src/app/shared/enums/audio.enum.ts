@@ -1,5 +1,5 @@
 export enum AudioEnum {
-    CORRECT,
-    TURN_CARD,
-    WIN
+    CORRECT = 'correct',
+    TURN_CARD = 'turnCard',
+    WIN = 'win'
 }

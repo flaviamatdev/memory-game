@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AudioEnum } from '../shared/enums/audio.enum';
+import { FileUpload } from '../shared/model/file-upload.model';
 
 const AUDIO_DIR_PATH = 'assets/audio';
 const AUDIO_SRC = {
@@ -13,32 +14,38 @@ const AUDIO_SRC = {
 })
 export class AudioService {
 
-    private _audioMap: { [key: number]: HTMLAudioElement };
+    private _audioMap: { [key: string]: HTMLAudioElement };
     private _allLoaded: boolean = false;
 
-    get defaultCardAudioSrc(): string {
-        return `${AUDIO_DIR_PATH}/${AUDIO_SRC[AudioEnum.TURN_CARD]}`;
-    }
 
-    load() {
+    load(cardAudios?: FileUpload[]) {
         if (this._allLoaded) {
             return;
         }
+
         this._audioMap = {};
         Object.entries(AUDIO_SRC).forEach(([key,src]) => {
-            this._audioMap[key] = this._load(src);
+            this._audioMap[key] = this._load(`${AUDIO_DIR_PATH}/${src}`);
         });
+
+        if (cardAudios) {
+            delete this._audioMap[AudioEnum.TURN_CARD];
+            cardAudios.forEach(cardAudio => {
+                this._audioMap[cardAudio.filename] = this._load(cardAudio.src);
+            });
+        }
+
         this._allLoaded = true;
     }
 
     private _load(src: string) {
-        let audio = new Audio(`${AUDIO_DIR_PATH}/${src}`);
+        let audio = new Audio(src);
         audio.load();
         return audio;
     }
 
-    play(audioKey: AudioEnum) {
-        (this._audioMap[audioKey]).play();
+    play(audioEnumOrFilename: AudioEnum | string) {
+        (this._audioMap[audioEnumOrFilename]).play();
     }
 
 }

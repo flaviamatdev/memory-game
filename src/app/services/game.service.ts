@@ -107,7 +107,7 @@ export class GameService {
         try {
             let cards = this._getCards();
             this._toolbarTitle = gameConfig.title;
-            this.audioService.load();
+            this._loadAudios(cards);
             this.router.navigate(['game'], {
                 state: {
                     cards: cards
@@ -117,6 +117,14 @@ export class GameService {
         catch (error) {
             this._handleCreateError(error);
         }
+    }
+
+    private _loadAudios(cards: Card[]) {
+        let cardAudios: FileUpload[] = null;
+        if (this._gameConfig.addCustomSoundsPerCard) {
+            cardAudios = cards.map(card => card.audio);
+        }
+        this.audioService.load(cardAudios);
     }
 
     private _handleCreateError(error: any) {
@@ -227,7 +235,7 @@ export class GameService {
         }
 
         if (this._playSound) {
-            this.audioService.play(AudioEnum.TURN_CARD);
+            this.audioService.play(choosen.audio?.filename ?? AudioEnum.TURN_CARD);
         }        
 
         if (this._selectedCard1 === null) {
@@ -310,18 +318,13 @@ export class GameService {
 
     buildCardsFromValidUploads(images: FileUpload[], audios?: FileUpload[]): Card[] {
         if (!(audios.length)) {
-            let defaultAudio = this.getDefaultCardAudio();
-            return images.map(image => new Card(null, image, defaultAudio));
+            return images.map(image => new Card(null, image, null));
         }
         
         return images.map(image => {
             let audio = audios.find(x => x.hasSameName(image));
             return new Card(null, image, audio);
-        })
-    }
-
-    getDefaultCardAudio(): FileUpload {
-        return new FileUpload(this.audioService.defaultCardAudioSrc, 'defaultCardAudio');
+        });
     }
 
 }
