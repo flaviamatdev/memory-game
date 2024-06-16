@@ -12,7 +12,7 @@ export class TranslationService {
     constructor(
         private translate: TranslateService,
     ) { 
-        translate.addLangs(['pt', 'en']);
+        translate.addLangs(['en', 'pt']);
         this._browserLang = this._getBrowserLang();
         translate.use(this._browserLang?.match(/pt|en/) ? this._browserLang : 'en');
     }
