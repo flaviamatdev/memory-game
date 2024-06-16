@@ -7,9 +7,9 @@
         [form]="form" [controlName]="FORM_INPUT.addCustomSoundsPerCard" (onChange)="receivePairConfigChange()">
     </app-select-yes-no>
 
-    <app-select-image-src-type [form]="form" [controlName]="FORM_INPUT.cardSrcType" [multiple]="true"
+    <app-select-media-src-type [form]="form" [controlName]="FORM_INPUT.cardSrcType" [multiple]="true"
         (onChange)="onChangeCardSrcType($event)">
-    </app-select-image-src-type>
+    </app-select-media-src-type>
 </div>
 
 <div [ngSwitch]="flag.isUpload" class="form-line mt-3 mb-3">

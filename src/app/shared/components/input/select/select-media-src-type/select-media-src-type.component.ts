@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectComponent } from '../select/select.component';
 import { MediaSourceTypeEnum } from 'src/app/shared/enums/media-src-type.enum';
-import { SRC_TYPE_TRANSLATION_VALUES } from './select-image-src-type-values';
+import { SRC_TYPE_TRANSLATION_VALUES } from './select-media-src-type-values';
 
 @Component({
-    selector: 'app-select-image-src-type',
-    templateUrl: './select-image-src-type.component.html',
-    styleUrls: ['./select-image-src-type.component.scss']
+    selector: 'app-select-media-src-type',
+    templateUrl: './select-media-src-type.component.html',
+    styleUrls: []
 })
-export class SelectImageSrcTypeComponent extends SelectComponent implements OnInit {
+export class SelectMediaSrcTypeComponent extends SelectComponent implements OnInit {
 
     readonly TRANSLATION = SRC_TYPE_TRANSLATION_VALUES;
 
