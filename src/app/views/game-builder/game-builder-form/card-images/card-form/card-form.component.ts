@@ -39,7 +39,7 @@ const STATE = {
         ])
     ]
 })
-export class CardImagesFormComponent implements OnInit {
+export class CardFormComponent implements OnInit {
 
     readonly UploadFileType = FileUploadTypeEnum;
     readonly FORM_INPUT = GAME_BUILDER_FORM_INPUT.card;
