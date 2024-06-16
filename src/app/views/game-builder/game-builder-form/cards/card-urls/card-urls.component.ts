@@ -9,7 +9,7 @@ import { UrlPairConfig } from '../url-pair-config.model';
     templateUrl: './card-urls.component.html',
     styleUrls: ['./card-urls.component.scss']
 })
-export class CardUrlsInputComponent implements OnInit, OnChanges {
+export class CardUrlsInputComponent implements OnInit, OnChanges  {
 
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION.input.cards;
     private readonly _CARD_URLS_INPUT = 'cardUrls';
@@ -24,10 +24,22 @@ export class CardUrlsInputComponent implements OnInit, OnChanges {
     private _numCardImages: number;
     private _cardImageMap: { [key: string]: FileUpload } = {};
 
-    constructor(private fb: FormBuilder) {}
+    constructor(
+        private fb: FormBuilder,
+    ) {
+        // define hear to avoid ExpressionChangedAfterItHasBeenCheckedError
+        this.indices = [...Array(2).keys()];
+        this._formArray = fb.array([]);
+    }
+    
 
     ngOnInit(): void {
-        this._init();
+        setTimeout(() => {
+            this.indices = [...Array(this.urlPairConfig.numPairs).keys()];
+            this._cardImageMap = {};
+            this._numCardImages = this.urlPairConfig.numCards;
+            this.form.addControl(this._CARD_URLS_INPUT, this._formArray);
+        }, 1);
     }
 
     ngOnDestroy() {
@@ -36,21 +48,8 @@ export class CardUrlsInputComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.urlPairConfig && !changes.urlPairConfig.firstChange) {
-            this.indices = undefined;
-            this._init();
+            this.ngOnInit();
         }
-    }
-
-    private _init() {
-        this._cardImageMap = {};
-        this._numCardImages = this.urlPairConfig.numCards;
-        this._initFormArray();
-        this.indices = [...Array(this.urlPairConfig.numPairs).keys()];
-    }
-
-    private _initFormArray() {
-        this._formArray = this.fb.array([]);
-        this.form.addControl(this._CARD_URLS_INPUT, this._formArray);
     }
 
     addSubForm(subForm: FormGroup) {

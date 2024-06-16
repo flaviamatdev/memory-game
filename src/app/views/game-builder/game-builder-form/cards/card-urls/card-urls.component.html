@@ -1,5 +1,3 @@
-<div *ngIf="indices">
-    <div *ngFor="let i of indices" class="card-box">
-        <app-card-pair-url-inputs [parent]="this" [index]="i" [urlPairConfig]="urlPairConfig"></app-card-pair-url-inputs>
-    </div>
+<div *ngFor="let i of (indices || [])" class="card-box">
+    <app-card-pair-url-inputs [parent]="this" [index]="i" [urlPairConfig]="urlPairConfig"></app-card-pair-url-inputs>
 </div>
