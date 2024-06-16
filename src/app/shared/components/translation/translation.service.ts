@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ITranslation } from '../../model/translation.model';
+import { ITranslation } from './translation.model';
 
 @Injectable({
     providedIn: 'root'
@@ -12,9 +12,9 @@ export class TranslationService {
     constructor(
         private translate: TranslateService,
     ) { 
-        translate.addLangs(['en', 'pt']);
+        translate.addLangs(['pt', 'en']);
         this._browserLang = this._getBrowserLang();
-        translate.use(this._browserLang?.match(/pt|en|es/) ? this._browserLang : 'pt');
+        translate.use(this._browserLang?.match(/pt|en/) ? this._browserLang : 'en');
     }
 
     private _getBrowserLang() {

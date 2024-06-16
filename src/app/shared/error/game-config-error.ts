@@ -1,4 +1,4 @@
-import { ITranslation } from "../model/translation.model";
+import { ITranslation } from "../components/translation/translation.model";
 
 export class GameConfigError extends Error {
     constructor(public translation: ITranslation) {

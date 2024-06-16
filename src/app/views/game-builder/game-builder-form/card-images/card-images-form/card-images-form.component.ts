@@ -6,7 +6,8 @@ import { GameService } from 'src/app/services/game.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { FileUploadTypeEnum } from 'src/app/shared/enums/file-upload-type.enum';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
-import { ITranslation } from 'src/app/shared/model/translation.model';
+
+import { ITranslation } from 'src/app/shared/components/translation/translation.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
 import { GameBuilderFormComponent } from '../../game-builder-form.component';

@@ -4,7 +4,7 @@ import { DialogService } from './dialog.service';
 import { TranslationService } from '../shared/components/translation/translation.service';
 import { GameConfigError } from '../shared/error/game-config-error';
 import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
-import { ITranslation } from '../shared/model/translation.model';
+import { ITranslation } from '../shared/components/translation/translation.model';
 
 @Injectable({
     providedIn: 'root'
