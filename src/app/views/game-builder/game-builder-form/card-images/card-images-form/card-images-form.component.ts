@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DialogService } from 'src/app/services/dialog.service';
+import { FeedbackService } from 'src/app/services/feedback.service';
 import { GameService } from 'src/app/services/game.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { FileUploadTypeEnum } from 'src/app/shared/enums/file-upload-type.enum';
@@ -56,7 +56,7 @@ export class CardImagesFormComponent implements OnInit {
     invalidUploadMsg: ITranslation;
 
     constructor(
-        private dialogService: DialogService,
+        private feedbackService: FeedbackService,
         private gameService: GameService
     ) {}
 
@@ -133,7 +133,7 @@ export class CardImagesFormComponent implements OnInit {
     }
 
     openExample() {
-        this.dialogService.openCustomDialog(ImageFilenameExampleDialogComponent, 80);
+        this.feedbackService.dialog.openCustomDialog(ImageFilenameExampleDialogComponent, 80);
     }
 
     receiveUploads(siblingControlName: string) {
@@ -146,15 +146,17 @@ export class CardImagesFormComponent implements OnInit {
         let imageControl = this.form.get(cardUploadInput.images);
         let audioControl = this.form.get(cardUploadInput.audios);
 
-        this.invalidUploadMsg = this.gameService.validateCardUploads(imageControl.value, audioControl.value);
-        if (this.invalidUploadMsg) {
+        try {
+            this.gameService.validateCardUploads(imageControl.value, audioControl.value);
+            this.invalidUploadMsg = null;
+            FormUtil.setFormControlAsValid(imageControl, false);
+            FormUtil.setFormControlAsValid(audioControl, false);
+        } 
+        catch (error) {
+            this.invalidUploadMsg = this.feedbackService.handleError(error);
             FormUtil.setFormControlAsInvalid(imageControl);
             FormUtil.setFormControlAsInvalid(audioControl);
-            return;
         }
-
-        FormUtil.setFormControlAsValid(imageControl, false);
-        FormUtil.setFormControlAsValid(audioControl, false);
     }
 
 }

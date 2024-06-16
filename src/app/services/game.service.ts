@@ -13,11 +13,10 @@ import { GameConfigError } from '../shared/error/game-config-error';
 import { Card } from '../shared/model/card';
 import { FileUpload } from '../shared/model/file-upload.model';
 import { GameConfig } from '../shared/model/game-config.model';
-import { ITranslation } from '../shared/model/translation.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
+import { FeedbackService } from './feedback.service';
 import { GameConfigFileService } from './game-config-file.service';
-import { ToastService } from './toast.service';
 
 const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 const ERROR_TRANSLATION = ERROR_MSG_TRANSLATION;
@@ -39,9 +38,9 @@ export class GameService {
     constructor(
         library: FaIconLibrary,
         private router: Router,
+        private feedbackService: FeedbackService,
         private translationService: TranslationService,
         private audioService: AudioService,
-        private toastService: ToastService,
         private configFileService: GameConfigFileService,
     ) {
         library.addIcons(...ICONS);
@@ -122,18 +121,7 @@ export class GameService {
 
     private _handleCreateError(error: any) {
         this._gameConfig = null;
-        
-        if ( !(error instanceof GameConfigError) ) {
-            return this._toastErrorTranslation(ERROR_TRANSLATION.unexpectedError);
-        }
-
-        this._toastErrorTranslation(error.translation);
-    }
-
-    private _toastErrorTranslation(translationObj: any) {
-        this.toastService.error(
-            this.translationService.getTranslationObj(translationObj)
-        );
+        this.feedbackService.handleError(error);
     }
 
     private _getCards(): Card[] {
@@ -156,7 +144,9 @@ export class GameService {
     }
 
     private _getCardsForSameImagePerPair(): Card[] {
-        let cards = this._gameConfig.cardImages.map((img, i) => new Card(`${i + 1}`, img));
+        // TODO usar cards no lugar de cardImages
+        // let cards = this._gameConfig.cardImages.map((img, i) => new Card(`${i + 1}`, img));
+        let cards = this._gameConfig.cards.map((card, i) => new Card(`${i+1}`, card.img, card.audio));
 
         return this._getFinalShuffledCardsWithId([
             ...this._shuffleCards(cards),
@@ -175,7 +165,9 @@ export class GameService {
     }
 
     private _getCardsForDifferentImagesPerPair(): Card[] {
-        // Espera-se que as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes do SEP
+        /* Espera-se que as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes do SEP */
+        
+        // TODO usar cards no lugar de cardImages
         let cardImages = this._gameConfig.cardImages;
         let keys = this._getFilenamePrefixForDiffImagesPerPair(cardImages);
         let cards: Card[] = [];
@@ -302,59 +294,33 @@ export class GameService {
 
     /* Game Config Building */
 
-    validateCardUploads(images: FileUpload[], audios: FileUpload[]): ITranslation { 
+    validateCardUploads(images: FileUpload[], audios: FileUpload[]) { 
         if (images.length !== audios.length) {
-            let translation = {
-                pt: 'A quantidade de arquivos de Imagem e Áudio não são iguais',
-                en: 'The number of Image and Audio files are not the same'
-            }
-            this._toastErrorTranslation(translation);
-            return translation;
-        }
-
-        let numMismatch = images.filter(image => !audios.some(audio => audio.hasSameName(image)));
-        if (numMismatch.length) {
-            console.log(numMismatch.map(x => x.filename));//.
-            let translation = {
-                pt: `Existe(m) ${numMismatch} arquivo(s) de imagem sem arquivo de audio com mesmo nome.`,
-                en: `There are ${numMismatch} image files without an audio file with the same name.`
-            }
-            this._toastErrorTranslation(translation);
-            return translation;
-        }
-
-        return null;
-    }
-
-    buildCardsFromUploads(images: FileUpload[], audios?: FileUpload[]): Card[] {
-        if (!(audios.length)) {
-            return images.map(image => new Card(null, image));
-        }
-
-        let n = images.length;
-        if (n !== audios.length) {
             throw new GameConfigError({
                 pt: 'A quantidade de arquivos de Imagem e Áudio não são iguais',
                 en: 'The number of Image and Audio files are not the same'
             });
         }
 
-        let cards: Card[] = [];
-
-        for (let i = 0; i < n; i++) {
-            let image = images[i];
-            let audio = audios.find(x => x.hasSameName(image));
-            if (!audio) { // should not happen => need handle this case?
-                throw new GameConfigError({
-                    pt: `Existe arquivo de imagem sem arquivo de audio com mesmo nome.`,
-                    en: `There are image file without an audio file with the same name.`
-                });
-            }
-
-            cards.push(new Card(null, image, audio));
+        let numMismatch = images.filter(image => !audios.some(audio => audio.hasSameName(image)));
+        if (numMismatch.length) {
+            console.log(numMismatch.map(x => x.filename));//.
+            throw new GameConfigError({
+                pt: `Existe(m) ${numMismatch} arquivo(s) de imagem sem arquivo de audio com mesmo nome.`,
+                en: `There are ${numMismatch} image files without an audio file with the same name.`
+            });
         }
+    }
 
-        return cards;
+    buildCardsFromValidUploads(images: FileUpload[], audios?: FileUpload[]): Card[] {
+        if (!(audios.length)) {
+            return images.map(image => new Card(null, image));
+        }
+        
+        return images.map(image => {
+            let audio = audios.find(x => x.hasSameName(image));
+            return new Card(null, image, audio);
+        })
     }
 
 }

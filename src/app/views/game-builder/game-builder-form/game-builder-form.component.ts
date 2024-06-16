@@ -182,7 +182,7 @@ export class GameBuilderFormComponent implements OnInit {
     private _getCardsFromUploads(formValue: any) {
         let images = formValue[FORM_INPUT.card.upload.images] as FileUpload[];
         let audios = formValue[FORM_INPUT.card.upload.audios] as FileUpload[];
-        return this.gameService.buildCardsFromUploads(images, audios);
+        return this.gameService.buildCardsFromValidUploads(images, audios);
     }
 
     private _getCardsFromUrls(formValue: any) {
@@ -200,21 +200,23 @@ export class GameBuilderFormComponent implements OnInit {
     private _buildGameConfigForDemo() {
         let gameConfig = new GameConfig();
         gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
-        gameConfig.cardImages = [];
+        gameConfig.cards = [];
 
-        const dirPath = 'assets/images/demo-game-cards';
+        const imgDirPath = 'assets/images/demo-game-cards';
 
         let numPairs: number = this.form.value.numPairs;
 
         for (let i = 1; i <= numPairs; i++) {
             let filename = `num${i}_draw.png`;
-            gameConfig.cardImages.push(new FileUpload(`${dirPath}/draw/${filename}`, filename));
+            let image = new FileUpload(`${imgDirPath}/draw/${filename}`, filename);
+            gameConfig.cards.push(new Card(null, image));
         }
 
         if (!gameConfig.singleCardPerPair) {
             for (let i = 1; i <= numPairs; i++) {
-                let filename = `num${i}_word.png`;               
-                gameConfig.cardImages.push(new FileUpload(`${dirPath}/words/${filename}`, filename));
+                let filename = `num${i}_word.png`;
+                let image = new FileUpload(`${imgDirPath}/words/${filename}`, filename);
+                gameConfig.cards.push(new Card(null, image));
             }
         }
 
