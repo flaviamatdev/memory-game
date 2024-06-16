@@ -6,7 +6,6 @@ import { GameService } from 'src/app/services/game.service';
 import { VALUES } from 'src/app/shared/constants/global.values';
 import { FileUploadTypeEnum } from 'src/app/shared/enums/file-upload-type.enum';
 import { ImageSourceTypeEnum } from 'src/app/shared/enums/image-src-type.enum';
-
 import { ITranslation } from 'src/app/shared/components/translation/translation.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
@@ -22,9 +21,9 @@ const STATE = {
 };
 
 @Component({
-    selector: 'app-card-images-form',
-    templateUrl: './card-images-form.component.html',
-    styleUrls: ['./card-images-form.component.scss'],
+    selector: 'app-card-form',
+    templateUrl: './card-form.component.html',
+    styleUrls: ['./card-form.component.scss'],
     animations: [
         trigger('showContent', [
             state(STATE.show, style({
