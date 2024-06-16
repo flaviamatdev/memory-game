@@ -45,7 +45,7 @@ export class AudioService {
     }
 
     play(audioEnumOrFilename: AudioEnum | string) {
-        (this._audioMap[audioEnumOrFilename]).play();
+        (this._audioMap[audioEnumOrFilename])?.play();
     }
 
 }
