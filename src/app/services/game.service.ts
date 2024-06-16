@@ -144,9 +144,7 @@ export class GameService {
     }
 
     private _getCardsForSameImagePerPair(): Card[] {
-        // TODO usar cards no lugar de cardImages
-        // let cards = this._gameConfig.cardImages.map((img, i) => new Card(`${i + 1}`, img));
-        let cards = this._gameConfig.cards.map((card, i) => new Card(`${i+1}`, card.img, card.audio));
+        let cards = this._gameConfig.cards.map((card, i) => new Card(`${i+1}`, card.image, card.audio));
 
         return this._getFinalShuffledCardsWithId([
             ...this._shuffleCards(cards),
@@ -166,23 +164,21 @@ export class GameService {
 
     private _getCardsForDifferentImagesPerPair(): Card[] {
         /* Espera-se que as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes do SEP */
-        
-        // TODO usar cards no lugar de cardImages
-        let cardImages = this._gameConfig.cardImages;
-        let keys = this._getFilenamePrefixForDiffImagesPerPair(cardImages);
+        let originalCards = this._gameConfig.cards;
+        let keys = this._getFilenamePrefixForDiffImagesPerPair(originalCards.map(card => card.image));
         let cards: Card[] = [];
 
         keys.forEach(key => {
-            cardImages
-                .filter(img => this._getCardImageFilenamePrefix(img) === key)
-                .forEach(img => cards.push(new Card(key, img)));
+            originalCards
+                .filter(card => this._getCardImageFilenamePrefix(card.image) === key)
+                .forEach(card => cards.push(new Card(key, card.image, card.audio)));
         });
 
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
     }
 
     private _getFilenamePrefixForDiffImagesPerPair(cardImages: FileUpload[]) {
-        let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
+        let filenames = cardImages.map(cardImage => this._getCardImageFilenamePrefix(cardImage));
         let occurrences = ArrayUtil.getNumOccurrences(filenames);
         let keys = Object.keys(occurrences);
 
@@ -314,13 +310,18 @@ export class GameService {
 
     buildCardsFromValidUploads(images: FileUpload[], audios?: FileUpload[]): Card[] {
         if (!(audios.length)) {
-            return images.map(image => new Card(null, image));
+            let defaultAudio = this.getDefaultCardAudio();
+            return images.map(image => new Card(null, image, defaultAudio));
         }
         
         return images.map(image => {
             let audio = audios.find(x => x.hasSameName(image));
             return new Card(null, image, audio);
         })
+    }
+
+    getDefaultCardAudio(): FileUpload {
+        return new FileUpload(this.audioService.defaultCardAudioSrc, 'defaultCardAudio');
     }
 
 }

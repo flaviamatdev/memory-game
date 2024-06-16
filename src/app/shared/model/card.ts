@@ -6,12 +6,12 @@ export class Card {
 
     constructor(
         public code: string,
-        public img: FileUpload,
+        public image: FileUpload,
         public audio?: FileUpload
     ) {}
 
     get hasValidFiles() {
-        return this.img.isValid() && (!this.audio || this.audio.isValidAudio());
+        return this.image.isValid() && (!this.audio || this.audio.isValidAudio());
     }
 
 }

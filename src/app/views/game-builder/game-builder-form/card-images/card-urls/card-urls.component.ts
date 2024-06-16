@@ -30,7 +30,7 @@ export class CardUrlsComponent implements OnInit, OnChanges {
 
     private _initForm() {
         this.form = this.fb.group({
-            img: new FormControl(null, Validators.required),
+            image: new FormControl(null, Validators.required),
         });
 
         this._resetControls();
@@ -51,10 +51,10 @@ export class CardUrlsComponent implements OnInit, OnChanges {
         }
 
         if (this.urlPairConfig.singleCardPerPair) {
-            this.form.removeControl('img2');
+            this.form.removeControl('image2');
             this.form.removeControl('audio2');
         } else {
-            this.form.addControl('img2', new FormControl(null, Validators.required));
+            this.form.addControl('image2', new FormControl(null, Validators.required));
             if (this.urlPairConfig.addCustomAudioPerPair) {
                 this.form.addControl('audio2', new FormControl(null, Validators.required));
             }

@@ -173,7 +173,7 @@ export class GameBuilderFormComponent implements OnInit {
         let srcType = data[FORM_INPUT.card.cardSrcType] as ImageSourceTypeEnum;
         gameConfig.cards = (srcType == ImageSourceTypeEnum.UPLOAD ?
             this._getCardsFromUploads(data) :
-            this._getCardsFromUrls(data)
+            this._getCardsFromUrls(data, gameConfig.addCustomSoundsPerCard)
         );
 
         return gameConfig;
@@ -185,12 +185,18 @@ export class GameBuilderFormComponent implements OnInit {
         return this.gameService.buildCardsFromValidUploads(images, audios);
     }
 
-    private _getCardsFromUrls(formValue: any) {
+    private _getCardsFromUrls(formValue: any, addCustomSoundsPerCard: boolean) {
         let cardUrls = formValue[FORM_INPUT.card.urls] as any[];
         let index=1;
-        return cardUrls.map(obj => {
-            let image = new FileUpload(obj.img, `imageUrl${index}`);
-            let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}`) : null;
+
+        let defaultAudio: FileUpload = null;
+        if (addCustomSoundsPerCard) {
+            defaultAudio = this.gameService.getDefaultCardAudio();
+        }
+
+        return cardUrls.map((obj) => {
+            let image = new FileUpload(obj.image, `imageUrl${index}`);
+            let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}`) : defaultAudio;
             index++;
             return new Card(null, image, audio);
         });
@@ -198,25 +204,30 @@ export class GameBuilderFormComponent implements OnInit {
 
 
     private _buildGameConfigForDemo() {
+        let data = this.form.value;
+
         let gameConfig = new GameConfig();
         gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
+        gameConfig.singleCardPerPair = data[FORM_INPUT.card.singleCardPerPair] as boolean;
+        gameConfig.addCustomSoundsPerCard = false;
         gameConfig.cards = [];
 
-        const imgDirPath = 'assets/images/demo-game-cards';
+        const imageDirPath = 'assets/images/demo-game-cards';
 
-        let numPairs: number = this.form.value.numPairs;
+        let numPairs: number = data.numPairs;
+        let defaultAudio = this.gameService.getDefaultCardAudio();
 
         for (let i = 1; i <= numPairs; i++) {
             let filename = `num${i}_draw.png`;
-            let image = new FileUpload(`${imgDirPath}/draw/${filename}`, filename);
-            gameConfig.cards.push(new Card(null, image));
+            let image = new FileUpload(`${imageDirPath}/draw/${filename}`, filename);
+            gameConfig.cards.push(new Card(null, image, defaultAudio));
         }
 
         if (!gameConfig.singleCardPerPair) {
             for (let i = 1; i <= numPairs; i++) {
                 let filename = `num${i}_word.png`;
-                let image = new FileUpload(`${imgDirPath}/words/${filename}`, filename);
-                gameConfig.cards.push(new Card(null, image));
+                let image = new FileUpload(`${imageDirPath}/words/${filename}`, filename);
+                gameConfig.cards.push(new Card(null, image, defaultAudio));
             }
         }
 

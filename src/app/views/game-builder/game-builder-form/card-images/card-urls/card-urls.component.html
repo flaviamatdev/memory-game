@@ -8,7 +8,7 @@
     <div class="d-flex-row">
         <div class="form-item">
             <app-input-image-url label="{{ 'TRANSLATION' | translate: firstPairImageLabelTranslation }}{{pairOrdinal}}"
-                [form]="form" controlName="img">
+                [form]="form" controlName="image">
             </app-input-image-url>
         </div>
     
@@ -26,7 +26,7 @@
     <div class="d-flex-row" *ngIf="!urlPairConfig?.singleCardPerPair">
         <div class="form-item">
             <app-input-image-url label="{{ 'TRANSLATION' | translate:TRANSLATION.url.image.getPairLink(2) }}{{pairOrdinal}}" 
-                [form]="form" controlName="img2">
+                [form]="form" controlName="image2">
             </app-input-image-url>
         </div>
     

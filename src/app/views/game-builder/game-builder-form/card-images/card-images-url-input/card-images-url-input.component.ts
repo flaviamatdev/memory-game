@@ -61,32 +61,32 @@ export class CardImagesUrlInputComponent implements OnInit, OnChanges {
         return this._formArray?.controls[index] as FormGroup;
     }
 
-    getUrl(pairIndex: number, imgIndex: number = 0): string {
+    getUrl(pairIndex: number, imageIndex: number = 0): string {
         try {
-            return this._cardImageMap[this._buildCardImageKey(pairIndex, imgIndex)]?.src;
+            return this._cardImageMap[this._buildCardImageKey(pairIndex, imageIndex)]?.src;
         } catch (error) {
             return null;
         }
     }
 
-    private _buildCardImageKey(pairIndex: number, imgIndex: number): string {
-        return `${pairIndex}${imgIndex}`;
+    private _buildCardImageKey(pairIndex: number, imageIndex: number): string {
+        return `${pairIndex}${imageIndex}`;
     }
 
-    onInsertUrl($url: string, pairIndex: number, imgIndex: number = 0) {
-        let key = this._buildCardImageKey(pairIndex, imgIndex);
-        this._cardImageMap[key] = new FileUpload($url,  `pair${pairIndex+1}_img${imgIndex+1}`);
+    onInsertUrl($url: string, pairIndex: number, imageIndex: number = 0) {
+        let key = this._buildCardImageKey(pairIndex, imageIndex);
+        this._cardImageMap[key] = new FileUpload($url, `pair${pairIndex+1}_image${imageIndex+1}`);
         this._updateFormControl();
     }
 
-    deleteUrl(pairIndex: number, imgIndex: number = 0) {
+    deleteUrl(pairIndex: number, imageIndex: number = 0) {
         let sumControlName = 'url';
-        if (imgIndex == 1) {
+        if (imageIndex == 1) {
             sumControlName = 'url2';
         }
         this.getSubForm(pairIndex).get(sumControlName).reset();
 
-        let cardImageKey = this._buildCardImageKey(pairIndex, imgIndex);
+        let cardImageKey = this._buildCardImageKey(pairIndex, imageIndex);
         delete this._cardImageMap[cardImageKey];
 
         this._updateFormControl();

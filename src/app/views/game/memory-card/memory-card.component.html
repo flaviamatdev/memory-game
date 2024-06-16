@@ -1,7 +1,7 @@
 <div class="card" [ngClass]="{rotated: isRotated}" (click)="onClick()">
     <div class="card-inner">
-        <div  class="front">
-            <img *ngIf="card.img" [src]="card.img.src" alt="card">
+        <div class="front">
+            <img *ngIf="card.image" [src]="card.image.src" alt="card">
         </div>
 
         <div class="back bg-primary">

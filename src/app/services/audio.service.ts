@@ -16,6 +16,10 @@ export class AudioService {
     private _audioMap: { [key: number]: HTMLAudioElement };
     private _allLoaded: boolean = false;
 
+    get defaultCardAudioSrc(): string {
+        return `${AUDIO_DIR_PATH}/${AUDIO_SRC[AudioEnum.TURN_CARD]}`;
+    }
+
     load() {
         if (this._allLoaded) {
             return;
