@@ -164,12 +164,30 @@ export class GameBuilderFormComponent implements OnInit {
     private _getCardsFromUrls(formValue: any) {
         let cardUrls = formValue[this.FORM_INPUT.card.urls] as any[];
         let index=1;
-        return cardUrls.map((obj) => {
-            let image = new FileUpload(obj.image, `imageUrl${index}`);
-            let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}`) : null;
+
+        let singleCardPerPair = formValue[this.FORM_INPUT.card.singleCardPerPair] as boolean;
+        if (singleCardPerPair) {
+            return cardUrls.map((obj) => {
+                let image = new FileUpload(obj.image, `imageUrl${index}`);
+                let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}`) : null;
+                index++;
+                return new Card(null, image, audio);
+            });
+        }
+
+        let cards: Card[] = [];
+        cardUrls.forEach((obj) => {
+            let image = new FileUpload(obj.image, `imageUrl${index}_card1`);
+            let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}_card1`) : null;
+            cards.push(new Card(null, image, audio));
+
+            let image2 = new FileUpload(obj.image2, `imageUrl${index}_card2`);
+            let audio2 = obj.audio ? new FileUpload(obj.audio2, `audioUrl${index}_card2`) : null;
+            cards.push(new Card(null, image2, audio2));
+
             index++;
-            return new Card(null, image, audio);
         });
+        return cards;
     }
 
 
