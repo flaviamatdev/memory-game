@@ -299,6 +299,8 @@ __webpack_require__.r(__webpack_exports__);
 const ERROR_TRANSLATION = _shared_constants_error_message_values__WEBPACK_IMPORTED_MODULE_3__["ERROR_MSG_TRANSLATION"].configFile;
 class GameConfigFileService {
     downloadGameConfig(gameConfig) {
+        var _a;
+        (_a = gameConfig.cards) === null || _a === void 0 ? void 0 : _a.forEach(card => delete card.code);
         _shared_util_file_util__WEBPACK_IMPORTED_MODULE_2__["FileUtil"].downloadJson(gameConfig, gameConfig.title);
     }
     readUploadedConfigFile(uploadFile) {

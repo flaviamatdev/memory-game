@@ -610,6 +610,12 @@
         _createClass(GameConfigFileService, [{
           key: "downloadGameConfig",
           value: function downloadGameConfig(gameConfig) {
+            var _a;
+
+            (_a = gameConfig.cards) === null || _a === void 0 ? void 0 : _a.forEach(function (card) {
+              return delete card.code;
+            });
+
             _shared_util_file_util__WEBPACK_IMPORTED_MODULE_2__["FileUtil"].downloadJson(gameConfig, gameConfig.title);
           }
         }, {
