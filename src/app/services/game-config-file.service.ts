@@ -13,6 +13,7 @@ const ERROR_TRANSLATION = ERROR_MSG_TRANSLATION.configFile;
 export class GameConfigFileService {
 
     downloadGameConfig(gameConfig: GameConfig) {
+        gameConfig.cards?.forEach(card => delete card.code);
         FileUtil.downloadJson(gameConfig, gameConfig.title);
     }
 
