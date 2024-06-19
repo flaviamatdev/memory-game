@@ -59,7 +59,7 @@ export class GameBuilderFormComponent implements OnInit {
             [this.FORM_INPUT.backgroundImgSrc]: new FormControl(null),
 
             [this.FORM_INPUT.card.singleCardPerPair]: new FormControl(null, Validators.required),
-            [this.FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(true, Validators.required),  // TODO value null
+            [this.FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(null, Validators.required),
             [this.FORM_INPUT.card.cardSrcType]: new FormControl(null, Validators.required),
         });
 
