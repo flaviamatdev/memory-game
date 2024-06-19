@@ -15,14 +15,9 @@ const AUDIO_SRC = {
 export class AudioService {
 
     private _audioMap: { [key: string]: HTMLAudioElement };
-    private _allLoaded: boolean = false;
 
 
     load(cardAudios?: FileUpload[]) {
-        if (this._allLoaded) {
-            return;
-        }
-
         this._audioMap = {};
         Object.entries(AUDIO_SRC).forEach(([key,src]) => {
             this._audioMap[key] = this._load(`${AUDIO_DIR_PATH}/${src}`);
@@ -34,8 +29,6 @@ export class AudioService {
                 this._audioMap[cardAudio.filename] = this._load(cardAudio.src);
             });
         }
-
-        this._allLoaded = true;
     }
 
     private _load(src: string) {

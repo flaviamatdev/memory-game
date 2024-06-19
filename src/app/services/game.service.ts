@@ -231,12 +231,15 @@ export class GameService {
 
     onChooseCard(choosen: Card): boolean {
         if (this.isGameFinished || this._foundPairCodes.includes(choosen.code)) {
+            if (this._playSound && choosen.audio) {
+                this.audioService.play(choosen.audio.filename);
+            }
             return;
         }
 
         if (this._playSound) {
             this.audioService.play(choosen.audio?.filename ?? AudioEnum.TURN_CARD);
-        }        
+        }
 
         if (this._selectedCard1 === null) {
             this._selectedCard1 = choosen;
