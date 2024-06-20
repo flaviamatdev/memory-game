@@ -159,18 +159,30 @@ const GAME_BUILDER_TRANSLATION = {
                 },
             },
             upload: {
-                pickDirPath: {
-                    pt: 'Selecione a pasta que contém as imagens das cartas',
-                    en: 'Select the folder containing the card images'
-                },
-                diffImagesPerPair: {
-                    warning: {
-                        pt: `Envio de arquivos diferentes por par: os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} . Veja um exemplo `,
-                        en: `Sending different files per pair: file names referring to the same pair must have the same prefix followed by ${IMG_FILENAME_SEP}. See an example `
+                images: {
+                    pickDirPath: {
+                        pt: 'Selecione a pasta que contém as imagens das cartas',
+                        en: 'Select the folder containing the card images'
                     },
-                    warningLink: {
-                        pt: 'aqui',
-                        en: 'here'
+                    diffImagesPerPair: {
+                        warning: {
+                            pt: `Envio de arquivos diferentes por par: os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} . Veja um exemplo `,
+                            en: `Sending different files per pair: file names referring to the same pair must have the same prefix followed by ${IMG_FILENAME_SEP}. See an example `
+                        },
+                        warningLink: {
+                            pt: 'aqui',
+                            en: 'here'
+                        }
+                    }
+                },
+                audios: {
+                    pickDirPath: {
+                        pt: 'Selecione a pasta que contém os áudios das cartas',
+                        en: 'Select the folder containing the card audios'
+                    },
+                    instruction: {
+                        pt: `O nome de cada arquivo de áudio de cada carta deve ser igual ao nome do arquivo de imagem correspondente. Por exemplo: 'bola.png' e 'bola.mp3'`,
+                        en: `The name of each audio file for each card must be the same as the name of the corresponding image file. For example: 'ball.png' and 'ball.mp3'`
                     }
                 }
             },
@@ -2052,18 +2064,58 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function CardFormComponent_div_7_app_upload_3_Template(rf, ctx) { if (rf & 1) {
+function CardFormComponent_div_7_div_5_Template(rf, ctx) { if (rf & 1) {
     const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "app-upload", 9);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("onUpload", function CardFormComponent_div_7_app_upload_3_Template_app_upload_onUpload_0_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r7); const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2); return ctx_r6.receiveUploads(ctx_r6.FORM_INPUT.upload.images); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "mat-icon");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, "warning");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipe"](5, "translate");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](6, "a", 15);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function CardFormComponent_div_7_div_5_Template_a_click_6_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r7); const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2); return ctx_r6.openExample(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipe"](8, "translate");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](9, ". ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("fileType", ctx_r3.UploadFileType.AUDIO)("labelTranslate", ctx_r3.TRANSLATION.cards.upload.pickDirPath)("form", ctx_r3.form)("controlName", ctx_r3.FORM_INPUT.upload.audios)("selectAllDir", true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind2"](5, 2, "TRANSLATION", ctx_r3.TRANSLATION.cards.upload.images.diffImagesPerPair.warning), " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind2"](8, 5, "TRANSLATION", ctx_r3.TRANSLATION.cards.upload.images.diffImagesPerPair.warningLink), " ");
 } }
-function CardFormComponent_div_7_div_4_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 13);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "mat-icon", 14);
+function CardFormComponent_div_7_div_6_Template(rf, ctx) { if (rf & 1) {
+    const _r9 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "div");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](2, "app-upload", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("onUpload", function CardFormComponent_div_7_div_6_Template_app_upload_onUpload_2_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r9); const ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2); return ctx_r8.receiveUploads(ctx_r8.FORM_INPUT.upload.images); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "div", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](4, "mat-icon");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](5, "warning");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](6, "div");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipe"](8, "translate");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("fileType", ctx_r4.UploadFileType.AUDIO)("labelTranslate", ctx_r4.TRANSLATION.cards.upload.audios.pickDirPath)("form", ctx_r4.form)("controlName", ctx_r4.FORM_INPUT.upload.audios)("selectAllDir", true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind2"](8, 6, "TRANSLATION", ctx_r4.TRANSLATION.cards.upload.audios.instruction));
+} }
+function CardFormComponent_div_7_div_7_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "mat-icon", 17);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, "cancel");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "strong");
@@ -2072,60 +2124,40 @@ function CardFormComponent_div_7_div_4_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind2"](5, 1, "TRANSLATION", ctx_r4.invalidUploadMsg));
-} }
-function CardFormComponent_div_7_div_5_Template(rf, ctx) { if (rf & 1) {
-    const _r9 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 15);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "mat-icon");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, "warning");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipe"](5, "translate");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](6, "a", 16);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function CardFormComponent_div_7_div_5_Template_a_click_6_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r9); const ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2); return ctx_r8.openExample(); });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](7);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipe"](8, "translate");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](9, ". ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-} if (rf & 2) {
     const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind2"](5, 2, "TRANSLATION", ctx_r5.TRANSLATION.cards.upload.diffImagesPerPair.warning), " ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind2"](8, 5, "TRANSLATION", ctx_r5.TRANSLATION.cards.upload.diffImagesPerPair.warningLink), " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind2"](5, 1, "TRANSLATION", ctx_r5.invalidUploadMsg));
 } }
 function CardFormComponent_div_7_Template(rf, ctx) { if (rf & 1) {
     const _r11 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 7);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "div", 8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](2, "app-upload", 9);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("onUpload", function CardFormComponent_div_7_Template_app_upload_onUpload_2_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r11); const ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](); return ctx_r10.receiveUploads(ctx_r10.FORM_INPUT.upload.audios); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](2, "div", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "div");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](4, "app-upload", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("onUpload", function CardFormComponent_div_7_Template_app_upload_onUpload_4_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r11); const ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](); return ctx_r10.receiveUploads(ctx_r10.FORM_INPUT.upload.audios); });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](3, CardFormComponent_div_7_app_upload_3_Template, 1, 5, "app-upload", 10);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](4, CardFormComponent_div_7_div_4_Template, 6, 4, "div", 11);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](5, CardFormComponent_div_7_div_5_Template, 10, 8, "div", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](5, CardFormComponent_div_7_div_5_Template, 10, 8, "div", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](6, CardFormComponent_div_7_div_6_Template, 9, 9, "div", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, CardFormComponent_div_7_div_7_Template, 6, 4, "div", 13);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("fileType", ctx_r0.UploadFileType.IMAGE)("labelTranslate", ctx_r0.TRANSLATION.cards.upload.pickDirPath)("form", ctx_r0.form)("controlName", ctx_r0.FORM_INPUT.upload.images)("selectAllDir", true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("fileType", ctx_r0.UploadFileType.IMAGE)("labelTranslate", ctx_r0.TRANSLATION.cards.upload.images.pickDirPath)("form", ctx_r0.form)("controlName", ctx_r0.FORM_INPUT.upload.images)("selectAllDir", true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r0.showFilePatternWarning);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r0.flag.showAudioUpload);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r0.invalidUploadMsg);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r0.showFilePatternWarning);
 } }
 function CardFormComponent_app_input_number_8_Template(rf, ctx) { if (rf & 1) {
     const _r13 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "app-input-number", 17);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "app-input-number", 18);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("onChange", function CardFormComponent_app_input_number_8_Template_app_input_number_onChange_0_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r13); const ctx_r12 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](); return ctx_r12.onChangeNumPairsForUrl($event); });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
 } if (rf & 2) {
@@ -2134,8 +2166,8 @@ function CardFormComponent_app_input_number_8_Template(rf, ctx) { if (rf & 1) {
 } }
 function CardFormComponent_div_10_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 0);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "div", 18);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](2, "app-card-urls", 19);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "div", 19);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](2, "app-card-urls", 20);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
 } if (rf & 2) {
@@ -2264,7 +2296,7 @@ class CardFormComponent {
     }
 }
 CardFormComponent.ɵfac = function CardFormComponent_Factory(t) { return new (t || CardFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](src_app_services_feedback_service__WEBPACK_IMPORTED_MODULE_11__["FeedbackService"]), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](src_app_services_game_service__WEBPACK_IMPORTED_MODULE_12__["GameService"])); };
-CardFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({ type: CardFormComponent, selectors: [["app-card-form"]], inputs: { parent: "parent" }, decls: 11, vars: 20, consts: [[1, "form-line"], [3, "label", "form", "controlName", "onChange"], [3, "form", "controlName", "multiple", "onChange"], [1, "form-line", "mt-3", "mb-3", 3, "ngSwitch"], ["class", "d-flex-col", 4, "ngSwitchCase"], [3, "labelTranslate", "form", "controlName", "min", "onChange", 4, "ngSwitchCase"], ["class", "form-line", 4, "ngIf"], [1, "d-flex-col"], [1, "upload-inputs"], [3, "fileType", "labelTranslate", "form", "controlName", "selectAllDir", "onUpload"], [3, "fileType", "labelTranslate", "form", "controlName", "selectAllDir", "onUpload", 4, "ngIf"], ["class", "mat-custom-error", 4, "ngIf"], ["class", "file-warning", 4, "ngIf"], [1, "mat-custom-error"], ["aria-label", "false"], [1, "file-warning"], [1, "example-link", 3, "click"], [3, "labelTranslate", "form", "controlName", "min", "onChange"], [1, "form-item", "mt-3"], [3, "form", "controlName", "urlPairConfig"]], template: function CardFormComponent_Template(rf, ctx) { if (rf & 1) {
+CardFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({ type: CardFormComponent, selectors: [["app-card-form"]], inputs: { parent: "parent" }, decls: 11, vars: 20, consts: [[1, "form-line"], [3, "label", "form", "controlName", "onChange"], [3, "form", "controlName", "multiple", "onChange"], [1, "form-line", "mt-3", "mb-3", 3, "ngSwitch"], ["class", "d-flex-col", 4, "ngSwitchCase"], [3, "labelTranslate", "form", "controlName", "min", "onChange", 4, "ngSwitchCase"], ["class", "form-line", 4, "ngIf"], [1, "d-flex-col"], [1, "uploads"], [1, "upload-div"], [3, "fileType", "labelTranslate", "form", "controlName", "selectAllDir", "onUpload"], ["class", "file-warning", 4, "ngIf"], ["class", "upload-div", 4, "ngIf"], ["class", "mat-custom-error", 4, "ngIf"], [1, "file-warning"], [1, "example-link", 3, "click"], [1, "mat-custom-error"], ["aria-label", "false"], [3, "labelTranslate", "form", "controlName", "min", "onChange"], [1, "form-item", "mt-3"], [3, "form", "controlName", "urlPairConfig"]], template: function CardFormComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](1, "app-select-yes-no", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("onChange", function CardFormComponent_Template_app_select_yes_no_onChange_1_listener() { return ctx.receivePairConfigChange(); });
@@ -2279,7 +2311,7 @@ CardFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefin
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](6, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, CardFormComponent_div_7_Template, 6, 8, "div", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, CardFormComponent_div_7_Template, 8, 8, "div", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](8, CardFormComponent_app_input_number_8_Template, 1, 4, "app-input-number", 5);
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](9, "div");
@@ -2304,7 +2336,7 @@ CardFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefin
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("@showContent", ctx.stateUrlInputs);
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx.urlPairConfig);
-    } }, directives: [_shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_13__["SelectYesNoComponent"], _shared_components_input_select_select_media_src_type_select_media_src_type_component__WEBPACK_IMPORTED_MODULE_14__["SelectMediaSrcTypeComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_15__["NgSwitch"], _angular_common__WEBPACK_IMPORTED_MODULE_15__["NgSwitchCase"], _angular_common__WEBPACK_IMPORTED_MODULE_15__["NgIf"], _shared_components_input_upload_upload_component__WEBPACK_IMPORTED_MODULE_16__["UploadComponent"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_17__["MatIcon"], _shared_components_input_input_number_input_number_component__WEBPACK_IMPORTED_MODULE_18__["InputNumberComponent"], _card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_19__["CardUrlsInputComponent"]], pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_20__["TranslatePipe"]], styles: [".layout[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.upload-inputs[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  -moz-column-gap: 4rem;\n       column-gap: 4rem;\n  row-gap: 2rem;\n}\n\n.file-warning[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n  background-color: #e89c12;\n  color: white;\n  padding: 4px;\n  border-radius: 2px;\n  max-width: -moz-max-content;\n  max-width: max-content;\n}\n\n.num-pairs[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  gap: 0.5rem;\n  align-items: flex-start;\n}\n\n.num-pairs[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  margin-top: 1.5rem;\n}\n\n.example-link[_ngcontent-%COMP%] {\n  cursor: pointer;\n  text-decoration: underline;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFxjYXJkLWZvcm0uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxXQUFBO0FBQ0o7O0FBRUE7RUFDSSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxlQUFBO0VBQ0EscUJBQUE7T0FBQSxnQkFBQTtFQUNBLGFBQUE7QUFDSjs7QUFFQTtFQUNJLGFBQUE7RUFDQSxtQkFBQTtFQUNBLFdBQUE7RUFDQSx5QkFBQTtFQUNBLFlBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7RUFDQSwyQkFBQTtFQUFBLHNCQUFBO0FBQ0o7O0FBRUE7RUFDSSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxXQUFBO0VBQ0EsdUJBQUE7QUFDSjs7QUFDSTtFQUNJLGtCQUFBO0FBQ1I7O0FBR0E7RUFDSSxlQUFBO0VBQ0EsMEJBQUE7QUFBSiIsImZpbGUiOiJjYXJkLWZvcm0uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubGF5b3V0IHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgZ2FwOiAwLjVyZW07XHJcbn1cclxuXHJcbi51cGxvYWQtaW5wdXRzIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogcm93O1xyXG4gICAgZmxleC13cmFwOiB3cmFwO1xyXG4gICAgY29sdW1uLWdhcDogNHJlbTtcclxuICAgIHJvdy1nYXA6IDJyZW07XHJcbn1cclxuXHJcbi5maWxlLXdhcm5pbmcge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBnYXA6IDAuNXJlbTtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNlODljMTI7XHJcbiAgICBjb2xvcjogd2hpdGU7XHJcbiAgICBwYWRkaW5nOiA0cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiAycHg7XHJcbiAgICBtYXgtd2lkdGg6IG1heC1jb250ZW50O1xyXG59XHJcblxyXG4ubnVtLXBhaXJzIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogcm93O1xyXG4gICAgZ2FwOiAwLjVyZW07XHJcbiAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDtcclxuXHJcbiAgICBidXR0b24ge1xyXG4gICAgICAgIG1hcmdpbi10b3A6IDEuNXJlbTtcclxuICAgIH1cclxufVxyXG5cclxuLmV4YW1wbGUtbGluayB7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTtcclxufVxyXG4iXX0= */"], data: { animation: [
+    } }, directives: [_shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_13__["SelectYesNoComponent"], _shared_components_input_select_select_media_src_type_select_media_src_type_component__WEBPACK_IMPORTED_MODULE_14__["SelectMediaSrcTypeComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_15__["NgSwitch"], _angular_common__WEBPACK_IMPORTED_MODULE_15__["NgSwitchCase"], _angular_common__WEBPACK_IMPORTED_MODULE_15__["NgIf"], _shared_components_input_upload_upload_component__WEBPACK_IMPORTED_MODULE_16__["UploadComponent"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_17__["MatIcon"], _shared_components_input_input_number_input_number_component__WEBPACK_IMPORTED_MODULE_18__["InputNumberComponent"], _card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_19__["CardUrlsInputComponent"]], pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_20__["TranslatePipe"]], styles: [".layout[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.uploads[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  -moz-column-gap: 4rem;\n       column-gap: 4rem;\n  row-gap: 2rem;\n}\n\n.upload-div[_ngcontent-%COMP%] {\n  flex: 6 0 0;\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  width: 50%;\n}\n\n.file-warning[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n  background-color: #e89c12;\n  color: white;\n  padding: 4px;\n  border-radius: 2px;\n}\n\n.num-pairs[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  gap: 0.5rem;\n  align-items: flex-start;\n}\n\n.num-pairs[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  margin-top: 1.5rem;\n}\n\n.example-link[_ngcontent-%COMP%] {\n  cursor: pointer;\n  text-decoration: underline;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFxjYXJkLWZvcm0uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxXQUFBO0FBQ0o7O0FBRUE7RUFDSSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxlQUFBO0VBQ0EscUJBQUE7T0FBQSxnQkFBQTtFQUNBLGFBQUE7QUFDSjs7QUFFQTtFQUNJLFdBQUE7RUFDQSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxTQUFBO0VBQ0EsVUFBQTtBQUNKOztBQUVBO0VBQ0ksYUFBQTtFQUNBLG1CQUFBO0VBQ0EsV0FBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7RUFDQSxrQkFBQTtBQUNKOztBQUVBO0VBQ0ksYUFBQTtFQUNBLG1CQUFBO0VBQ0EsV0FBQTtFQUNBLHVCQUFBO0FBQ0o7O0FBQ0k7RUFDSSxrQkFBQTtBQUNSOztBQUdBO0VBQ0ksZUFBQTtFQUNBLDBCQUFBO0FBQUoiLCJmaWxlIjoiY2FyZC1mb3JtLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmxheW91dCB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICAgIGdhcDogMC41cmVtO1xyXG59XHJcblxyXG4udXBsb2FkcyB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IHJvdztcclxuICAgIGZsZXgtd3JhcDogd3JhcDtcclxuICAgIGNvbHVtbi1nYXA6IDRyZW07XHJcbiAgICByb3ctZ2FwOiAycmVtO1xyXG59XHJcblxyXG4udXBsb2FkLWRpdiB7XHJcbiAgICBmbGV4OiA2IDAgMDtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgZ2FwOiAxcmVtO1xyXG4gICAgd2lkdGg6IDUwJTtcclxufVxyXG5cclxuLmZpbGUtd2FybmluZyB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGdhcDogMC41cmVtO1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2U4OWMxMjtcclxuICAgIGNvbG9yOiB3aGl0ZTtcclxuICAgIHBhZGRpbmc6IDRweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDJweDtcclxufVxyXG5cclxuLm51bS1wYWlycyB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IHJvdztcclxuICAgIGdhcDogMC41cmVtO1xyXG4gICAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7XHJcblxyXG4gICAgYnV0dG9uIHtcclxuICAgICAgICBtYXJnaW4tdG9wOiAxLjVyZW07XHJcbiAgICB9XHJcbn1cclxuXHJcbi5leGFtcGxlLWxpbmsge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7XHJcbn1cclxuIl19 */"], data: { animation: [
             Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('showContent', [
                 Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["state"])(STATE.show, Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
                     overflow: 'hidden',
