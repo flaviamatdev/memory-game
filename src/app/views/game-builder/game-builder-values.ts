@@ -148,18 +148,31 @@ export const GAME_BUILDER_TRANSLATION = {
             },
 
             upload: {
-                pickDirPath: {
-                    pt: 'Selecione a pasta que contém as imagens das cartas',
-                    en: 'Select the folder containing the card images'
-                },
-                diffImagesPerPair: {
-                    warning: {
-                        pt: `Envio de arquivos diferentes por par: os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} . Veja um exemplo `,
-                        en: `Sending different files per pair: file names referring to the same pair must have the same prefix followed by ${IMG_FILENAME_SEP}. See an example `
+                images: {
+                    pickDirPath: {
+                        pt: 'Selecione a pasta que contém as imagens das cartas',
+                        en: 'Select the folder containing the card images'
                     },
-                    warningLink: {
-                        pt: 'aqui',
-                        en: 'here'
+                    diffImagesPerPair: {
+                        warning: {
+                            pt: `Envio de arquivos diferentes por par: os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} . Veja um exemplo `,
+                            en: `Sending different files per pair: file names referring to the same pair must have the same prefix followed by ${IMG_FILENAME_SEP}. See an example `
+                        },
+                        warningLink: {
+                            pt: 'aqui',
+                            en: 'here'
+                        }
+                    }
+                },
+                
+                audios: {
+                    pickDirPath: {
+                        pt: 'Selecione a pasta que contém os áudios das cartas',
+                        en: 'Select the folder containing the card audios'
+                    },
+                    instruction: {
+                        pt: `O nome de cada arquivo de áudio de cada carta deve ser igual ao nome do arquivo de imagem correspondente. Por exemplo: 'bola.png' e 'bola.mp3'`,
+                        en: `The name of each audio file for each card must be the same as the name of the corresponding image file. For example: 'ball.png' and 'ball.mp3'`
                     }
                 }
             },

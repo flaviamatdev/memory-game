@@ -4,12 +4,20 @@
     gap: 0.5rem;
 }
 
-.upload-inputs {
+.uploads {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     column-gap: 4rem;
     row-gap: 2rem;
+}
+
+.upload-div {
+    flex: 6 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 50%;
 }
 
 .file-warning {
@@ -20,7 +28,6 @@
     color: white;
     padding: 4px;
     border-radius: 2px;
-    max-width: max-content;
 }
 
 .num-pairs {

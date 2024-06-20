@@ -14,32 +14,43 @@
 
 <div [ngSwitch]="flag.isUpload" class="form-line mt-3 mb-3">
     <div *ngSwitchCase="true" class="d-flex-col">
-        <div class="upload-inputs">
-            <app-upload
-                [fileType]="UploadFileType.IMAGE" [labelTranslate]="TRANSLATION.cards.upload.pickDirPath" 
-                [form]="form" [controlName]="FORM_INPUT.upload.images" [selectAllDir]="true"
-                (onUpload)="receiveUploads(FORM_INPUT.upload.audios)">
-            </app-upload>
+        <div class="uploads">
+            <div class="upload-div">
+                <div>
+                    <app-upload
+                        [fileType]="UploadFileType.IMAGE" [labelTranslate]="TRANSLATION.cards.upload.images.pickDirPath" 
+                        [form]="form" [controlName]="FORM_INPUT.upload.images" [selectAllDir]="true"
+                        (onUpload)="receiveUploads(FORM_INPUT.upload.audios)">
+                    </app-upload>
+                </div>
+                <div *ngIf="showFilePatternWarning" class="file-warning">
+                    <mat-icon>warning</mat-icon>
+                    <span>
+                        {{ 'TRANSLATION' | translate: TRANSLATION.cards.upload.images.diffImagesPerPair.warning }}
+                        <a class="example-link" (click)="openExample()">
+                            {{ 'TRANSLATION' | translate: TRANSLATION.cards.upload.images.diffImagesPerPair.warningLink }}
+                        </a>.
+                    </span>
+                </div>
+            </div>            
 
-            <app-upload *ngIf="flag.showAudioUpload"
-                [fileType]="UploadFileType.AUDIO" [labelTranslate]="TRANSLATION.cards.upload.pickDirPath" 
-                [form]="form" [controlName]="FORM_INPUT.upload.audios" [selectAllDir]="true"
-                (onUpload)="receiveUploads(FORM_INPUT.upload.images)">
-            </app-upload>
+            <div *ngIf="flag.showAudioUpload" class="upload-div">
+                <div>
+                    <app-upload
+                        [fileType]="UploadFileType.AUDIO" [labelTranslate]="TRANSLATION.cards.upload.audios.pickDirPath" 
+                        [form]="form" [controlName]="FORM_INPUT.upload.audios" [selectAllDir]="true"
+                        (onUpload)="receiveUploads(FORM_INPUT.upload.images)">
+                    </app-upload>
+                </div>
+                <div class="file-warning">
+                    <mat-icon>warning</mat-icon>
+                    <div>{{ 'TRANSLATION' | translate: TRANSLATION.cards.upload.audios.instruction }}</div>
+                </div>
+            </div>
         </div>
         <div *ngIf="invalidUploadMsg" class="mat-custom-error">
             <mat-icon aria-label="false">cancel</mat-icon>
             <strong>{{ 'TRANSLATION' | translate: invalidUploadMsg }}</strong>
-        </div>
-
-        <div *ngIf="showFilePatternWarning" class="file-warning">
-            <mat-icon>warning</mat-icon>
-            <span>
-                {{ 'TRANSLATION' | translate: TRANSLATION.cards.upload.diffImagesPerPair.warning }}
-                <a class="example-link" (click)="openExample()">
-                    {{ 'TRANSLATION' | translate: TRANSLATION.cards.upload.diffImagesPerPair.warningLink }}
-                </a>.
-            </span>
         </div>
     </div>
 
