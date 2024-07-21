@@ -112,13 +112,13 @@
           }
         },
         instruction: {
-          pt: 'Preencha o formulário abaixo com as informações para o jogo',
-          en: 'Fill out the form below with the information for the game'
+          pt: 'Preencha o formulário abaixo com as informações para o jogo OU selecione a opção abaixo caso tenha o arquivo do jogo.',
+          en: 'Fill out the form below with the game information OR select the option below if you have the game file.'
         },
         uploadConfigFile: {
           checkboxLabel: {
-            pt: 'Prefiro enviar arquivo de configuração',
-            en: 'I prefer upload configuration file'
+            pt: 'Já tenho arquivo do jogo',
+            en: 'I already have the game file'
           },
           instruction: {
             pt: "(gerado ao clicar em \"".concat(DOWNLOAD_CONFIG_FILE.pt, "\" no p\xE9 da p\xE1gina)"),
