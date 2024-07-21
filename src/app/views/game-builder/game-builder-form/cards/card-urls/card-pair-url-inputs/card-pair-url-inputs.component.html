@@ -1,0 +1,39 @@
+<div class="d-flex-col">
+    <div class="mt-2 fst-italic fw-bold">{{ 'TRANSLATION' | translate: TRANSLATION.pair }}{{pairOrdinal}}</div>
+
+    <div *ngIf="!urlPairConfig?.singleCardPerPair">
+        <div class="mt-2 fst-italic">{{ 'TRANSLATION' | translate: TRANSLATION.getCardPair(1) }}{{pairOrdinal}}</div>
+    </div>
+
+    <div class="d-flex-row">
+        <div class="form-item">
+            <app-input-image-url label="{{ 'TRANSLATION' | translate: firstPairImageLabelTranslation }}{{pairOrdinal}}"
+                [form]="form" controlName="image">
+            </app-input-image-url>
+        </div>
+    
+        <div class="form-item" *ngIf="urlPairConfig?.addCustomAudioPerPair">
+            <app-input-audio-url label="{{ 'TRANSLATION' | translate: firstPairAudioLabelTranslation }}{{pairOrdinal}}"
+                [form]="form" controlName="audio">
+            </app-input-audio-url>
+        </div>
+    </div>
+
+    <div *ngIf="!urlPairConfig?.singleCardPerPair">
+        <div class="mt-2 fst-italic">{{ 'TRANSLATION' | translate: TRANSLATION.getCardPair(2) }}{{pairOrdinal}}</div>
+    </div>
+
+    <div class="d-flex-row" *ngIf="!urlPairConfig?.singleCardPerPair">
+        <div class="form-item">
+            <app-input-image-url label="{{ 'TRANSLATION' | translate:TRANSLATION.url.image.getPairLink(2) }}{{pairOrdinal}}" 
+                [form]="form" controlName="image2">
+            </app-input-image-url>
+        </div>
+    
+        <div *ngIf="urlPairConfig.addCustomAudioPerPair" class="form-item">
+            <app-input-audio-url label="{{ 'TRANSLATION' | translate: TRANSLATION.url.audio.getPairLink(2) }}{{pairOrdinal}}"
+                [form]="form" controlName="audio2">
+            </app-input-audio-url>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 import { CardIdTypeEnum, CardIdTypeHelper } from "../enums/card-id-type.enum";
+import { Card } from "./card";
 import { FileUpload } from "./file-upload.model";
 
 export class GameConfig {
@@ -6,12 +7,14 @@ export class GameConfig {
     title: string;
     cardIdType: CardIdTypeEnum;
     backgroundImgSrc?: string;
-    singleImgPerPair: boolean;
-    cardImages: FileUpload[];
+    singleCardPerPair: boolean;
+    addCustomSoundsPerCard: boolean;
+    cards: Card[];
+    cardImages: FileUpload[]; // TODO remover
 
     get numPairs(): number {
-        let numPairImages = this.cardImages.length;
-        if (!this.singleImgPerPair) {
+        let numPairImages = this.cards.length;
+        if (!this.singleCardPerPair) {
             numPairImages /= 2;
         }
         return numPairImages;
@@ -21,23 +24,24 @@ export class GameConfig {
         return this._hasAllRequiredValues() && 
             CardIdTypeHelper.isValid(this.cardIdType) &&
             this._isValidBackgroundImgSrc() && 
-            this._isValidCardImages();
+            this._isValidCards();
     }
 
     private _hasAllRequiredValues(): boolean {
         return !!(this.title?.trim()) && ([
             this.cardIdType,
-            this.singleImgPerPair,
-            this.cardImages,
+            this.singleCardPerPair,
+            this.addCustomSoundsPerCard,
+            this.cards,
         ]).every(value => value !== null && value !== undefined);
     }
 
     private _isValidBackgroundImgSrc(): boolean {
-        return !this.backgroundImgSrc || FileUpload.isValidSrc(this.backgroundImgSrc);
+        return !this.backgroundImgSrc || FileUpload.isValidImageSrc(this.backgroundImgSrc);
     }
 
-    private _isValidCardImages(): boolean {
-        return this.cardImages.every(img => new FileUpload(img.src, img.filename).isValid());
+    private _isValidCards(): boolean {
+        return this.cards.length > 0 && this.cards.every(card => Card.hasValidFiles(card));
     }
 
 }

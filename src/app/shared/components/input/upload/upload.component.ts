@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ToastService } from 'src/app/services/toast.service';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
+import { FileUploadTypeEnum } from '../../../enums/file-upload-type.enum';
 import { TranslationService } from '../../translation/translation.service';
 import { AbstractInputComponent } from '../abstract-input.component';
 import { UPLOAD_TRANSLATION } from './upload-values';
@@ -14,14 +15,14 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
 
     readonly TRANSLATION = UPLOAD_TRANSLATION;
 
-    @Input() isImage: boolean = false;
+    @Input() fileType: FileUploadTypeEnum = FileUploadTypeEnum.IMAGE;
     @Input() multiple: boolean = false;
     @Input() selectAllDir: boolean = false;
 
     @Output() onClearInput = new EventEmitter();
     @Output() onUpload = new EventEmitter();
 
-    accept: string[] = ['application/json'];
+    accept: string;
     btnTranslation: any;
     singleChosedFileName: string;
 
@@ -29,7 +30,6 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     
     private _numFiles: number = 0;
     private _fileUploads: FileUpload[];
-    private _fileTypeTranslationParamKey: string = 'regular';
 
     constructor(
         private toastService: ToastService,
@@ -43,16 +43,20 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this._setAccept();
         this.multiple = this.multiple || this.selectAllDir;
         this.btnTranslation = (this.multiple ? 
             this.TRANSLATION.multiple.btn : 
             this.TRANSLATION.nonMultiple.btn
         );
+    }
 
-        if (this.isImage) {
-            this.accept = FileUpload.ACCEPT_IMG;
-            this._fileTypeTranslationParamKey = 'image';
-        }
+    private _setAccept() {
+        this.accept = ({
+            [FileUploadTypeEnum.AUDIO]: 'audio/*',
+            [FileUploadTypeEnum.IMAGE]: 'image/*',
+            [FileUploadTypeEnum.JSON]:  'application/json',
+        })[this.fileType];
     }
 
     reset() {
@@ -81,46 +85,44 @@ export class UploadComponent extends AbstractInputComponent implements OnInit {
             return;
         }
         
-        let { files, allOk } = this._extractFiles(fileList);
-        if (!allOk) {
+        let { files, typeOk } = this._extractFiles(fileList);
+        if (!typeOk) {
             this._clearInput();
             this._showOutAcceptErrorMsg();
             return;
         }
 
-        files.forEach(file => this._readFile(file));
+        files.sort((a,b) => a.name.localeCompare(b.name))
+            .forEach(file => this._readFile(file));
     }
 
     private _extractFiles(fileList: FileList) {
         this._numFiles = fileList.length ?? 0;
-
+        
+        const accept = this.accept.replace('*', '');
         let files: File[] = [];
-        let allOk = true;
+        let typeOk = true;
         let i = 0;
         do {
             let file = fileList.item(i++);
             files.push(file);
-            allOk = allOk && (!this.accept || this.accept.includes(file.type));
-        } while (allOk && i < this._numFiles);
+            typeOk = typeOk && file.type.startsWith(accept);
+        } while (typeOk && i < this._numFiles);
         
         return {
             files: files, 
-            allOk: allOk
+            typeOk: typeOk
         };
     }
 
     private _showOutAcceptErrorMsg() {
-        let accept = this.accept
-            .map(mimetype => `.${mimetype.split('/')[1]}`)
-            .join(', ');
-        let fileType = this.translationService.getTranslationObj(this.TRANSLATION.fileType[this._fileTypeTranslationParamKey]);
         let translation = (this.multiple ?
             this.TRANSLATION.multiple.acceptErrorMsg :
             this.TRANSLATION.nonMultiple.acceptErrorMsg
         );
-        let msg = this.translationService.getTranslationObj(translation, { 
-            fileType: fileType,
-            accept: accept 
+        let fileTypeTranslation = this.translationService.getTranslation(this.TRANSLATION.fileType[this.fileType]);
+        let msg = this.translationService.getTranslation(translation, { 
+            fileType: fileTypeTranslation,
         });
         this.toastService.error(msg, 7000);
     }

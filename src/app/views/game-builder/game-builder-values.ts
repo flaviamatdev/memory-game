@@ -20,14 +20,14 @@ export const GAME_BUILDER_TRANSLATION = {
     },
 
     instruction: {
-        pt: 'Preencha o formulário abaixo com as informações para o jogo',
-        en: 'Fill out the form below with the information for the game'
+        pt: 'Preencha o formulário abaixo com as informações para o jogo OU selecione a opção abaixo caso tenha o arquivo do jogo.',
+        en: 'Fill out the form below with the game information OR select the option below if you have the game file.'
     },
 
     uploadConfigFile: {
         checkboxLabel: {
-            pt: 'Prefiro enviar arquivo de configuração',
-            en: 'I prefer upload configuration file'
+            pt: 'Já tenho arquivo do jogo',
+            en: 'I already have the game file'
         },
         instruction: {
             pt: `(gerado ao clicar em "${DOWNLOAD_CONFIG_FILE.pt}" no pé da página)`,
@@ -44,6 +44,11 @@ export const GAME_BUILDER_TRANSLATION = {
         backgroundImg: {
             pt: 'Imagem de Fundo',
             en: 'Background image'
+        },
+
+        cards: {
+            pt: 'Cartas',
+            en: 'Cards'
         },
 
         cardImages: {
@@ -65,9 +70,14 @@ export const GAME_BUILDER_TRANSLATION = {
             en: 'Game title'
         },
 
-        singleImgPerPair: {
-            pt: 'Cada par possui imagens iguais?',
-            en: 'Does each pair have the same images?'
+        singleCardPerPair: {
+            pt: 'Cada par possui cartas iguais?',
+            en: 'Does each pair have the same card?'
+        },
+
+        addCustomSoundsPerCard: {
+            pt: 'Adicionar sons customizados ao abrir cada carta',
+            en: 'Add custom sounds when opening each card'
         },
 
         numPairs: {
@@ -95,40 +105,74 @@ export const GAME_BUILDER_TRANSLATION = {
             }
         },
 
-        cardImages: {
+        cards: {
             pair: {
                 pt: 'Par nº ',
                 en: 'Pair #'
             },
-            url: {
-                pairImageLink: {
-                    pt: 'Link da Imagem do Par ',
-                    en: 'Image Link of Pair #'
-                },
-                diffImages: {
-                    pairImageLink1: {
-                        pt: 'Link da Imagem 1 do Par ',
-                        en: 'Image Link #1 of Pair #'
-                    },
-                    pairImageLink2: {
-                        pt: 'Link da Imagem 2 do Par ',
-                        en: 'Image Link #2 of Pair #'
-                    },
+            getCardPair: (ordinal: any) => {
+                return {
+                    pt: `Carta ${ordinal} do Par `,
+                    en: `Card #${ordinal} of Pair #`
                 }
             },
-            upload: {
-                pickDirPath: {
-                    pt: 'Selecione a pasta que contém as imagens das cartas',
-                    en: 'Select the folder containing the card images'
-                },
-                diffImagesPerPair: {
-                    warning: {
-                        pt: `Envio de arquivos diferentes por par: os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} . Veja um exemplo `,
-                        en: `Sending different files per pair: file names referring to the same pair must have the same prefix followed by ${IMG_FILENAME_SEP}. See an example `
+
+            url: {
+                image: {
+                    pairLink: {
+                        pt: 'Link da Imagem do Par ',
+                        en: 'Image Link of Pair #'
                     },
-                    warningLink: {
-                        pt: 'aqui',
-                        en: 'here'
+
+                    getPairLink: (ordinal: any) => {
+                        return {
+                            pt: `Link da Imagem ${ordinal} do Par `,
+                            en: `Image Link #${ordinal} of Pair #`
+                        }
+                    },
+                },
+
+                audio: {
+                    pairLink: {
+                        pt: 'Link do Áudio do Par ',
+                        en: 'Audio Link of Pair #'
+                    },
+
+                    getPairLink: (ordinal: any) => {
+                        return {
+                            pt: `Link do Áudio ${ordinal} do Par `,
+                            en: `Audio Link #${ordinal} of Pair #`
+                        }
+                    },
+                },
+            },
+
+            upload: {
+                images: {
+                    pickDirPath: {
+                        pt: 'Selecione a pasta que contém as imagens das cartas',
+                        en: 'Select the folder containing the card images'
+                    },
+                    diffImagesPerPair: {
+                        warning: {
+                            pt: `Envio de arquivos diferentes por par: os nomes dos arquivos referentes ao mesmo par devem ter o mesmo prefixo seguido de ${IMG_FILENAME_SEP} . Veja um exemplo `,
+                            en: `Sending different files per pair: file names referring to the same pair must have the same prefix followed by ${IMG_FILENAME_SEP}. See an example `
+                        },
+                        warningLink: {
+                            pt: 'aqui',
+                            en: 'here'
+                        }
+                    }
+                },
+                
+                audios: {
+                    pickDirPath: {
+                        pt: 'Selecione a pasta que contém os áudios das cartas',
+                        en: 'Select the folder containing the card audios'
+                    },
+                    instruction: {
+                        pt: `O nome de cada arquivo de áudio de cada carta deve ser igual ao nome do arquivo de imagem correspondente. Por exemplo: 'bola.png' e 'bola.mp3'`,
+                        en: `The name of each audio file for each card must be the same as the name of the corresponding image file. For example: 'ball.png' and 'ball.mp3'`
                     }
                 }
             },

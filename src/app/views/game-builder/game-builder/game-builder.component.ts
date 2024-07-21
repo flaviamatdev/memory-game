@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
 import { UploadComponent } from 'src/app/shared/components/input/upload/upload.component';
+import { FileUploadTypeEnum } from 'src/app/shared/enums/file-upload-type.enum';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 
@@ -13,6 +14,7 @@ import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 export class GameBuilderComponent implements OnInit {
 
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
+    readonly CONFIG_FILE_TYPE = FileUploadTypeEnum.JSON;
 
     pageTitleTranslation: any = {};
     flag: { [key: string]: boolean } = {};

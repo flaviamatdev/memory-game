@@ -1,7 +1,7 @@
 <div class="input-image">
-    <app-select-image-src-type [form]="form" [controlName]="myControlName.srcType"
+    <app-select-media-src-type [form]="form" [controlName]="myControlName.srcType"
         (onChange)="onChooseInputType($event)">
-    </app-select-image-src-type>
+    </app-select-media-src-type>
 
     <div class="form-item">
         <div class="input-preview">
@@ -13,7 +13,7 @@
                 </div>
 
                 <div *ngSwitchCase="false">
-                    <app-upload #upload [isImage]="true" [labelTranslate]="TRANSLATION.upload" 
+                    <app-upload #upload [labelTranslate]="TRANSLATION.upload" 
                         [form]="form" [controlName]="myControlName.upload" (onClearInput)="deleteFile()">
                     </app-upload>
                 </div>

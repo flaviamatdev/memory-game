@@ -4,19 +4,23 @@ import { GameService } from 'src/app/services/game.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { TranslationService } from 'src/app/shared/components/translation/translation.service';
 import { CardIdTypeEnum, CardIdTypeNameTranslations } from 'src/app/shared/enums/card-id-type.enum';
-import { GameConfig } from 'src/app/shared/model/game-config.model';
+import { MediaSourceTypeEnum } from 'src/app/shared/enums/media-src-type.enum';
+import { Card } from 'src/app/shared/model/card';
 import { FileUpload } from 'src/app/shared/model/file-upload.model';
+import { GameConfig } from 'src/app/shared/model/game-config.model';
 import { GAME_BUILDER_TRANSLATION } from '../game-builder-values';
 import { GameBuilderComponent } from '../game-builder/game-builder.component';
+import { GAME_BUILDER_FORM_INPUT } from './game-build-form-input.values';
 
 @Component({
     selector: 'app-game-builder-form',
     templateUrl: './game-builder-form.component.html',
     styleUrls: ['./game-builder-form.component.scss']
 })
-export class GameConfigFormComponent implements OnInit {
+export class GameBuilderFormComponent implements OnInit {
 
     readonly TRANSLATION = GAME_BUILDER_TRANSLATION;
+    readonly FORM_INPUT = GAME_BUILDER_FORM_INPUT;
     readonly ACCEPT_IMG = [ 'image/png', 'image/jpeg' ];
 
     @Input() parent: GameBuilderComponent;
@@ -49,22 +53,22 @@ export class GameConfigFormComponent implements OnInit {
     private _initForm() {
         this.form = this.fb.group({
             title: new FormControl('Memory Game', Validators.required),
-            cardIdType: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
+            [this.FORM_INPUT.cardIdType]: new FormControl(CardIdTypeEnum.NUMBERS, Validators.required),
 
-            addBackgroundImg: new FormControl(false, Validators.required),
-            backgroundImgSrc: new FormControl(null),
+            [this.FORM_INPUT.addBackgroundImg]: new FormControl(false, Validators.required),
+            [this.FORM_INPUT.backgroundImgSrc]: new FormControl(null),
 
-            singleImgPerPair: new FormControl(null, Validators.required),
-            cardImageSrcType: new FormControl(null, Validators.required),
-            cardImages: new FormControl(null, Validators.required),
+            [this.FORM_INPUT.card.singleCardPerPair]: new FormControl(null, Validators.required),
+            [this.FORM_INPUT.card.addCustomSoundsPerCard]: new FormControl(null, Validators.required),
+            [this.FORM_INPUT.card.cardSrcType]: new FormControl(null, Validators.required),
         });
 
         if (this._isDemo) {
-            this.form.addControl('numPairs', new FormControl(null, Validators.required));
-            this.form.removeControl('addBackgroundImg');
-            this.form.removeControl('backgroundImgSrc');
-            this.form.removeControl('cardImageSrcType');
-            this.form.removeControl('cardImages');
+            this.form.addControl(this.FORM_INPUT.card.numPairs, new FormControl(null, Validators.required));
+            this.form.removeControl(this.FORM_INPUT.addBackgroundImg);
+            this.form.removeControl(this.FORM_INPUT.backgroundImgSrc);
+            this.form.removeControl(this.FORM_INPUT.card.addCustomSoundsPerCard);
+            this.form.removeControl(this.FORM_INPUT.card.cardSrcType);
         }
     }
 
@@ -102,7 +106,7 @@ export class GameConfigFormComponent implements OnInit {
 
     onChangeAddBackgroundImg($value: boolean) {
         this.flag.addBackgroundImg = $value;
-        this.form.get('backgroundImgSrc').setValue(null);
+        this.form.get(this.FORM_INPUT.backgroundImgSrc).setValue(null);
     }
 
     download() {
@@ -120,13 +124,12 @@ export class GameConfigFormComponent implements OnInit {
             return this.toastService.showInvalidFormError();
         }
 
-        let gameConfig = this._buildGameConfig();
         if (this._isDemo) {
-            gameConfig.title = this.translationService.getTranslationObj(this.TRANSLATION.gameTitle.demo);
-            this._setDemoCardImages(gameConfig);
+            this.gameService.create(this._buildGameConfigForDemo());
+            return;
         }
-        
-        this.gameService.create(gameConfig);
+
+        this.gameService.create(this._buildGameConfig());
     }
 
     private get _isInvalidForm() {
@@ -138,31 +141,84 @@ export class GameConfigFormComponent implements OnInit {
         let data = {...this.form.value };
         let gameConfig = new GameConfig();
         gameConfig.title = data.title.toUpperCase();
-        gameConfig.singleImgPerPair = data.singleImgPerPair;
+        gameConfig.singleCardPerPair = data.singleCardPerPair;
+        gameConfig.addCustomSoundsPerCard = data.addCustomSoundsPerCard;
         gameConfig.cardIdType = data.cardIdType;
         gameConfig.backgroundImgSrc = data.backgroundImgSrc;
-        gameConfig.cardImages = data.cardImages;
+
+        let srcType = data[this.FORM_INPUT.card.cardSrcType] as MediaSourceTypeEnum;
+        gameConfig.cards = (srcType == MediaSourceTypeEnum.UPLOAD ?
+            this._getCardsFromUploads(data) :
+            this._getCardsFromUrls(data)
+        );
+
         return gameConfig;
     }
 
-    private _setDemoCardImages(gameConfig: GameConfig) {
-        gameConfig.cardImages = [];
+    private _getCardsFromUploads(formValue: any) {
+        let images = formValue[this.FORM_INPUT.card.upload.images] as FileUpload[];
+        let audios = formValue[this.FORM_INPUT.card.upload.audios] as FileUpload[];
+        return this.gameService.buildCardsFromValidUploads(images, audios);
+    }
 
-        const dirPath = 'assets/images/demo-game-cards';
+    private _getCardsFromUrls(formValue: any) {
+        let cardUrls = formValue[this.FORM_INPUT.card.urls] as any[];
+        let index=1;
 
-        let numPairs: number = this.form.value.numPairs;
+        let singleCardPerPair = formValue[this.FORM_INPUT.card.singleCardPerPair] as boolean;
+        if (singleCardPerPair) {
+            return cardUrls.map((obj) => {
+                let image = new FileUpload(obj.image, `imageUrl${index}`);
+                let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}`) : null;
+                index++;
+                return new Card(null, image, audio);
+            });
+        }
+
+        let cards: Card[] = [];
+        cardUrls.forEach((obj) => {
+            let image = new FileUpload(obj.image, `imageUrl${index}_card1`);
+            let audio = obj.audio ? new FileUpload(obj.audio, `audioUrl${index}_card1`) : null;
+            cards.push(new Card(null, image, audio));
+
+            let image2 = new FileUpload(obj.image2, `imageUrl${index}_card2`);
+            let audio2 = obj.audio ? new FileUpload(obj.audio2, `audioUrl${index}_card2`) : null;
+            cards.push(new Card(null, image2, audio2));
+
+            index++;
+        });
+        return cards;
+    }
+
+
+    private _buildGameConfigForDemo() {
+        let data = this.form.value;
+
+        let gameConfig = new GameConfig();
+        gameConfig.title = this.translationService.getTranslation(this.TRANSLATION.gameTitle.demo);
+        gameConfig.singleCardPerPair = data[this.FORM_INPUT.card.singleCardPerPair] as boolean;
+        gameConfig.addCustomSoundsPerCard = false;
+        gameConfig.cards = [];
+
+        const imageDirPath = 'assets/images/demo-game-cards';
+
+        let numPairs: number = data.numPairs;
 
         for (let i = 1; i <= numPairs; i++) {
             let filename = `num${i}_draw.png`;
-            gameConfig.cardImages.push(new FileUpload(`${dirPath}/draw/${filename}`, filename));
+            let image = new FileUpload(`${imageDirPath}/draw/${filename}`, filename);
+            gameConfig.cards.push(new Card(null, image, null));
         }
 
-        if (!gameConfig.singleImgPerPair) {
+        if (!gameConfig.singleCardPerPair) {
             for (let i = 1; i <= numPairs; i++) {
-                let filename = `num${i}_word.png`;               
-                gameConfig.cardImages.push(new FileUpload(`${dirPath}/words/${filename}`, filename));
+                let filename = `num${i}_word.png`;
+                let image = new FileUpload(`${imageDirPath}/words/${filename}`, filename);
+                gameConfig.cards.push(new Card(null, image, null));
             }
         }
+
+        return gameConfig;
     }
 
 }

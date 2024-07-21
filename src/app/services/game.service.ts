@@ -4,6 +4,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { delay } from "rxjs/operators";
 import { TranslationService } from '../shared/components/translation/translation.service';
+import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
 import { VALUES } from '../shared/constants/global.values';
 import { ICONS, NUM_ICONS } from '../shared/constants/icons';
 import { AudioEnum } from '../shared/enums/audio.enum';
@@ -14,9 +15,8 @@ import { FileUpload } from '../shared/model/file-upload.model';
 import { GameConfig } from '../shared/model/game-config.model';
 import { ArrayUtil } from '../shared/util/array.util';
 import { AudioService } from './audio.service';
-import { ERROR_MSG_TRANSLATION } from '../shared/constants/error-message.values';
+import { FeedbackService } from './feedback.service';
 import { GameConfigFileService } from './game-config-file.service';
-import { ToastService } from './toast.service';
 
 const IMG_FILENAME_SEP = VALUES.upload.fileNameSeparator;
 const ERROR_TRANSLATION = ERROR_MSG_TRANSLATION;
@@ -38,9 +38,9 @@ export class GameService {
     constructor(
         library: FaIconLibrary,
         private router: Router,
+        private feedbackService: FeedbackService,
         private translationService: TranslationService,
         private audioService: AudioService,
-        private toastService: ToastService,
         private configFileService: GameConfigFileService,
     ) {
         library.addIcons(...ICONS);
@@ -107,7 +107,7 @@ export class GameService {
         try {
             let cards = this._getCards();
             this._toolbarTitle = gameConfig.title;
-            this.audioService.load();
+            this._loadAudios(cards);
             this.router.navigate(['game'], {
                 state: {
                     cards: cards
@@ -119,18 +119,17 @@ export class GameService {
         }
     }
 
+    private _loadAudios(cards: Card[]) {
+        let cardAudios: FileUpload[] = null;
+        if (this._gameConfig.addCustomSoundsPerCard) {
+            cardAudios = cards.map(card => card.audio);
+        }
+        this.audioService.load(cardAudios);
+    }
+
     private _handleCreateError(error: any) {
         this._gameConfig = null;
-        
-        if ( !(error instanceof GameConfigError) ) {
-            return this.toastService.error(
-                this.translationService.getTranslationObj(ERROR_TRANSLATION.unexpectedError)
-            );
-        }
-
-        this.toastService.error(
-            this.translationService.getTranslationObj(error.translation)
-        );
+        this.feedbackService.handleError(error);
     }
 
     private _getCards(): Card[] {
@@ -140,7 +139,7 @@ export class GameService {
             throw new GameConfigError(ERROR_TRANSLATION.exceededMaxNumIcons);
         }
 
-        if (!this._gameConfig.singleImgPerPair) {
+        if (!this._gameConfig.singleCardPerPair) {
             return this._getCardsForDifferentImagesPerPair();
         }
         return this._getCardsForSameImagePerPair();
@@ -153,7 +152,7 @@ export class GameService {
     }
 
     private _getCardsForSameImagePerPair(): Card[] {
-        let cards = this._gameConfig.cardImages.map((img, i) => new Card(`${i + 1}`, img));
+        let cards = this._gameConfig.cards.map((card, i) => new Card(`${i+1}`, card.image, card.audio));
 
         return this._getFinalShuffledCardsWithId([
             ...this._shuffleCards(cards),
@@ -172,22 +171,22 @@ export class GameService {
     }
 
     private _getCardsForDifferentImagesPerPair(): Card[] {
-        // Espera-se que as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes do SEP
-        let cardImages = this._gameConfig.cardImages;
-        let keys = this._getFilenamePrefixForDiffImagesPerPair(cardImages);
+        /* Espera-se que as imagens dos mesmos pares tenham o nome com o mesmo prefixo antes do SEP */
+        let originalCards = this._gameConfig.cards;
+        let keys = this._getFilenamePrefixForDiffImagesPerPair(originalCards.map(card => card.image));
         let cards: Card[] = [];
 
         keys.forEach(key => {
-            cardImages
-                .filter(img => this._getCardImageFilenamePrefix(img) === key)
-                .forEach(img => cards.push(new Card(key, img)));
+            originalCards
+                .filter(card => this._getCardImageFilenamePrefix(card.image) === key)
+                .forEach(card => cards.push(new Card(key, card.image, card.audio)));
         });
 
         return this._getFinalShuffledCardsWithId(this._shuffleCards(cards));
     }
 
     private _getFilenamePrefixForDiffImagesPerPair(cardImages: FileUpload[]) {
-        let filenames = cardImages.map(img => this._getCardImageFilenamePrefix(img));
+        let filenames = cardImages.map(cardImage => this._getCardImageFilenamePrefix(cardImage));
         let occurrences = ArrayUtil.getNumOccurrences(filenames);
         let keys = Object.keys(occurrences);
 
@@ -232,12 +231,15 @@ export class GameService {
 
     onChooseCard(choosen: Card): boolean {
         if (this.isGameFinished || this._foundPairCodes.includes(choosen.code)) {
+            if (this._playSound && choosen.audio) {
+                this.audioService.play(choosen.audio.filename);
+            }
             return;
         }
 
         if (this._playSound) {
-            this.audioService.play(AudioEnum.TURN_CARD);
-        }        
+            this.audioService.play(choosen.audio?.filename ?? AudioEnum.TURN_CARD);
+        }
 
         if (this._selectedCard1 === null) {
             this._selectedCard1 = choosen;
@@ -295,6 +297,36 @@ export class GameService {
 
     swapPlaySound() {
         this._playSound = !this._playSound;
+    }
+
+    /* Game Config Building */
+
+    validateCardUploads(images: FileUpload[], audios: FileUpload[]) { 
+        if (images.length !== audios.length) {
+            throw new GameConfigError({
+                pt: 'A quantidade de arquivos de Imagem e Áudio não são iguais',
+                en: 'The number of Image and Audio files are not the same'
+            });
+        }
+
+        let numMismatch = images.filter(image => !audios.some(audio => audio.hasSameName(image)));
+        if (numMismatch.length) {
+            throw new GameConfigError({
+                pt: `Existe(m) ${numMismatch} arquivo(s) de imagem sem arquivo de audio com mesmo nome.`,
+                en: `There are ${numMismatch} image files without an audio file with the same name.`
+            });
+        }
+    }
+
+    buildCardsFromValidUploads(images: FileUpload[], audios?: FileUpload[]): Card[] {
+        if (!(audios?.length)) {
+            return images.map(image => new Card(null, image, null));
+        }
+        
+        return images.map(image => {
+            let audio = audios.find(x => x.hasSameName(image));
+            return new Card(null, image, audio);
+        });
     }
 
 }

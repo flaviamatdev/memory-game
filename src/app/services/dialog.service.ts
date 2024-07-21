@@ -41,9 +41,9 @@ export class DialogService {
             header: {
                 icon: 'pan_tool',
                 iconColor: 'darkorange',
-                title: this.translationService.getTranslationObj(DIALOG_TRANSLATION.gameIsNotOverWarning)
+                title: this.translationService.getTranslation(DIALOG_TRANSLATION.gameIsNotOverWarning)
             },
-            bodyText: confirmQuestion ?? this.translationService.getTranslationObj(DIALOG_TRANSLATION.liveGameConfirmation),
+            bodyText: confirmQuestion ?? this.translationService.getTranslation(DIALOG_TRANSLATION.liveGameConfirmation),
             okCallback: callback
         });
     }
