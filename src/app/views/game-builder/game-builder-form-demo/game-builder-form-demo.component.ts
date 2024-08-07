@@ -53,32 +53,31 @@ export class GameBuilderFormDemoComponent extends AbstractGameBuilderFormCompone
         gameConfig.addCustomSoundsPerCard = true;
         gameConfig.cards = [];
 
-        const imageDirPath = 'assets/images/demo-game-cards';
-        const audioDirPath = 'assets/audio/demo-game-audios';
-
         let numPairs: number = data.numPairs;
-        let audios: FileUpload[] = [];
 
         for (let i = 1; i <= numPairs; i++) {
-            let filename = `num${i}_draw.png`;
-            let image = new FileUpload(`${imageDirPath}/draw/${filename}`, filename);
-
-            let audioFilename = `num${i}.mp3`;
-            let audio = new FileUpload(`${audioDirPath}/${audioFilename}`, audioFilename);
-            audios.push(audio);
-            
-            gameConfig.cards.push(new Card(null, image, audio));
+            gameConfig.cards.push( this._buildCard(i, `num${i}_draw.png`, 'draw') );
         }
 
         if (!gameConfig.singleCardPerPair) {
             for (let i = 1; i <= numPairs; i++) {
-                let filename = `num${i}_word.png`;
-                let image = new FileUpload(`${imageDirPath}/words/${filename}`, filename);
-                gameConfig.cards.push(new Card(null, image, audios[i]));
+                gameConfig.cards.push( this._buildCard(i, `num${i}_word.png`, 'words') );
             }
         }
 
         return gameConfig;
+    }
+
+    private _buildCard(i: number, imgFilename: string, imgSubDir: string) {
+        const imageDirPath = 'assets/images/demo-game-cards';
+        const audioDirPath = 'assets/audio/demo-game-audios';
+
+        let image = new FileUpload(`${imageDirPath}/${imgSubDir}/${imgFilename}`, imgFilename);
+
+        let audioFilename = `num${i}.mp3`;
+        let audio = new FileUpload(`${audioDirPath}/${audioFilename}`, audioFilename);
+
+        return new Card(null, image, audio);
     }
 
 }
