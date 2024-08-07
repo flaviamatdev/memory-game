@@ -19,9 +19,16 @@ export const GAME_BUILDER_TRANSLATION = {
         }
     },
 
-    instruction: {
-        pt: 'Preencha o formulário abaixo com as informações para o jogo OU selecione a opção abaixo caso tenha o arquivo do jogo.',
-        en: 'Fill out the form below with the game information OR select the option below if you have the game file.'
+    topInstruction: {
+        main: {
+            pt: 'Preencha o formulário abaixo com as informações para o jogo',
+            en: 'Fill out the form below with the game information'
+        },
+    
+        orUploadConfigFile: {
+            pt: ' OU selecione a opção abaixo caso tenha o arquivo do jogo.',
+            en: ' OR select the option below if you have the game file.'
+        },
     },
 
     uploadConfigFile: {

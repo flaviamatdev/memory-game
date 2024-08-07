@@ -1,0 +1,33 @@
+<h1 class="color-primary">{{ 'TRANSLATION' | translate: TRANSLATION.pageTitle.demoBuilder }}</h1>
+
+<div class="main-instructions mb-4">
+    <mat-label>{{ 'TRANSLATION' | translate: TRANSLATION.topInstruction.main }}</mat-label>
+</div>
+
+<form [formGroup]="form">
+    <div class="form-line">
+        <app-select class="form-item" 
+            label="{{ 'TRANSLATION' | translate: TRANSLATION.input.cardIdType }}" 
+            [form]="form" [controlName]="FORM_INPUT.cardIdType" [optionsTranslate]="options.cardId">
+        </app-select>
+
+        <app-select-yes-no class="form-item" 
+            [labelTranslate]="TRANSLATION.input.singleCardPerPair" 
+            [form]="form" [controlName]="FORM_INPUT.card.singleCardPerPair">
+        </app-select-yes-no>
+
+        <app-select class="form-item" 
+            [labelTranslate]="TRANSLATION.input.numPairs" 
+            [form]="form" [controlName]="FORM_INPUT.card.numPairs" [options]="options.numPairs">
+        </app-select>
+    </div>
+</form>
+
+<div class="d-flex-row mt-4">
+    <div>
+        <button mat-raised-button type="submit" color="primary" (click)="submit()">
+            <mat-icon>sports_esports</mat-icon>
+            {{ 'TRANSLATION' | translate: TRANSLATION.btn.submit.playDemo }} 
+        </button>
+    </div>
+</div>
