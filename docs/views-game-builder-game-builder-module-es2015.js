@@ -638,26 +638,24 @@ class GameBuilderFormDemoComponent extends _abstract_game_builder_form_abstract_
         gameConfig.singleCardPerPair = data[this.FORM_INPUT.card.singleCardPerPair];
         gameConfig.addCustomSoundsPerCard = true;
         gameConfig.cards = [];
-        const imageDirPath = 'assets/images/demo-game-cards';
-        const audioDirPath = 'assets/audio/demo-game-audios';
         let numPairs = data.numPairs;
-        let audios = [];
         for (let i = 1; i <= numPairs; i++) {
-            let filename = `num${i}_draw.png`;
-            let image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"](`${imageDirPath}/draw/${filename}`, filename);
-            let audioFilename = `num${i}.mp3`;
-            let audio = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"](`${audioDirPath}/${audioFilename}`, audioFilename);
-            audios.push(audio);
-            gameConfig.cards.push(new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__["Card"](null, image, audio));
+            gameConfig.cards.push(this._buildCard(i, `num${i}_draw.png`, 'draw'));
         }
         if (!gameConfig.singleCardPerPair) {
             for (let i = 1; i <= numPairs; i++) {
-                let filename = `num${i}_word.png`;
-                let image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"](`${imageDirPath}/words/${filename}`, filename);
-                gameConfig.cards.push(new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__["Card"](null, image, audios[i]));
+                gameConfig.cards.push(this._buildCard(i, `num${i}_word.png`, 'words'));
             }
         }
         return gameConfig;
+    }
+    _buildCard(i, imgFilename, imgSubDir) {
+        const imageDirPath = 'assets/images/demo-game-cards';
+        const audioDirPath = 'assets/audio/demo-game-audios';
+        let image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"](`${imageDirPath}/${imgSubDir}/${imgFilename}`, imgFilename);
+        let audioFilename = `num${i}.mp3`;
+        let audio = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"](`${audioDirPath}/${audioFilename}`, audioFilename);
+        return new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__["Card"](null, image, audio);
     }
 }
 GameBuilderFormDemoComponent.ɵfac = function GameBuilderFormDemoComponent_Factory(t) { return new (t || GameBuilderFormDemoComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_app_services_game_service__WEBPACK_IMPORTED_MODULE_7__["GameService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_8__["ToastService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_app_shared_components_translation_translation_service__WEBPACK_IMPORTED_MODULE_9__["TranslationService"])); };

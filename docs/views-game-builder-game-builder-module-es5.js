@@ -1106,31 +1106,29 @@
             gameConfig.singleCardPerPair = data[this.FORM_INPUT.card.singleCardPerPair];
             gameConfig.addCustomSoundsPerCard = true;
             gameConfig.cards = [];
-            var imageDirPath = 'assets/images/demo-game-cards';
-            var audioDirPath = 'assets/audio/demo-game-audios';
             var numPairs = data.numPairs;
-            var audios = [];
 
             for (var i = 1; i <= numPairs; i++) {
-              var filename = "num".concat(i, "_draw.png");
-              var image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"]("".concat(imageDirPath, "/draw/").concat(filename), filename);
-              var audioFilename = "num".concat(i, ".mp3");
-              var audio = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"]("".concat(audioDirPath, "/").concat(audioFilename), audioFilename);
-              audios.push(audio);
-              gameConfig.cards.push(new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__["Card"](null, image, audio));
+              gameConfig.cards.push(this._buildCard(i, "num".concat(i, "_draw.png"), 'draw'));
             }
 
             if (!gameConfig.singleCardPerPair) {
               for (var _i = 1; _i <= numPairs; _i++) {
-                var _filename = "num".concat(_i, "_word.png");
-
-                var _image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"]("".concat(imageDirPath, "/words/").concat(_filename), _filename);
-
-                gameConfig.cards.push(new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__["Card"](null, _image, audios[_i]));
+                gameConfig.cards.push(this._buildCard(_i, "num".concat(_i, "_word.png"), 'words'));
               }
             }
 
             return gameConfig;
+          }
+        }, {
+          key: "_buildCard",
+          value: function _buildCard(i, imgFilename, imgSubDir) {
+            var imageDirPath = 'assets/images/demo-game-cards';
+            var audioDirPath = 'assets/audio/demo-game-audios';
+            var image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"]("".concat(imageDirPath, "/").concat(imgSubDir, "/").concat(imgFilename), imgFilename);
+            var audioFilename = "num".concat(i, ".mp3");
+            var audio = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"]("".concat(audioDirPath, "/").concat(audioFilename), audioFilename);
+            return new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__["Card"](null, image, audio);
           }
         }]);
 
