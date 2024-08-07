@@ -23,10 +23,17 @@ export class CreditsComponent {
         },
         {
             text: {
-                pt: 'Efeitos sonoros (não customizados): ',
-                en: 'Sound effects (not customized): '
+                pt: 'Efeitos sonoros das cartas (não customizados): ',
+                en: 'Card sound effects (not customized): '
             } as ITranslation,
             url: 'https://pixabay.com/sound-effects'
+        },
+        {
+            text: {
+                pt: 'Efeitos sonoros das cartas do jogo demo (one, two, ...): ',
+                en: 'Demo game card sound effects (one, two, ...): '
+            } as ITranslation,
+            url: 'https://ssl.gstatic.com/dictionary/static/sounds/oxford/one--_us_1.mp3'
         },
     ];
 
