@@ -9,7 +9,7 @@ import { MediaSourceTypeEnum } from 'src/app/shared/enums/media-src-type.enum';
 import { ITranslation } from 'src/app/shared/components/translation/translation.model';
 import { FormUtil } from 'src/app/shared/util/form.util';
 import { GAME_BUILDER_TRANSLATION } from '../../../game-builder-values';
-import { GAME_BUILDER_FORM_INPUT } from '../../game-build-form-input.values';
+import { GAME_BUILDER_FORM_INPUT } from '../../../game-build-form-input.values';
 import { GameBuilderFormComponent } from '../../game-builder-form.component';
 import { CardImageFilenameExampleDialogComponent } from '../card-image-filename-example-dialog/card-image-filename-example-dialog.component';
 import { UrlPairConfig } from '../url-pair-config.model';

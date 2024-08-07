@@ -11,6 +11,10 @@
 
   function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
+  function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
+
+  function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
@@ -111,9 +115,15 @@
             en: 'Demo Game'
           }
         },
-        instruction: {
-          pt: 'Preencha o formulário abaixo com as informações para o jogo OU selecione a opção abaixo caso tenha o arquivo do jogo.',
-          en: 'Fill out the form below with the game information OR select the option below if you have the game file.'
+        topInstruction: {
+          main: {
+            pt: 'Preencha o formulário abaixo com as informações para o jogo',
+            en: 'Fill out the form below with the game information'
+          },
+          orUploadConfigFile: {
+            pt: ' OU selecione a opção abaixo caso tenha o arquivo do jogo.',
+            en: ' OR select the option below if you have the game file.'
+          }
         },
         uploadConfigFile: {
           checkboxLabel: {
@@ -932,6 +942,315 @@
     },
 
     /***/
+    "30b+":
+    /*!***********************************************************************************************!*\
+      !*** ./src/app/views/game-builder/game-builder-form-demo/game-builder-form-demo.component.ts ***!
+      \***********************************************************************************************/
+
+    /*! exports provided: GameBuilderFormDemoComponent */
+
+    /***/
+    function b(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "GameBuilderFormDemoComponent", function () {
+        return GameBuilderFormDemoComponent;
+      });
+      /* harmony import */
+
+
+      var _angular_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/forms */
+      "3Pt+");
+      /* harmony import */
+
+
+      var src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! src/app/shared/enums/card-id-type.enum */
+      "YzOW");
+      /* harmony import */
+
+
+      var src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/shared/model/card */
+      "M6cH");
+      /* harmony import */
+
+
+      var src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! src/app/shared/model/file-upload.model */
+      "wufY");
+      /* harmony import */
+
+
+      var src_app_shared_model_game_config_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/shared/model/game-config.model */
+      "2w9t");
+      /* harmony import */
+
+
+      var _abstract_game_builder_form_abstract_game_builder_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ../abstract-game-builder-form/abstract-game-builder-form.component */
+      "nvkq");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var src_app_services_game_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! src/app/services/game.service */
+      "VdwR");
+      /* harmony import */
+
+
+      var src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! src/app/services/toast.service */
+      "2g2N");
+      /* harmony import */
+
+
+      var src_app_shared_components_translation_translation_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! src/app/shared/components/translation/translation.service */
+      "AgV0");
+      /* harmony import */
+
+
+      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! @angular/material/form-field */
+      "kmnG");
+      /* harmony import */
+
+
+      var _shared_components_input_select_select_select_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      /*! ../../../shared/components/input/select/select/select.component */
+      "OlXG");
+      /* harmony import */
+
+
+      var _shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      /*! ../../../shared/components/input/select/select-yes-no/select-yes-no.component */
+      "oJA7");
+      /* harmony import */
+
+
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+      /*! @angular/material/button */
+      "bTqV");
+      /* harmony import */
+
+
+      var _angular_material_icon__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+      /*! @angular/material/icon */
+      "NFeN");
+      /* harmony import */
+
+
+      var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+      /*! @ngx-translate/core */
+      "sYmb");
+
+      var GameBuilderFormDemoComponent = /*#__PURE__*/function (_abstract_game_builde) {
+        _inherits(GameBuilderFormDemoComponent, _abstract_game_builde);
+
+        function GameBuilderFormDemoComponent(gameService, toastService, fb, translationService) {
+          var _this4;
+
+          _classCallCheck(this, GameBuilderFormDemoComponent);
+
+          _this4 = _callSuper(this, GameBuilderFormDemoComponent, [gameService, toastService]);
+          _this4.gameService = gameService;
+          _this4.toastService = toastService;
+          _this4.fb = fb;
+          _this4.translationService = translationService;
+          return _this4;
+        } // override
+
+
+        _createClass(GameBuilderFormDemoComponent, [{
+          key: "_initForm",
+          value: function _initForm() {
+            this.form = this.fb.group(_defineProperty(_defineProperty(_defineProperty({}, this.FORM_INPUT.cardIdType, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].NUMBERS, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)), this.FORM_INPUT.card.singleCardPerPair, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)), this.FORM_INPUT.card.numPairs, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)));
+          } // override
+
+        }, {
+          key: "_setOptions",
+          value: function _setOptions() {
+            var _this5 = this;
+
+            _get(_getPrototypeOf(GameBuilderFormDemoComponent.prototype), "_setOptions", this).call(this);
+
+            this.options.numPairs = [];
+            [4, 6, 8, 10].forEach(function (value) {
+              return _this5.options.numPairs.push({
+                id: value,
+                label: value
+              });
+            });
+          } // override
+
+        }, {
+          key: "_buildGameConfig",
+          value: function _buildGameConfig() {
+            var data = this.form.value;
+            var gameConfig = new src_app_shared_model_game_config_model__WEBPACK_IMPORTED_MODULE_4__["GameConfig"]();
+            gameConfig.title = this.translationService.getTranslation(this.TRANSLATION.gameTitle.demo);
+            gameConfig.cardIdType = data[this.FORM_INPUT.cardIdType];
+            gameConfig.singleCardPerPair = data[this.FORM_INPUT.card.singleCardPerPair];
+            gameConfig.addCustomSoundsPerCard = true;
+            gameConfig.cards = [];
+            var numPairs = data.numPairs;
+
+            for (var i = 1; i <= numPairs; i++) {
+              gameConfig.cards.push(this._buildCard(i, "num".concat(i, "_draw.png"), 'draw'));
+            }
+
+            if (!gameConfig.singleCardPerPair) {
+              for (var _i = 1; _i <= numPairs; _i++) {
+                gameConfig.cards.push(this._buildCard(_i, "num".concat(_i, "_word.png"), 'words'));
+              }
+            }
+
+            return gameConfig;
+          }
+        }, {
+          key: "_buildCard",
+          value: function _buildCard(i, imgFilename, imgSubDir) {
+            var imageDirPath = 'assets/images/demo-game-cards';
+            var audioDirPath = 'assets/audio/demo-game-audios';
+            var image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"]("".concat(imageDirPath, "/").concat(imgSubDir, "/").concat(imgFilename), imgFilename);
+            var audioFilename = "num".concat(i, ".mp3");
+            var audio = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_3__["FileUpload"]("".concat(audioDirPath, "/").concat(audioFilename), audioFilename);
+            return new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_2__["Card"](null, image, audio);
+          }
+        }]);
+
+        return GameBuilderFormDemoComponent;
+      }(_abstract_game_builder_form_abstract_game_builder_form_component__WEBPACK_IMPORTED_MODULE_5__["AbstractGameBuilderFormComponent"]);
+
+      GameBuilderFormDemoComponent.ɵfac = function GameBuilderFormDemoComponent_Factory(t) {
+        return new (t || GameBuilderFormDemoComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_app_services_game_service__WEBPACK_IMPORTED_MODULE_7__["GameService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_8__["ToastService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_app_shared_components_translation_translation_service__WEBPACK_IMPORTED_MODULE_9__["TranslationService"]));
+      };
+
+      GameBuilderFormDemoComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+        type: GameBuilderFormDemoComponent,
+        selectors: [["app-game-builder-form-demo"]],
+        features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"]],
+        decls: 20,
+        vars: 27,
+        consts: [[1, "color-primary"], [1, "main-instructions", "mb-4"], [3, "formGroup"], [1, "form-line"], [1, "form-item", 3, "label", "form", "controlName", "optionsTranslate"], [1, "form-item", 3, "labelTranslate", "form", "controlName"], [1, "form-item", 3, "labelTranslate", "form", "controlName", "options"], [1, "d-flex-row", "mt-4"], ["mat-raised-button", "", "type", "submit", "color", "primary", 3, "click"]],
+        template: function GameBuilderFormDemoComponent_Template(rf, ctx) {
+          if (rf & 1) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "h1", 0);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipe"](2, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](3, "div", 1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](4, "mat-label");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](5);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipe"](6, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](7, "form", 2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](8, "div", 3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](9, "app-select", 4);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipe"](10, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](11, "app-select-yes-no", 5);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](12, "app-select", 6);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](13, "div", 7);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](14, "div");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](15, "button", 8);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function GameBuilderFormDemoComponent_Template_button_click_15_listener() {
+              return ctx.submit();
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](16, "mat-icon");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](17, "sports_esports");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](18);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipe"](19, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+          }
+
+          if (rf & 2) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipeBind2"](2, 15, "TRANSLATION", ctx.TRANSLATION.pageTitle.demoBuilder));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](4);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipeBind2"](6, 18, "TRANSLATION", ctx.TRANSLATION.topInstruction.main));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("formGroup", ctx.form);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpropertyInterpolate"]("label", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipeBind2"](10, 21, "TRANSLATION", ctx.TRANSLATION.input.cardIdType));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("form", ctx.form)("controlName", ctx.FORM_INPUT.cardIdType)("optionsTranslate", ctx.options.cardId);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("labelTranslate", ctx.TRANSLATION.input.singleCardPerPair)("form", ctx.form)("controlName", ctx.FORM_INPUT.card.singleCardPerPair);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("labelTranslate", ctx.TRANSLATION.input.numPairs)("form", ctx.form)("controlName", ctx.FORM_INPUT.card.numPairs)("options", ctx.options.numPairs);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](6);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipeBind2"](19, 24, "TRANSLATION", ctx.TRANSLATION.btn.submit.playDemo), " ");
+          }
+        },
+        directives: [_angular_material_form_field__WEBPACK_IMPORTED_MODULE_10__["MatLabel"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupDirective"], _shared_components_input_select_select_select_component__WEBPACK_IMPORTED_MODULE_11__["SelectComponent"], _shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_12__["SelectYesNoComponent"], _angular_material_button__WEBPACK_IMPORTED_MODULE_13__["MatButton"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_14__["MatIcon"]],
+        pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_15__["TranslatePipe"]],
+        styles: ["h1[_ngcontent-%COMP%] {\n  font-family: Quicksand !important;\n}\n\n.main-instructions[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}\n\n.d-flex-row[_ngcontent-%COMP%] {\n  align-items: flex-start;\n  justify-content: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcZ2FtZS1idWlsZGVyLWZvcm0tZGVtby5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlDQUFBO0FBQ0o7O0FBRUE7RUFDSSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxTQUFBO0FBQ0o7O0FBRUE7RUFDSSx1QkFBQTtFQUNBLHVCQUFBO0FBQ0oiLCJmaWxlIjoiZ2FtZS1idWlsZGVyLWZvcm0tZGVtby5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImgxIHtcclxuICAgIGZvbnQtZmFtaWx5OiBRdWlja3NhbmQgIWltcG9ydGFudDtcclxufVxyXG5cclxuLm1haW4taW5zdHJ1Y3Rpb25zIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgZ2FwOiAxcmVtO1xyXG59XHJcblxyXG4uZC1mbGV4LXJvdyB7XHJcbiAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG59XHJcbiJdfQ== */"]
+      });
+      /***/
+    },
+
+    /***/
     "3hcz":
     /*!*****************************************************************************************************************************!*\
       !*** ./src/app/views/game-builder/game-builder-form/cards/card-urls/card-pair-url-inputs/card-pair-url-inputs.component.ts ***!
@@ -1348,342 +1667,70 @@
       /* harmony import */
 
 
-      var _game_builder_values__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-      /*! ../game-builder-values */
-      "1KsR");
+      var _abstract_game_builder_form_abstract_game_builder_form_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ../abstract-game-builder-form/abstract-game-builder-form.component */
+      "nvkq");
       /* harmony import */
 
 
-      var _game_build_form_input_values__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-      /*! ./game-build-form-input.values */
-      "T3tV");
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
       /* harmony import */
 
 
-      var src_app_services_game_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var src_app_services_game_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! src/app/services/game.service */
       "VdwR");
       /* harmony import */
 
 
-      var src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! src/app/services/toast.service */
       "2g2N");
-      /* harmony import */
 
-
-      var src_app_shared_components_translation_translation_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
-      /*! src/app/shared/components/translation/translation.service */
-      "AgV0");
-
-      function GameBuilderFormComponent_div_0_Template(rf, ctx) {
+      function GameBuilderFormComponent_div_13_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](0, "div");
+          _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](0, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](1, "form", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](1, "app-background-image-form", 13);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](2, "div", 6);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](3, "app-select", 7);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipe"](4, "translate");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](5, "app-select-yes-no", 8);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](6, "app-select", 9);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
         }
 
         if (rf & 2) {
-          var ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵnextContext"]();
+          var ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("formGroup", ctx_r0.form);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpropertyInterpolate"]("label", _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipeBind2"](4, 12, "TRANSLATION", ctx_r0.TRANSLATION.input.cardIdType));
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("form", ctx_r0.form)("controlName", ctx_r0.FORM_INPUT.cardIdType)("optionsTranslate", ctx_r0.options.cardId);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("labelTranslate", ctx_r0.TRANSLATION.input.singleCardPerPair)("form", ctx_r0.form)("controlName", ctx_r0.FORM_INPUT.card.singleCardPerPair);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](1);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("labelTranslate", ctx_r0.TRANSLATION.input.numPairs)("form", ctx_r0.form)("controlName", ctx_r0.FORM_INPUT.card.numPairs)("options", ctx_r0.options.numPairs);
+          _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("form", ctx_r0.form)("controlName", ctx_r0.FORM_INPUT.backgroundImgSrc);
         }
       }
 
-      function GameBuilderFormComponent_ng_template_1_div_13_Template(rf, ctx) {
-        if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](0, "div", 16);
+      var GameBuilderFormComponent = /*#__PURE__*/function (_abstract_game_builde2) {
+        _inherits(GameBuilderFormComponent, _abstract_game_builde2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](1, "app-background-image-form", 17);
+        function GameBuilderFormComponent(gameService, toastService, fb) {
+          var _this6;
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-        }
-
-        if (rf & 2) {
-          var ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵnextContext"](2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](1);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("form", ctx_r4.form)("controlName", ctx_r4.FORM_INPUT.backgroundImgSrc);
-        }
-      }
-
-      function GameBuilderFormComponent_ng_template_1_Template(rf, ctx) {
-        if (rf & 1) {
-          var _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵgetCurrentView"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](0, "form", 5);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](1, "span", 10);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipe"](3, "translate");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](4, "div", 6);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](5, "app-input-text", 11);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](6, "app-select", 12);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](7, "mat-divider");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](8, "span", 10);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](9);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipe"](10, "translate");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](11, "div", 6);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](12, "app-select-yes-no", 13);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵlistener"]("onChange", function GameBuilderFormComponent_ng_template_1_Template_app_select_yes_no_onChange_12_listener($event) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵrestoreView"](_r6);
-
-            var ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵnextContext"]();
-
-            return ctx_r5.onChangeAddBackgroundImg($event);
-          });
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtemplate"](13, GameBuilderFormComponent_ng_template_1_div_13_Template, 2, 2, "div", 14);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](14, "mat-divider");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](15, "span", 10);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](16);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipe"](17, "translate");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](18, "app-card-form", 15);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-        }
-
-        if (rf & 2) {
-          var ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵnextContext"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("formGroup", ctx_r2.form);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipeBind2"](3, 15, "TRANSLATION", ctx_r2.TRANSLATION.sectionTitle.mainData), " ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("labelTranslate", ctx_r2.TRANSLATION.input.gameTitle)("form", ctx_r2.form);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](1);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("labelTranslate", ctx_r2.TRANSLATION.input.cardIdType)("form", ctx_r2.form)("controlName", ctx_r2.FORM_INPUT.cardIdType)("optionsTranslate", ctx_r2.options.cardId);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipeBind2"](10, 18, "TRANSLATION", ctx_r2.TRANSLATION.sectionTitle.backgroundImg));
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("labelTranslate", ctx_r2.TRANSLATION.input.backgroundImg.add)("form", ctx_r2.form)("controlName", ctx_r2.FORM_INPUT.addBackgroundImg);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](1);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngIf", ctx_r2.flag.addBackgroundImg);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipeBind2"](17, 21, "TRANSLATION", ctx_r2.TRANSLATION.sectionTitle.cards));
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("parent", ctx_r2);
-        }
-      }
-
-      function GameBuilderFormComponent_div_10_Template(rf, ctx) {
-        if (rf & 1) {
-          var _r8 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵgetCurrentView"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](0, "div", 18);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](1, "button", 19);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵlistener"]("click", function GameBuilderFormComponent_div_10_Template_button_click_1_listener() {
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵrestoreView"](_r8);
-
-            var ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵnextContext"]();
-
-            return ctx_r7.download();
-          });
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](2, "mat-icon");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](3, "download");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](4);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipe"](5, "translate");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](6, "span");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](7);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipe"](8, "translate");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
-        }
-
-        if (rf & 2) {
-          var ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵnextContext"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](4);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipeBind2"](5, 2, "TRANSLATION", ctx_r3.TRANSLATION.btn.download.label), " ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipeBind2"](8, 5, "TRANSLATION", ctx_r3.TRANSLATION.btn.download.comment));
-        }
-      }
-
-      var GameBuilderFormComponent = /*#__PURE__*/function () {
-        function GameBuilderFormComponent(fb, gameService, toastService, translationService) {
           _classCallCheck(this, GameBuilderFormComponent);
 
-          this.fb = fb;
-          this.gameService = gameService;
-          this.toastService = toastService;
-          this.translationService = translationService;
-          this.TRANSLATION = _game_builder_values__WEBPACK_IMPORTED_MODULE_6__["GAME_BUILDER_TRANSLATION"];
-          this.FORM_INPUT = _game_build_form_input_values__WEBPACK_IMPORTED_MODULE_7__["GAME_BUILDER_FORM_INPUT"];
-          this.ACCEPT_IMG = ['image/png', 'image/jpeg'];
-          this.options = {};
-          this.flag = {};
-          this.submitBtnTranslation = {};
-        }
+          _this6 = _callSuper(this, GameBuilderFormComponent, [gameService, toastService]);
+          _this6.gameService = gameService;
+          _this6.toastService = toastService;
+          _this6.fb = fb;
+          _this6.ACCEPT_IMG = ['image/png', 'image/jpeg'];
+          _this6.flag = {};
+          return _this6;
+        } // override
+
 
         _createClass(GameBuilderFormComponent, [{
-          key: "ngOnInit",
-          value: function ngOnInit() {
-            this.flag = {
-              isDemo: this._isDemo
-            };
-
-            this._initForm();
-
-            this._setOptions();
-
-            this._setSubmitBtn();
-          }
-        }, {
-          key: "_isDemo",
-          get: function get() {
-            return this.parent.isDemo;
-          }
-        }, {
           key: "_initForm",
           value: function _initForm() {
             this.form = this.fb.group(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
               title: new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"]('Memory Game', _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)
             }, this.FORM_INPUT.cardIdType, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].NUMBERS, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)), this.FORM_INPUT.addBackgroundImg, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](false, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)), this.FORM_INPUT.backgroundImgSrc, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](null)), this.FORM_INPUT.card.singleCardPerPair, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)), this.FORM_INPUT.card.addCustomSoundsPerCard, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)), this.FORM_INPUT.card.cardSrcType, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required)));
-
-            if (this._isDemo) {
-              this.form.addControl(this.FORM_INPUT.card.numPairs, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required));
-              this.form.removeControl(this.FORM_INPUT.addBackgroundImg);
-              this.form.removeControl(this.FORM_INPUT.backgroundImgSrc);
-              this.form.removeControl(this.FORM_INPUT.card.addCustomSoundsPerCard);
-              this.form.removeControl(this.FORM_INPUT.card.cardSrcType);
-            }
-          }
-        }, {
-          key: "_setOptions",
-          value: function _setOptions() {
-            var _this4 = this;
-
-            var cardIdTypeNameTranslations = src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeNameTranslations"];
-            this.options = {
-              cardId: [{
-                id: src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].NUMBERS,
-                label: cardIdTypeNameTranslations[src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].NUMBERS]
-              }, {
-                id: src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].ROW_COLUMN,
-                label: cardIdTypeNameTranslations[src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].ROW_COLUMN]
-              }, {
-                id: src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].ICONS,
-                label: cardIdTypeNameTranslations[src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_1__["CardIdTypeEnum"].ICONS]
-              }]
-            };
-
-            if (this._isDemo) {
-              this.options.numPairs = [];
-              [4, 6, 8, 10].forEach(function (value) {
-                return _this4.options.numPairs.push({
-                  id: value,
-                  label: value
-                });
-              });
-            }
-          }
-        }, {
-          key: "_setSubmitBtn",
-          value: function _setSubmitBtn() {
-            this.submitBtnTranslation = this._isDemo ? this.TRANSLATION.btn.submit.playDemo : this.TRANSLATION.btn.submit.createGame;
           }
         }, {
           key: "onChangeAddBackgroundImg",
@@ -1694,36 +1741,13 @@
         }, {
           key: "download",
           value: function download() {
-            if (this._isDemo) {
-              return;
-            }
-
             if (this._isInvalidForm) {
               return this.toastService.showInvalidFormError();
             }
 
             this.gameService.downloadGameConfig(this._buildGameConfig());
-          }
-        }, {
-          key: "submit",
-          value: function submit() {
-            if (this._isInvalidForm) {
-              return this.toastService.showInvalidFormError();
-            }
+          } // override
 
-            if (this._isDemo) {
-              this.gameService.create(this._buildGameConfigForDemo());
-              return;
-            }
-
-            this.gameService.create(this._buildGameConfig());
-          }
-        }, {
-          key: "_isInvalidForm",
-          get: function get() {
-            this.form.markAllAsTouched();
-            return this.form.invalid;
-          }
         }, {
           key: "_buildGameConfig",
           value: function _buildGameConfig() {
@@ -1773,101 +1797,183 @@
             });
             return cards;
           }
-        }, {
-          key: "_buildGameConfigForDemo",
-          value: function _buildGameConfigForDemo() {
-            var data = this.form.value;
-            var gameConfig = new src_app_shared_model_game_config_model__WEBPACK_IMPORTED_MODULE_5__["GameConfig"]();
-            gameConfig.title = this.translationService.getTranslation(this.TRANSLATION.gameTitle.demo);
-            gameConfig.singleCardPerPair = data[this.FORM_INPUT.card.singleCardPerPair];
-            gameConfig.addCustomSoundsPerCard = false;
-            gameConfig.cards = [];
-            var imageDirPath = 'assets/images/demo-game-cards';
-            var numPairs = data.numPairs;
-
-            for (var i = 1; i <= numPairs; i++) {
-              var filename = "num".concat(i, "_draw.png");
-              var image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_4__["FileUpload"]("".concat(imageDirPath, "/draw/").concat(filename), filename);
-              gameConfig.cards.push(new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_3__["Card"](null, image, null));
-            }
-
-            if (!gameConfig.singleCardPerPair) {
-              for (var _i = 1; _i <= numPairs; _i++) {
-                var _filename = "num".concat(_i, "_word.png");
-
-                var _image = new src_app_shared_model_file_upload_model__WEBPACK_IMPORTED_MODULE_4__["FileUpload"]("".concat(imageDirPath, "/words/").concat(_filename), _filename);
-
-                gameConfig.cards.push(new src_app_shared_model_card__WEBPACK_IMPORTED_MODULE_3__["Card"](null, _image, null));
-              }
-            }
-
-            return gameConfig;
-          }
         }]);
 
         return GameBuilderFormComponent;
-      }();
+      }(_abstract_game_builder_form_abstract_game_builder_form_component__WEBPACK_IMPORTED_MODULE_6__["AbstractGameBuilderFormComponent"]);
 
       GameBuilderFormComponent.ɵfac = function GameBuilderFormComponent_Factory(t) {
-        return new (t || GameBuilderFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](src_app_services_game_service__WEBPACK_IMPORTED_MODULE_9__["GameService"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_10__["ToastService"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](src_app_shared_components_translation_translation_service__WEBPACK_IMPORTED_MODULE_11__["TranslationService"]));
+        return new (t || GameBuilderFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](src_app_services_game_service__WEBPACK_IMPORTED_MODULE_8__["GameService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_9__["ToastService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]));
       };
 
-      GameBuilderFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
+      GameBuilderFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
         type: GameBuilderFormComponent,
         selectors: [["app-game-builder-form"]],
-        inputs: {
-          parent: "parent"
-        },
-        decls: 11,
-        vars: 7,
-        consts: [[4, "ngIf", "ngIfElse"], ["showFullBuilderForm", ""], [1, "d-flex-row", "mt-4"], ["mat-raised-button", "", "type", "submit", "color", "primary", 3, "click"], ["class", "download-btn", 4, "ngIf"], [3, "formGroup"], [1, "form-line"], [1, "form-item", 3, "label", "form", "controlName", "optionsTranslate"], [1, "form-item", 3, "labelTranslate", "form", "controlName"], [1, "form-item", 3, "labelTranslate", "form", "controlName", "options"], [1, "subtitle", "color-primary"], ["controlName", "title", 1, "input-title", 3, "labelTranslate", "form"], [1, "input-card-id", 3, "labelTranslate", "form", "controlName", "optionsTranslate"], [3, "labelTranslate", "form", "controlName", "onChange"], ["class", "form-item", 4, "ngIf"], [3, "parent"], [1, "form-item"], [3, "form", "controlName"], [1, "download-btn"], ["mat-stroked-button", "", "type", "button", "color", "primary", 3, "click"]],
+        features: [_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵInheritDefinitionFeature"]],
+        decls: 35,
+        vars: 36,
+        consts: [[3, "formGroup"], [1, "subtitle", "color-primary"], [1, "form-line"], ["controlName", "title", 1, "input-title", 3, "labelTranslate", "form"], [1, "input-card-id", 3, "labelTranslate", "form", "controlName", "optionsTranslate"], [3, "labelTranslate", "form", "controlName", "onChange"], ["class", "form-item", 4, "ngIf"], [3, "parent"], [1, "d-flex-row", "mt-4"], ["mat-raised-button", "", "type", "submit", "color", "primary", 3, "click"], [1, "download-btn"], ["mat-stroked-button", "", "type", "button", "color", "primary", 3, "click"], [1, "form-item"], [3, "form", "controlName"]],
         template: function GameBuilderFormComponent_Template(rf, ctx) {
           if (rf & 1) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtemplate"](0, GameBuilderFormComponent_div_0_Template, 7, 15, "div", 0);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](0, "form", 0);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtemplate"](1, GameBuilderFormComponent_ng_template_1_Template, 19, 24, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtemplateRefExtractor"]);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](1, "span", 1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](3, "div", 2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](2);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](4, "div");
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipe"](3, "translate");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](5, "button", 3);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵlistener"]("click", function GameBuilderFormComponent_Template_button_click_5_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](4, "div", 2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](5, "app-input-text", 3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](6, "app-select", 4);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](7, "mat-divider");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](8, "span", 1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](9);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipe"](10, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](11, "div", 2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](12, "app-select-yes-no", 5);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("onChange", function GameBuilderFormComponent_Template_app_select_yes_no_onChange_12_listener($event) {
+              return ctx.onChangeAddBackgroundImg($event);
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtemplate"](13, GameBuilderFormComponent_div_13_Template, 2, 2, "div", 6);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](14, "mat-divider");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](15, "span", 1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](16);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipe"](17, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](18, "app-card-form", 7);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](19, "div", 8);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](20, "div");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](21, "button", 9);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function GameBuilderFormComponent_Template_button_click_21_listener() {
               return ctx.submit();
             });
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](6, "mat-icon");
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](22, "mat-icon");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](7, "sports_esports");
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](23, "sports_esports");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](8);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](24);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipe"](9, "translate");
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipe"](25, "translate");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtemplate"](10, GameBuilderFormComponent_div_10_Template, 9, 8, "div", 4);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](26, "div", 10);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](27, "button", 11);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function GameBuilderFormComponent_Template_button_click_27_listener() {
+              return ctx.download();
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](28, "mat-icon");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](29, "download");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](30);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipe"](31, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](32, "span");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](33);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipe"](34, "translate");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
           }
 
           if (rf & 2) {
-            var _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵreference"](2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("formGroup", ctx.form);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngIf", ctx.flag.isDemo)("ngIfElse", _r1);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](2);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](8);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](3, 18, "TRANSLATION", ctx.TRANSLATION.sectionTitle.mainData), " ");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵpipeBind2"](9, 4, "TRANSLATION", ctx.submitBtnTranslation), " ");
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("labelTranslate", ctx.TRANSLATION.input.gameTitle)("form", ctx.form);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngIf", !ctx.flag.isDemo);
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("labelTranslate", ctx.TRANSLATION.input.cardIdType)("form", ctx.form)("controlName", ctx.FORM_INPUT.cardIdType)("optionsTranslate", ctx.options.cardId);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](10, 21, "TRANSLATION", ctx.TRANSLATION.sectionTitle.backgroundImg));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("labelTranslate", ctx.TRANSLATION.input.backgroundImg.add)("form", ctx.form)("controlName", ctx.FORM_INPUT.addBackgroundImg);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngIf", ctx.flag.addBackgroundImg);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](17, 24, "TRANSLATION", ctx.TRANSLATION.sectionTitle.cards));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("parent", ctx);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](6);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](25, 27, "TRANSLATION", ctx.TRANSLATION.btn.submit.createGame), " ");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](6);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](31, 30, "TRANSLATION", ctx.TRANSLATION.btn.download.label), " ");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](34, 33, "TRANSLATION", ctx.TRANSLATION.btn.download.comment));
           }
         },
         styles: ["form[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}\n\n.input-title[_ngcontent-%COMP%] {\n  flex: 8 0 0;\n}\n\n.input-card-id[_ngcontent-%COMP%] {\n  flex: 4 0 0;\n}\n\n.input-file[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.subtitle[_ngcontent-%COMP%] {\n  font-size: 16px;\n}\n\n.d-flex-row[_ngcontent-%COMP%] {\n  align-items: flex-start;\n  justify-content: center;\n}\n\n.download-btn[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  gap: 0.25rem;\n}\n\n.download-btn[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcZ2FtZS1idWlsZGVyLWZvcm0uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxTQUFBO0FBQ0o7O0FBRUE7RUFDSSxXQUFBO0FBQ0o7O0FBQ0E7RUFDSSxXQUFBO0FBRUo7O0FBQ0E7RUFDSSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxXQUFBO0FBRUo7O0FBQ0E7RUFDSSxlQUFBO0FBRUo7O0FBQ0E7RUFDSSx1QkFBQTtFQUNBLHVCQUFBO0FBRUo7O0FBQ0E7RUFDSSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0VBQ0EsWUFBQTtBQUVKOztBQUFJO0VBQ0ksa0JBQUE7RUFDQSxlQUFBO0FBRVIiLCJmaWxlIjoiZ2FtZS1idWlsZGVyLWZvcm0uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJmb3JtIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgZ2FwOiAxcmVtO1xyXG59XHJcblxyXG4uaW5wdXQtdGl0bGUge1xyXG4gICAgZmxleDogOCAwIDA7XHJcbn1cclxuLmlucHV0LWNhcmQtaWQge1xyXG4gICAgZmxleDogNCAwIDA7XHJcbn1cclxuXHJcbi5pbnB1dC1maWxlIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgZ2FwOiAwLjVyZW07XHJcbn1cclxuXHJcbi5zdWJ0aXRsZSB7XHJcbiAgICBmb250LXNpemU6IDE2cHg7XHJcbn1cclxuXHJcbi5kLWZsZXgtcm93IHtcclxuICAgIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0O1xyXG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbn1cclxuXHJcbi5kb3dubG9hZC1idG4ge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBnYXA6IDAuMjVyZW07XHJcblxyXG4gICAgc3BhbiB7XHJcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMTJweDtcclxuICAgIH1cclxufVxyXG4iXX0= */"]
@@ -2288,7 +2394,7 @@
       /*! src/app/services/game.service */
       "VdwR");
 
-      function GameBuilderComponent_div_7_Template(rf, ctx) {
+      function GameBuilderComponent_div_8_Template(rf, ctx) {
         if (rf & 1) {
           var _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
 
@@ -2296,7 +2402,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](1, "mat-checkbox", 6);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("change", function GameBuilderComponent_div_7_Template_mat_checkbox_change_1_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("change", function GameBuilderComponent_div_8_Template_mat_checkbox_change_1_listener($event) {
             _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r4);
 
             var ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
@@ -2334,7 +2440,7 @@
         }
       }
 
-      function GameBuilderComponent_app_game_builder_form_8_Template(rf, ctx) {
+      function GameBuilderComponent_app_game_builder_form_9_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelement"](0, "app-game-builder-form", 8);
         }
@@ -2346,7 +2452,7 @@
         }
       }
 
-      function GameBuilderComponent_div_9_Template(rf, ctx) {
+      function GameBuilderComponent_div_10_Template(rf, ctx) {
         if (rf & 1) {
           var _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
 
@@ -2354,7 +2460,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](1, "app-upload", 9, 10);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("onUpload", function GameBuilderComponent_div_9_Template_app_upload_onUpload_1_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("onUpload", function GameBuilderComponent_div_10_Template_app_upload_onUpload_1_listener($event) {
             _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r7);
 
             var _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](2);
@@ -2393,17 +2499,17 @@
         _createClass(GameBuilderComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this5 = this;
+            var _this7 = this;
 
             var _a;
 
             (_a = this.route.data) === null || _a === void 0 ? void 0 : _a.subscribe(function (data) {
               var _a;
 
-              _this5._isDemo = (_a = data.demo) !== null && _a !== void 0 ? _a : false;
-              _this5.pageTitleTranslation = _this5._isDemo ? _this5.TRANSLATION.pageTitle.demoBuilder : _this5.TRANSLATION.pageTitle.gameBuilder;
+              _this7._isDemo = (_a = data.demo) !== null && _a !== void 0 ? _a : false;
+              _this7.pageTitleTranslation = _this7._isDemo ? _this7.TRANSLATION.pageTitle.demoBuilder : _this7.TRANSLATION.pageTitle.gameBuilder;
 
-              _this5._initFlags();
+              _this7._initFlags();
             });
           }
         }, {
@@ -2447,8 +2553,8 @@
       GameBuilderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({
         type: GameBuilderComponent,
         selectors: [["app-game-builder"]],
-        decls: 10,
-        vars: 11,
+        decls: 11,
+        vars: 15,
         consts: [[1, "color-primary"], [1, "main-instructions", "mb-4"], ["class", "upload-config-file", 4, "ngIf"], [3, "parent", 4, "ngIf"], [4, "ngIf"], [1, "upload-config-file"], ["color", "primary", 3, "change"], [1, "instruction"], [3, "parent"], [3, "fileType", "onUpload"], ["upload", ""]],
         template: function GameBuilderComponent_Template(rf, ctx) {
           if (rf & 1) {
@@ -2468,27 +2574,29 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipe"](6, "translate");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](7, GameBuilderComponent_div_7_Template, 7, 8, "div", 2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipe"](7, "translate");
 
             _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](8, GameBuilderComponent_app_game_builder_form_8_Template, 1, 1, "app-game-builder-form", 3);
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](8, GameBuilderComponent_div_8_Template, 7, 8, "div", 2);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](9, GameBuilderComponent_div_9_Template, 3, 1, "div", 4);
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](9, GameBuilderComponent_app_game_builder_form_9_Template, 1, 1, "app-game-builder-form", 3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](10, GameBuilderComponent_div_10_Template, 3, 1, "div", 4);
           }
 
           if (rf & 2) {
             _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipeBind2"](2, 5, "TRANSLATION", ctx.pageTitleTranslation));
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipeBind2"](2, 6, "TRANSLATION", ctx.pageTitleTranslation));
 
             _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](4);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipeBind2"](6, 8, "TRANSLATION", ctx.TRANSLATION.instruction));
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate2"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipeBind2"](6, 9, "TRANSLATION", ctx.TRANSLATION.topInstruction.main), " ", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipeBind2"](7, 12, "TRANSLATION", ctx.TRANSLATION.topInstruction.orUploadConfigFile), " ");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](3);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", !ctx.flag.isDemo);
 
@@ -2608,14 +2716,14 @@
         _createClass(CardUrlsInputComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this6 = this;
+            var _this8 = this;
 
             setTimeout(function () {
-              _this6.indices = _toConsumableArray(Array(_this6.urlPairConfig.numPairs).keys());
-              _this6._cardImageMap = {};
-              _this6._numCardImages = _this6.urlPairConfig.numCards;
+              _this8.indices = _toConsumableArray(Array(_this8.urlPairConfig.numPairs).keys());
+              _this8._cardImageMap = {};
+              _this8._numCardImages = _this8.urlPairConfig.numCards;
 
-              _this6.form.addControl(_this6._CARD_URLS_INPUT, _this6._formArray);
+              _this8.form.addControl(_this8._CARD_URLS_INPUT, _this8._formArray);
             }, 1);
           }
         }, {
@@ -2733,6 +2841,47 @@
         },
         styles: [".card-box[_ngcontent-%COMP%] {\n  border: 1px dotted steelblue;\n  border-radius: 4px;\n  padding: 0 1rem;\n  margin-bottom: 1rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFxjYXJkLXVybHMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSw0QkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLG1CQUFBO0FBQ0oiLCJmaWxlIjoiY2FyZC11cmxzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNhcmQtYm94IHtcclxuICAgIGJvcmRlcjogMXB4IGRvdHRlZCBzdGVlbGJsdWU7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBwYWRkaW5nOiAwIDFyZW07XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxcmVtO1xyXG59XHJcbiJdfQ== */"]
       });
+      /***/
+    },
+
+    /***/
+    "Oh0K":
+    /*!********************************************************************!*\
+      !*** ./src/app/views/game-builder/game-build-form-input.values.ts ***!
+      \********************************************************************/
+
+    /*! exports provided: GAME_BUILDER_FORM_INPUT */
+
+    /***/
+    function Oh0K(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "GAME_BUILDER_FORM_INPUT", function () {
+        return GAME_BUILDER_FORM_INPUT;
+      });
+
+      var GAME_BUILDER_FORM_INPUT = {
+        cardIdType: 'cardIdType',
+        addBackgroundImg: 'addBackgroundImg',
+        backgroundImgSrc: 'backgroundImgSrc',
+        card: {
+          singleCardPerPair: 'singleCardPerPair',
+          addCustomSoundsPerCard: 'addCustomSoundsPerCard',
+          cardSrcType: 'cardSrcType',
+          // for srcType UPLOAD
+          upload: {
+            images: 'cardUploadImages',
+            audios: 'cardUploadAudios'
+          },
+          // for srcType URL        
+          numPairs: 'numPairs',
+          urls: 'cardUrls'
+        }
+      };
       /***/
     },
 
@@ -2970,22 +3119,22 @@
         _inherits(SelectComponent, _abstract_input_compo2);
 
         function SelectComponent() {
-          var _this7;
+          var _this9;
 
           _classCallCheck(this, SelectComponent);
 
-          _this7 = _callSuper(this, SelectComponent, arguments);
-          _this7.ALL_OPTION = 'all';
-          _this7.options = [];
-          _this7.optionsTranslate = [];
-          _this7.valueAttribute = 'id';
-          _this7.labelAttribute = 'label';
-          _this7.multiple = false;
-          _this7.useFullOptionAsValue = false;
-          _this7.onFinishedLoading = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-          _this7.showLoadingOptionsError = false;
-          _this7._allSelected = false;
-          return _this7;
+          _this9 = _callSuper(this, SelectComponent, arguments);
+          _this9.ALL_OPTION = 'all';
+          _this9.options = [];
+          _this9.optionsTranslate = [];
+          _this9.valueAttribute = 'id';
+          _this9.labelAttribute = 'label';
+          _this9.multiple = false;
+          _this9.useFullOptionAsValue = false;
+          _this9.onFinishedLoading = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+          _this9.showLoadingOptionsError = false;
+          _this9._allSelected = false;
+          return _this9;
         }
 
         _createClass(SelectComponent, [{
@@ -3022,7 +3171,7 @@
         }, {
           key: "_onChangeSelectionMultiple",
           value: function _onChangeSelectionMultiple($eventValue) {
-            var _this8 = this;
+            var _this10 = this;
 
             if (this._allSelected) {
               this.formControl.setValue([]);
@@ -3034,7 +3183,7 @@
 
             if (this._allSelected) {
               this.formControl.setValue(this.options.map(function (option) {
-                return option[_this8.valueAttribute];
+                return option[_this10.valueAttribute];
               }));
             }
           }
@@ -3215,87 +3364,87 @@
       /* harmony import */
 
 
-      var _game_builder_form_background_image_form_background_image_form_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _game_builder_form_demo_game_builder_form_demo_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ./game-builder-form-demo/game-builder-form-demo.component */
+      "30b+");
+      /* harmony import */
+
+
+      var _game_builder_form_background_image_form_background_image_form_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ./game-builder-form/background-image-form/background-image-form.component */
       "iOa7");
       /* harmony import */
 
 
-      var _game_builder_form_cards_card_form_card_form_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _game_builder_form_cards_card_form_card_form_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! ./game-builder-form/cards/card-form/card-form.component */
       "ZNbn");
       /* harmony import */
 
 
-      var _game_builder_form_cards_card_image_filename_example_dialog_card_image_filename_example_dialog_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _game_builder_form_cards_card_image_filename_example_dialog_card_image_filename_example_dialog_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! ./game-builder-form/cards/card-image-filename-example-dialog/card-image-filename-example-dialog.component */
       "ImFY");
       /* harmony import */
 
 
-      var _game_builder_form_cards_card_urls_card_pair_url_inputs_card_pair_url_inputs_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _game_builder_form_cards_card_urls_card_pair_url_inputs_card_pair_url_inputs_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! ./game-builder-form/cards/card-urls/card-pair-url-inputs/card-pair-url-inputs.component */
       "3hcz");
       /* harmony import */
 
 
-      var _game_builder_form_cards_card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _game_builder_form_cards_card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! ./game-builder-form/cards/card-urls/card-urls.component */
       "M3mD");
       /* harmony import */
 
 
-      var _game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! ./game-builder-form/game-builder-form.component */
       "4ECR");
       /* harmony import */
 
 
-      var _game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      var _game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! ./game-builder/game-builder.component */
       "Lpt5");
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
       /* harmony import */
 
 
-      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
       /*! @angular/material/form-field */
       "kmnG");
       /* harmony import */
 
 
-      var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+      var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
       /*! @angular/material/checkbox */
       "bSwM");
       /* harmony import */
 
 
-      var _shared_components_input_upload_upload_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+      var _shared_components_input_upload_upload_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
       /*! ../../shared/components/input/upload/upload.component */
       "1mk4");
       /* harmony import */
 
 
-      var _shared_components_input_select_select_select_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
-      /*! ../../shared/components/input/select/select/select.component */
-      "OlXG");
-      /* harmony import */
-
-
-      var _shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
-      /*! ../../shared/components/input/select/select-yes-no/select-yes-no.component */
-      "oJA7");
-      /* harmony import */
-
-
-      var _shared_components_input_input_text_input_text_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+      var _shared_components_input_input_text_input_text_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
       /*! ../../shared/components/input/input-text/input-text.component */
       "z1KF");
+      /* harmony import */
+
+
+      var _shared_components_input_select_select_select_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+      /*! ../../shared/components/input/select/select/select.component */
+      "OlXG");
       /* harmony import */
 
 
@@ -3305,25 +3454,28 @@
       /* harmony import */
 
 
-      var _angular_material_button__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
+      var _shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
+      /*! ../../shared/components/input/select/select-yes-no/select-yes-no.component */
+      "oJA7");
+      /* harmony import */
+
+
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
       /*! @angular/material/button */
       "bTqV");
       /* harmony import */
 
 
-      var _angular_material_icon__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+      var _angular_material_icon__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
       /*! @angular/material/icon */
       "NFeN");
 
       var routes = [{
         path: '',
-        component: _game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_12__["GameBuilderComponent"]
+        component: _game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_13__["GameBuilderComponent"]
       }, {
         path: 'demo',
-        component: _game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_12__["GameBuilderComponent"],
-        data: {
-          demo: true
-        }
+        component: _game_builder_form_demo_game_builder_form_demo_component__WEBPACK_IMPORTED_MODULE_6__["GameBuilderFormDemoComponent"]
       }];
 
       var GameBuilderModule = /*#__PURE__*/_createClass(function GameBuilderModule() {
@@ -3334,25 +3486,25 @@
         return new (t || GameBuilderModule)();
       };
 
-      GameBuilderModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineNgModule"]({
+      GameBuilderModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineNgModule"]({
         type: GameBuilderModule
       });
-      GameBuilderModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineInjector"]({
+      GameBuilderModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjector"]({
         imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild(routes), src_app_material_module__WEBPACK_IMPORTED_MODULE_4__["MaterialModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateModule"], src_app_shared_components_input_input_module__WEBPACK_IMPORTED_MODULE_5__["InputModule"]]]
       });
 
       (function () {
-        (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵsetNgModuleScope"](GameBuilderModule, {
-          declarations: [_game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_12__["GameBuilderComponent"], _game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_11__["GameBuilderFormComponent"], _game_builder_form_background_image_form_background_image_form_component__WEBPACK_IMPORTED_MODULE_6__["BackgroundImageFormComponent"], _game_builder_form_cards_card_form_card_form_component__WEBPACK_IMPORTED_MODULE_7__["CardFormComponent"], _game_builder_form_cards_card_image_filename_example_dialog_card_image_filename_example_dialog_component__WEBPACK_IMPORTED_MODULE_8__["CardImageFilenameExampleDialogComponent"], _game_builder_form_cards_card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_10__["CardUrlsInputComponent"], _game_builder_form_cards_card_urls_card_pair_url_inputs_card_pair_url_inputs_component__WEBPACK_IMPORTED_MODULE_9__["CardPairUrlInputsComponent"]],
+        (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵsetNgModuleScope"](GameBuilderModule, {
+          declarations: [_game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_13__["GameBuilderComponent"], _game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_12__["GameBuilderFormComponent"], _game_builder_form_background_image_form_background_image_form_component__WEBPACK_IMPORTED_MODULE_7__["BackgroundImageFormComponent"], _game_builder_form_cards_card_form_card_form_component__WEBPACK_IMPORTED_MODULE_8__["CardFormComponent"], _game_builder_form_cards_card_image_filename_example_dialog_card_image_filename_example_dialog_component__WEBPACK_IMPORTED_MODULE_9__["CardImageFilenameExampleDialogComponent"], _game_builder_form_cards_card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_11__["CardUrlsInputComponent"], _game_builder_form_cards_card_urls_card_pair_url_inputs_card_pair_url_inputs_component__WEBPACK_IMPORTED_MODULE_10__["CardPairUrlInputsComponent"], _game_builder_form_demo_game_builder_form_demo_component__WEBPACK_IMPORTED_MODULE_6__["GameBuilderFormDemoComponent"]],
           imports: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"], src_app_material_module__WEBPACK_IMPORTED_MODULE_4__["MaterialModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateModule"], src_app_shared_components_input_input_module__WEBPACK_IMPORTED_MODULE_5__["InputModule"]]
         });
       })();
 
-      _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵsetComponentScope"](_game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_12__["GameBuilderComponent"], [_angular_material_form_field__WEBPACK_IMPORTED_MODULE_14__["MatLabel"], _angular_common__WEBPACK_IMPORTED_MODULE_0__["NgIf"], _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_15__["MatCheckbox"], _game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_11__["GameBuilderFormComponent"], _shared_components_input_upload_upload_component__WEBPACK_IMPORTED_MODULE_16__["UploadComponent"]], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]]);
+      _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵsetComponentScope"](_game_builder_game_builder_component__WEBPACK_IMPORTED_MODULE_13__["GameBuilderComponent"], [_angular_material_form_field__WEBPACK_IMPORTED_MODULE_15__["MatLabel"], _angular_common__WEBPACK_IMPORTED_MODULE_0__["NgIf"], _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_16__["MatCheckbox"], _game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_12__["GameBuilderFormComponent"], _shared_components_input_upload_upload_component__WEBPACK_IMPORTED_MODULE_17__["UploadComponent"]], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]]);
 
-      _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵsetComponentScope"](_game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_11__["GameBuilderFormComponent"], [_angular_common__WEBPACK_IMPORTED_MODULE_0__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _shared_components_input_select_select_select_component__WEBPACK_IMPORTED_MODULE_17__["SelectComponent"], _shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_18__["SelectYesNoComponent"], _shared_components_input_input_text_input_text_component__WEBPACK_IMPORTED_MODULE_19__["InputTextComponent"], _angular_material_divider__WEBPACK_IMPORTED_MODULE_20__["MatDivider"], _game_builder_form_background_image_form_background_image_form_component__WEBPACK_IMPORTED_MODULE_6__["BackgroundImageFormComponent"], _game_builder_form_cards_card_form_card_form_component__WEBPACK_IMPORTED_MODULE_7__["CardFormComponent"], _angular_material_button__WEBPACK_IMPORTED_MODULE_21__["MatButton"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_22__["MatIcon"]], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]]);
+      _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵsetComponentScope"](_game_builder_form_game_builder_form_component__WEBPACK_IMPORTED_MODULE_12__["GameBuilderFormComponent"], [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _shared_components_input_input_text_input_text_component__WEBPACK_IMPORTED_MODULE_18__["InputTextComponent"], _shared_components_input_select_select_select_component__WEBPACK_IMPORTED_MODULE_19__["SelectComponent"], _angular_material_divider__WEBPACK_IMPORTED_MODULE_20__["MatDivider"], _shared_components_input_select_select_yes_no_select_yes_no_component__WEBPACK_IMPORTED_MODULE_21__["SelectYesNoComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_0__["NgIf"], _game_builder_form_background_image_form_background_image_form_component__WEBPACK_IMPORTED_MODULE_7__["BackgroundImageFormComponent"], _game_builder_form_cards_card_form_card_form_component__WEBPACK_IMPORTED_MODULE_8__["CardFormComponent"], _angular_material_button__WEBPACK_IMPORTED_MODULE_22__["MatButton"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_23__["MatIcon"]], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]]);
 
-      _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵsetComponentScope"](_game_builder_form_cards_card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_10__["CardUrlsInputComponent"], [_angular_common__WEBPACK_IMPORTED_MODULE_0__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_0__["NgForOf"], _game_builder_form_cards_card_urls_card_pair_url_inputs_card_pair_url_inputs_component__WEBPACK_IMPORTED_MODULE_9__["CardPairUrlInputsComponent"]], []);
+      _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵsetComponentScope"](_game_builder_form_cards_card_urls_card_urls_component__WEBPACK_IMPORTED_MODULE_11__["CardUrlsInputComponent"], [_angular_common__WEBPACK_IMPORTED_MODULE_0__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_0__["NgForOf"], _game_builder_form_cards_card_urls_card_pair_url_inputs_card_pair_url_inputs_component__WEBPACK_IMPORTED_MODULE_10__["CardPairUrlInputsComponent"]], []);
       /***/
 
     },
@@ -3461,47 +3613,6 @@
         directives: [_input_text_input_text_component__WEBPACK_IMPORTED_MODULE_1__["InputTextComponent"], _image_preview_image_preview_component__WEBPACK_IMPORTED_MODULE_2__["ImagePreviewComponent"]],
         styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJpbnB1dC1pbWFnZS11cmwuY29tcG9uZW50LnNjc3MifQ== */"]
       });
-      /***/
-    },
-
-    /***/
-    "T3tV":
-    /*!**************************************************************************************!*\
-      !*** ./src/app/views/game-builder/game-builder-form/game-build-form-input.values.ts ***!
-      \**************************************************************************************/
-
-    /*! exports provided: GAME_BUILDER_FORM_INPUT */
-
-    /***/
-    function T3tV(module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export (binding) */
-
-
-      __webpack_require__.d(__webpack_exports__, "GAME_BUILDER_FORM_INPUT", function () {
-        return GAME_BUILDER_FORM_INPUT;
-      });
-
-      var GAME_BUILDER_FORM_INPUT = {
-        cardIdType: 'cardIdType',
-        addBackgroundImg: 'addBackgroundImg',
-        backgroundImgSrc: 'backgroundImgSrc',
-        card: {
-          singleCardPerPair: 'singleCardPerPair',
-          addCustomSoundsPerCard: 'addCustomSoundsPerCard',
-          cardSrcType: 'cardSrcType',
-          // for srcType UPLOAD
-          upload: {
-            images: 'cardUploadImages',
-            audios: 'cardUploadAudios'
-          },
-          // for srcType URL        
-          numPairs: 'numPairs',
-          urls: 'cardUrls'
-        }
-      };
       /***/
     },
 
@@ -3834,8 +3945,8 @@
 
 
       var _game_build_form_input_values__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-      /*! ../../game-build-form-input.values */
-      "T3tV");
+      /*! ../../../game-build-form-input.values */
+      "Oh0K");
       /* harmony import */
 
 
@@ -4261,11 +4372,11 @@
         }, {
           key: "_removeUrlInputs",
           value: function _removeUrlInputs() {
-            var _this9 = this;
+            var _this11 = this;
 
             this.stateUrlInputs = STATE.hide;
             setTimeout(function () {
-              _this9.urlPairConfig = null;
+              _this11.urlPairConfig = null;
             }, ANIMATION_TIMEOUT);
           }
         }, {
@@ -4601,7 +4712,7 @@
         _createClass(BackgroundImageFormComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this10 = this;
+            var _this12 = this;
 
             this.myControlName = {
               srcType: "".concat(this.controlName, "SrcType"),
@@ -4612,16 +4723,16 @@
             this.form.addControl(this.myControlName.url, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"]());
             this.form.addControl(this.myControlName.upload, new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"]());
             this.form.get(this.myControlName.upload).valueChanges.subscribe(function (value) {
-              return _this10._onUpload(value);
+              return _this12._onUpload(value);
             });
           }
         }, {
           key: "ngOnDestroy",
           value: function ngOnDestroy() {
-            var _this11 = this;
+            var _this13 = this;
 
             Object.values(this.myControlName).forEach(function (controlName) {
-              return _this11.form.removeControl(controlName);
+              return _this13.form.removeControl(controlName);
             });
           }
         }, {
@@ -4682,12 +4793,12 @@
         }, {
           key: "deleteFile",
           value: function deleteFile() {
-            var _this12 = this;
+            var _this14 = this;
 
             var _a;
 
             [this.myControlName.url, this.myControlName.upload].forEach(function (controlName) {
-              return _this12.form.get(controlName).setValue(null);
+              return _this14.form.get(controlName).setValue(null);
             });
 
             this._setImage(null);
@@ -4857,6 +4968,146 @@
           en: 'valid'
         })
       };
+      /***/
+    },
+
+    /***/
+    "nvkq":
+    /*!*******************************************************************************************************!*\
+      !*** ./src/app/views/game-builder/abstract-game-builder-form/abstract-game-builder-form.component.ts ***!
+      \*******************************************************************************************************/
+
+    /*! exports provided: AbstractGameBuilderFormComponent */
+
+    /***/
+    function nvkq(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "AbstractGameBuilderFormComponent", function () {
+        return AbstractGameBuilderFormComponent;
+      });
+      /* harmony import */
+
+
+      var src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! src/app/shared/enums/card-id-type.enum */
+      "YzOW");
+      /* harmony import */
+
+
+      var _game_build_form_input_values__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ../game-build-form-input.values */
+      "Oh0K");
+      /* harmony import */
+
+
+      var _game_builder_values__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ../game-builder-values */
+      "1KsR");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var src_app_services_game_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/services/game.service */
+      "VdwR");
+      /* harmony import */
+
+
+      var src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! src/app/services/toast.service */
+      "2g2N");
+
+      var AbstractGameBuilderFormComponent = /*#__PURE__*/function () {
+        function AbstractGameBuilderFormComponent(gameService, toastService) {
+          _classCallCheck(this, AbstractGameBuilderFormComponent);
+
+          this.gameService = gameService;
+          this.toastService = toastService;
+          this.TRANSLATION = _game_builder_values__WEBPACK_IMPORTED_MODULE_2__["GAME_BUILDER_TRANSLATION"];
+          this.FORM_INPUT = _game_build_form_input_values__WEBPACK_IMPORTED_MODULE_1__["GAME_BUILDER_FORM_INPUT"];
+          this.ACCEPT_IMG = ['image/png', 'image/jpeg'];
+          this.options = {};
+        }
+
+        _createClass(AbstractGameBuilderFormComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            this._initForm();
+
+            this._setOptions();
+          }
+        }, {
+          key: "_initForm",
+          value: function _initForm() {
+            throw new Error('Method not implemented'); // child components should implement it
+          }
+        }, {
+          key: "_setOptions",
+          value: function _setOptions() {
+            var cardIdTypeNameTranslations = src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__["CardIdTypeNameTranslations"];
+            this.options = {
+              cardId: [{
+                id: src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__["CardIdTypeEnum"].NUMBERS,
+                label: cardIdTypeNameTranslations[src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__["CardIdTypeEnum"].NUMBERS]
+              }, {
+                id: src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__["CardIdTypeEnum"].ROW_COLUMN,
+                label: cardIdTypeNameTranslations[src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__["CardIdTypeEnum"].ROW_COLUMN]
+              }, {
+                id: src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__["CardIdTypeEnum"].ICONS,
+                label: cardIdTypeNameTranslations[src_app_shared_enums_card_id_type_enum__WEBPACK_IMPORTED_MODULE_0__["CardIdTypeEnum"].ICONS]
+              }]
+            };
+          }
+        }, {
+          key: "submit",
+          value: function submit() {
+            if (this._isInvalidForm) {
+              return this.toastService.showInvalidFormError();
+            }
+
+            this.gameService.create(this._buildGameConfig());
+          }
+        }, {
+          key: "_isInvalidForm",
+          get: function get() {
+            this.form.markAllAsTouched();
+            return this.form.invalid;
+          }
+        }, {
+          key: "_buildGameConfig",
+          value: function _buildGameConfig() {
+            throw new Error('Method not implemented'); // child components should implement it
+          }
+        }]);
+
+        return AbstractGameBuilderFormComponent;
+      }();
+
+      AbstractGameBuilderFormComponent.ɵfac = function AbstractGameBuilderFormComponent_Factory(t) {
+        return new (t || AbstractGameBuilderFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](src_app_services_game_service__WEBPACK_IMPORTED_MODULE_4__["GameService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](src_app_services_toast_service__WEBPACK_IMPORTED_MODULE_5__["ToastService"]));
+      };
+
+      AbstractGameBuilderFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
+        type: AbstractGameBuilderFormComponent,
+        selectors: [["app-abstract-game-builder-form"]],
+        inputs: {
+          parent: "parent"
+        },
+        decls: 0,
+        vars: 0,
+        template: function AbstractGameBuilderFormComponent_Template(rf, ctx) {},
+        encapsulation: 2
+      });
       /***/
     },
 
@@ -5233,14 +5484,14 @@
         _inherits(InputNumberComponent, _abstract_input_compo3);
 
         function InputNumberComponent() {
-          var _this13;
+          var _this15;
 
           _classCallCheck(this, InputNumberComponent);
 
-          _this13 = _callSuper(this, InputNumberComponent, arguments);
-          _this13.min = null;
-          _this13.max = null;
-          return _this13;
+          _this15 = _callSuper(this, InputNumberComponent, arguments);
+          _this15.min = null;
+          _this15.max = null;
+          return _this15;
         }
 
         _createClass(InputNumberComponent, [{
@@ -5399,7 +5650,7 @@
         _createClass(InputAudioUrlComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this14 = this;
+            var _this16 = this;
 
             this.flag = {
               hasValue: false,
@@ -5407,11 +5658,11 @@
             };
             this._audio = new Audio();
             this.form.get(this.controlName).valueChanges.subscribe(function (value) {
-              _this14.flag.hasValue = !!value;
-              _this14._audio.src = value;
+              _this16.flag.hasValue = !!value;
+              _this16._audio.src = value;
 
               if (value) {
-                _this14._audio.load();
+                _this16._audio.load();
               }
             });
           }
@@ -5570,13 +5821,13 @@
         _inherits(SelectMediaSrcTypeComponent, _select_select_compon2);
 
         function SelectMediaSrcTypeComponent() {
-          var _this15;
+          var _this17;
 
           _classCallCheck(this, SelectMediaSrcTypeComponent);
 
-          _this15 = _callSuper(this, SelectMediaSrcTypeComponent, arguments);
-          _this15.TRANSLATION = _select_media_src_type_values__WEBPACK_IMPORTED_MODULE_2__["SRC_TYPE_TRANSLATION_VALUES"];
-          return _this15;
+          _this17 = _callSuper(this, SelectMediaSrcTypeComponent, arguments);
+          _this17.TRANSLATION = _select_media_src_type_values__WEBPACK_IMPORTED_MODULE_2__["SRC_TYPE_TRANSLATION_VALUES"];
+          return _this17;
         }
 
         _createClass(SelectMediaSrcTypeComponent, [{
@@ -5808,15 +6059,15 @@
         _inherits(InputTextComponent, _abstract_input_compo4);
 
         function InputTextComponent() {
-          var _this16;
+          var _this18;
 
           _classCallCheck(this, InputTextComponent);
 
-          _this16 = _callSuper(this, InputTextComponent, arguments);
-          _this16.placeholder = '';
-          _this16.maxLength = 100;
-          _this16.title = '';
-          return _this16;
+          _this18 = _callSuper(this, InputTextComponent, arguments);
+          _this18.placeholder = '';
+          _this18.maxLength = 100;
+          _this18.title = '';
+          return _this18;
         }
 
         _createClass(InputTextComponent, [{

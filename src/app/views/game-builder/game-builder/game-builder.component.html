@@ -1,7 +1,10 @@
 <h1 class="color-primary">{{ 'TRANSLATION' | translate: pageTitleTranslation }}</h1>
 
 <div class="main-instructions mb-4">
-    <mat-label>{{ 'TRANSLATION' | translate: TRANSLATION.instruction }}</mat-label>
+    <mat-label>
+        {{ 'TRANSLATION' | translate: TRANSLATION.topInstruction.main }}
+        {{ 'TRANSLATION' | translate: TRANSLATION.topInstruction.orUploadConfigFile }}
+    </mat-label>
 
     <div *ngIf="!flag.isDemo" class="upload-config-file">
         <mat-checkbox (change)="onChangeUploadConfigFile($event.checked)" color="primary">

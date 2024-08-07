@@ -1,68 +1,46 @@
-<div *ngIf="flag.isDemo; else showFullBuilderForm">
-    <form [formGroup]="form">
-        <div class="form-line">
-            <app-select class="form-item" 
-                label="{{ 'TRANSLATION' | translate: TRANSLATION.input.cardIdType }}" 
-                [form]="form" [controlName]="FORM_INPUT.cardIdType" [optionsTranslate]="options.cardId">
-            </app-select>
+<form [formGroup]="form">
+    <span class="subtitle color-primary">
+        {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.mainData }}
+    </span>
 
-            <app-select-yes-no class="form-item" 
-                [labelTranslate]="TRANSLATION.input.singleCardPerPair" 
-                [form]="form" [controlName]="FORM_INPUT.card.singleCardPerPair">
-            </app-select-yes-no>
+    <div class="form-line">
+        <app-input-text class="input-title" 
+            [labelTranslate]="TRANSLATION.input.gameTitle" 
+            [form]="form" controlName="title">
+        </app-input-text>
 
-            <app-select class="form-item" 
-                [labelTranslate]="TRANSLATION.input.numPairs" 
-                [form]="form" [controlName]="FORM_INPUT.card.numPairs" [options]="options.numPairs">
-            </app-select>
-        </div>
-    </form>
-</div>
-<ng-template #showFullBuilderForm>
-    <form [formGroup]="form">
-        <span class="subtitle color-primary">
-            {{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.mainData }}
-        </span>
+        <app-select class="input-card-id" 
+            [labelTranslate]="TRANSLATION.input.cardIdType" 
+            [form]="form" [controlName]="FORM_INPUT.cardIdType" [optionsTranslate]="options.cardId">
+        </app-select>
+    </div>
 
-        <div class="form-line">
-            <app-input-text class="input-title" 
-                [labelTranslate]="TRANSLATION.input.gameTitle" 
-                [form]="form" controlName="title">
-            </app-input-text>
-    
-            <app-select class="input-card-id" 
-                [labelTranslate]="TRANSLATION.input.cardIdType" 
-                [form]="form" [controlName]="FORM_INPUT.cardIdType" [optionsTranslate]="options.cardId">
-            </app-select>
+    <mat-divider></mat-divider>
+    <span class="subtitle color-primary">{{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.backgroundImg }}</span>
+    <div class="form-line">
+        <app-select-yes-no [labelTranslate]="TRANSLATION.input.backgroundImg.add" 
+            [form]="form" [controlName]="FORM_INPUT.addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
+        </app-select-yes-no>
+
+        <div *ngIf="flag.addBackgroundImg" class="form-item">
+            <app-background-image-form [form]="form" [controlName]="FORM_INPUT.backgroundImgSrc"></app-background-image-form>
         </div>
-    
-        <mat-divider></mat-divider>
-        <span class="subtitle color-primary">{{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.backgroundImg }}</span>
-        <div class="form-line">
-            <app-select-yes-no [labelTranslate]="TRANSLATION.input.backgroundImg.add" 
-                [form]="form" [controlName]="FORM_INPUT.addBackgroundImg" (onChange)="onChangeAddBackgroundImg($event)">
-            </app-select-yes-no>
-    
-            <div *ngIf="flag.addBackgroundImg" class="form-item">
-                <app-background-image-form [form]="form" [controlName]="FORM_INPUT.backgroundImgSrc"></app-background-image-form>
-            </div>
-        </div>
-    
-        <mat-divider></mat-divider>
-        <span class="subtitle color-primary">{{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.cards }}</span>
-        <app-card-form [parent]="this"></app-card-form>
-    </form>
-</ng-template>
+    </div>
+
+    <mat-divider></mat-divider>
+    <span class="subtitle color-primary">{{ 'TRANSLATION' | translate: TRANSLATION.sectionTitle.cards }}</span>
+    <app-card-form [parent]="this"></app-card-form>
+</form>
 
 <div class="d-flex-row mt-4">
     <div>
         <button mat-raised-button type="submit" color="primary" (click)="submit()">
             <mat-icon>sports_esports</mat-icon>
-            {{ 'TRANSLATION' | translate: submitBtnTranslation }} 
+            {{ 'TRANSLATION' | translate: TRANSLATION.btn.submit.createGame }} 
         </button>
     </div>
 
-    <div *ngIf="!flag.isDemo" class="download-btn">
+    <div class="download-btn">
         <button mat-stroked-button type="button" color="primary" (click)="download()">
             <mat-icon>download</mat-icon>
             {{ 'TRANSLATION' | translate: TRANSLATION.btn.download.label }}
