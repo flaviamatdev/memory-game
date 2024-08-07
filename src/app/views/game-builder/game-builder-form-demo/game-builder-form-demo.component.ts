@@ -48,6 +48,7 @@ export class GameBuilderFormDemoComponent extends AbstractGameBuilderFormCompone
 
         let gameConfig = new GameConfig();
         gameConfig.title = this.translationService.getTranslation(this.TRANSLATION.gameTitle.demo);
+        gameConfig.cardIdType = data[this.FORM_INPUT.cardIdType] as number;
         gameConfig.singleCardPerPair = data[this.FORM_INPUT.card.singleCardPerPair] as boolean;
         gameConfig.addCustomSoundsPerCard = false;
         gameConfig.cards = [];
